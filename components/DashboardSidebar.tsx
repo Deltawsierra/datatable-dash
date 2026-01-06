@@ -1,7 +1,7 @@
 'use client';
 
 import { Layout, Menu, Typography } from 'antd';
-import { TableOutlined, DatabaseOutlined } from '@ant-design/icons';
+import { TableOutlined, DatabaseOutlined, DashboardOutlined } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { tableConfigs } from '../lib/types';
 
@@ -17,14 +17,26 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
   const pathname = usePathname();
   const router = useRouter();
   
-  const currentTable = pathname.split('/').pop() || 'states';
+  const getSelectedKey = () => {
+    if (pathname === '/') return 'overview';
+    return pathname.split('/').pop() || 'overview';
+  };
   
-  const menuItems = tableConfigs.map((config) => ({
+  const overviewItem = {
+    key: 'overview',
+    icon: <DashboardOutlined />,
+    label: 'Overview',
+    onClick: () => router.push('/'),
+  };
+  
+  const tableItems = tableConfigs.map((config) => ({
     key: config.key,
     icon: <TableOutlined />,
     label: config.label,
     onClick: () => router.push(config.path),
   }));
+  
+  const menuItems = [overviewItem, ...tableItems];
 
   return (
     <Sider
@@ -64,13 +76,13 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
         {!collapsed && (
           <div className="px-4 py-2 mb-2">
             <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-              Tables
+              Navigation
             </span>
           </div>
         )}
         <Menu
           mode="inline"
-          selectedKeys={[currentTable]}
+          selectedKeys={[getSelectedKey()]}
           items={menuItems}
           style={{ border: 'none' }}
           data-testid="sidebar-menu"

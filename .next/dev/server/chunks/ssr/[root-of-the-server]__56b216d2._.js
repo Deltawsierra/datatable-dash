@@ -55,6 +55,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$typography$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/typography/index.js [app-ssr] (ecmascript) <export default as Typography>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$TableOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TableOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/TableOutlined.js [app-ssr] (ecmascript) <export default as TableOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DatabaseOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__DatabaseOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/DatabaseOutlined.js [app-ssr] (ecmascript) <export default as DatabaseOutlined>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DashboardOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__DashboardOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/DashboardOutlined.js [app-ssr] (ecmascript) <export default as DashboardOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/types.ts [app-ssr] (ecmascript)");
 'use client';
@@ -68,17 +69,34 @@ const { Title } = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2
 function DashboardSidebar({ collapsed, onCollapse }) {
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
-    const currentTable = pathname.split('/').pop() || 'states';
-    const menuItems = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tableConfigs"].map((config)=>({
+    const getSelectedKey = ()=>{
+        if (pathname === '/') return 'overview';
+        return pathname.split('/').pop() || 'overview';
+    };
+    const overviewItem = {
+        key: 'overview',
+        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DashboardOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__DashboardOutlined$3e$__["DashboardOutlined"], {}, void 0, false, {
+            fileName: "[project]/components/DashboardSidebar.tsx",
+            lineNumber: 27,
+            columnNumber: 11
+        }, this),
+        label: 'Overview',
+        onClick: ()=>router.push('/')
+    };
+    const tableItems = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tableConfigs"].map((config)=>({
             key: config.key,
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$TableOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TableOutlined$3e$__["TableOutlined"], {}, void 0, false, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 24,
+                lineNumber: 34,
                 columnNumber: 11
             }, this),
             label: config.label,
             onClick: ()=>router.push(config.path)
         }));
+    const menuItems = [
+        overviewItem,
+        ...tableItems
+    ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Sider, {
         width: 280,
         collapsible: true,
@@ -110,12 +128,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardSidebar.tsx",
-                                lineNumber: 50,
+                                lineNumber: 62,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 46,
+                            lineNumber: 58,
                             columnNumber: 11
                         }, this),
                         !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -129,7 +147,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     children: "RDM Dashboard"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 54,
+                                    lineNumber: 66,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -137,24 +155,24 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     children: "Reference Data"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 57,
+                                    lineNumber: 69,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 53,
+                            lineNumber: 65,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/DashboardSidebar.tsx",
-                    lineNumber: 45,
+                    lineNumber: 57,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 44,
+                lineNumber: 56,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -164,21 +182,21 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                         className: "px-4 py-2 mb-2",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                             className: "text-xs font-medium text-gray-400 uppercase tracking-wider",
-                            children: "Tables"
+                            children: "Navigation"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 66,
+                            lineNumber: 78,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 65,
+                        lineNumber: 77,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$menu$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
                         mode: "inline",
                         selectedKeys: [
-                            currentTable
+                            getSelectedKey()
                         ],
                         items: menuItems,
                         style: {
@@ -187,19 +205,19 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                         "data-testid": "sidebar-menu"
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 71,
+                        lineNumber: 83,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 63,
+                lineNumber: 75,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/DashboardSidebar.tsx",
-        lineNumber: 30,
+        lineNumber: 42,
         columnNumber: 5
     }, this);
 }
