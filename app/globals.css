@@ -5,18 +5,51 @@
 :root {
   --sidebar-width: 280px;
   --header-height: 64px;
-  --primary-color: #1677ff;
-  --background: #ffffff;
-  --foreground: #171717;
-  --sidebar-bg: #f5f5f5;
-  --border-color: #e8e8e8;
+  
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --muted: #64748b;
+  
+  --header-bg: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+  --header-text: #ffffff;
+  
+  --sidebar-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  --sidebar-text: #e2e8f0;
+  --sidebar-text-muted: #94a3b8;
+  --sidebar-hover: rgba(255, 255, 255, 0.1);
+  --sidebar-active: rgba(59, 130, 246, 0.3);
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  
+  --content-bg: #f1f5f9;
+  --border-color: #e2e8f0;
 }
 
 .dark {
-  --background: #121212;
-  --foreground: #f5f5f5;
-  --sidebar-bg: #1f1f1f;
-  --border-color: #303030;
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --muted: #94a3b8;
+  
+  --header-bg: linear-gradient(135deg, #1e3a8a 0%, #4338ca 50%, #6d28d9 100%);
+  --header-text: #ffffff;
+  
+  --sidebar-bg: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  --sidebar-text: #f1f5f9;
+  --sidebar-text-muted: #64748b;
+  --sidebar-hover: rgba(255, 255, 255, 0.05);
+  --sidebar-active: rgba(99, 102, 241, 0.4);
+  --sidebar-border: rgba(255, 255, 255, 0.05);
+  
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  
+  --content-bg: #0f172a;
+  --border-color: #334155;
 }
 
 * {
@@ -35,23 +68,68 @@ body {
 body {
   background: var(--background);
   color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .ant-layout {
   min-height: 100vh;
-}
-
-.ant-layout-sider {
-  background: var(--sidebar-bg) !important;
-}
-
-.ant-menu {
   background: transparent !important;
-  border-inline-end: none !important;
 }
 
-.ant-table-wrapper {
-  background: transparent;
+.ant-layout-content {
+  background: var(--content-bg) !important;
+}
+
+.ant-card {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+}
+
+.dark .ant-card {
+  color: var(--foreground);
+}
+
+.dark .ant-card-head {
+  color: var(--foreground);
+  border-color: var(--card-border);
+}
+
+.dark .ant-table {
+  background: var(--card-bg);
+  color: var(--foreground);
+}
+
+.dark .ant-table-thead > tr > th {
+  background: var(--sidebar-bg) !important;
+  color: var(--sidebar-text) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .ant-table-tbody > tr > td {
+  border-color: var(--border-color) !important;
+}
+
+.dark .ant-table-tbody > tr:hover > td {
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+.dark .ant-pagination-item {
+  background: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .ant-pagination-item a {
+  color: var(--foreground) !important;
+}
+
+.dark .ant-pagination-item-active {
+  border-color: var(--primary) !important;
+}
+
+.dark .ant-select-selector {
+  background: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--foreground) !important;
 }
 
 @keyframes border-beam {
@@ -61,4 +139,18 @@ body {
   100% {
     offset-distance: 100%;
   }
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
 }
