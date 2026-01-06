@@ -6,20 +6,18 @@ import type { ColumnsType } from 'antd/es/table';
 
 const { Title, Text } = Typography;
 
-interface DataTableProps<T> {
+interface DataTableProps<T extends { id: string }> {
   title: string;
   data: T[];
   columns: ColumnsType<T>;
   loading?: boolean;
-  rowKey?: string;
 }
 
-export default function DataTable<T extends Record<string, unknown>>({
+export default function DataTable<T extends { id: string }>({
   title,
   data,
   columns,
   loading = false,
-  rowKey = 'id',
 }: DataTableProps<T>) {
   const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
   
@@ -57,9 +55,9 @@ export default function DataTable<T extends Record<string, unknown>>({
           <Table
             columns={columns}
             dataSource={data}
-            rowKey={rowKey}
+            rowKey="id"
             pagination={{
-              position: ['bottomRight'],
+              align: 'end',
               showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
               pageSize: 10,
               showSizeChanger: true,
