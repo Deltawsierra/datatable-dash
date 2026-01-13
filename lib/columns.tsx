@@ -1,5 +1,5 @@
 import type { ColumnsType } from 'antd/es/table';
-import type { State, Country, Department } from './types';
+import type { State, Country, Department, TableName } from './types';
 
 export const statesColumns: ColumnsType<State> = [
   {
@@ -121,14 +121,14 @@ export const departmentsColumns: ColumnsType<Department> = [
   },
 ];
 
-export function getColumns(tableName: string) {
+export function getColumns(tableName: TableName): ColumnsType<{ id: string }> {
   switch (tableName) {
     case 'states':
-      return statesColumns;
+      return statesColumns as ColumnsType<{ id: string }>;
     case 'countries':
-      return countriesColumns;
+      return countriesColumns as ColumnsType<{ id: string }>;
     case 'departments':
-      return departmentsColumns;
+      return departmentsColumns as ColumnsType<{ id: string }>;
     default:
       return [];
   }

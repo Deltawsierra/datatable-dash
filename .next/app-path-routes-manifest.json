@@ -1,0 +1,6 @@
+{
+  "/(dashboard)/page": "/",
+  "/(dashboard)/tables/[slug]/page": "/tables/[slug]",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found"
+}

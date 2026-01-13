@@ -1,28 +1,9 @@
-'use client';
-
-import { ConfigProvider, App as AntApp } from 'antd';
+import type { Metadata } from 'next';
 import './globals.css';
 
-const theme = {
-  token: {
-    colorPrimary: '#1677ff',
-    borderRadius: 6,
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-  },
-  components: {
-    Layout: {
-      siderBg: '#f5f5f5',
-      headerBg: '#ffffff',
-    },
-    Menu: {
-      itemBg: 'transparent',
-      subMenuItemBg: 'transparent',
-    },
-    Table: {
-      headerBg: '#fafafa',
-      rowHoverBg: '#f5f5f5',
-    },
-  },
+export const metadata: Metadata = {
+  title: 'RDM Dashboard - Reference Data Management',
+  description: 'Reference Data Management Dashboard for viewing and managing data tables',
 };
 
 export default function RootLayout({
@@ -31,19 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>RDM Dashboard - Reference Data Management</title>
-        <meta name="description" content="Reference Data Management Dashboard for viewing and managing data tables" />
-      </head>
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <ConfigProvider theme={theme}>
-          <AntApp>
-            {children}
-          </AntApp>
-        </ConfigProvider>
+        {children}
       </body>
     </html>
   );

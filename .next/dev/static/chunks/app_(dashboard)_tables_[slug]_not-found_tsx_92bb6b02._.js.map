@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///home/runner/workspace/app/%28dashboard%29/tables/%5Bslug%5D/not-found.tsx"],"sourcesContent":["'use client';\n\nimport { Result, Button } from 'antd';\nimport { useRouter } from 'next/navigation';\n\nexport default function NotFound() {\n  const router = useRouter();\n  \n  return (\n    <div className=\"flex items-center justify-center min-h-[calc(100vh-64px)]\">\n      <Result\n        status=\"404\"\n        title=\"Table Not Found\"\n        subTitle=\"The table you're looking for doesn't exist.\"\n        extra={\n          <Button \n            type=\"primary\" \n            onClick={() => router.push('/tables/states')}\n            data-testid=\"button-go-home\"\n          >\n            Go to States\n          </Button>\n        }\n        data-testid=\"not-found-result\"\n      />\n    </div>\n  );\n}\n"],"names":[],"mappings":";;;;;AAEA;AAAA;AACA;;;AAHA;;;AAKe,SAAS;;IACtB,MAAM,SAAS,IAAA,kJAAS;IAExB,qBACE,6LAAC;QAAI,WAAU;kBACb,cAAA,6LAAC,+LAAM;YACL,QAAO;YACP,OAAM;YACN,UAAS;YACT,qBACE,6LAAC,+MAAM;gBACL,MAAK;gBACL,SAAS,IAAM,OAAO,IAAI,CAAC;gBAC3B,eAAY;0BACb;;;;;;YAIH,eAAY;;;;;;;;;;;AAIpB;GAtBwB;;QACP,kJAAS;;;KADF"}}]
+}

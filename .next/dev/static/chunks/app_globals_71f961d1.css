@@ -65,11 +65,11 @@
 html, :host {
   -webkit-text-size-adjust: 100%;
   tab-size: 4;
-  line-height: 1.5;
-  font-family: var(--font-sans);
   font-feature-settings: normal;
   font-variation-settings: normal;
   -webkit-tap-highlight-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+  line-height: 1.5;
 }
 
 body {
@@ -104,9 +104,9 @@ b, strong {
 }
 
 code, kbd, samp, pre {
-  font-family: var(--font-mono);
   font-feature-settings: normal;
   font-variation-settings: normal;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
   font-size: 1em;
 }
 
@@ -417,7 +417,7 @@ img, video {
 }
 
 .rounded-lg {
-  border-radius: .5625rem;
+  border-radius: .5rem;
 }
 
 .rounded-md {
@@ -544,20 +544,6 @@ img, video {
   transition-property: all;
   transition-duration: .15s;
   transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-}
-
-@keyframes enter {
-  from {
-    opacity: var(--tw-enter-opacity, 1);
-    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0));
-  }
-}
-
-@keyframes exit {
-  to {
-    opacity: var(--tw-exit-opacity, 1);
-    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0));
-  }
 }
 
 :root {

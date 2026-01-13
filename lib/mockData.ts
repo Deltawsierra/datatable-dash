@@ -1,4 +1,4 @@
-import type { State, Country, Department } from './types';
+import type { State, Country, Department, TableName } from './types';
 
 export const statesData: State[] = [
   { id: '1', code: 'CA', name: 'California', country: 'United States', population: 39538223, capital: 'Sacramento' },
@@ -43,7 +43,7 @@ export const departmentsData: Department[] = [
   { id: '10', code: 'DAT', name: 'Data Science', description: 'Analytics and machine learning', headCount: 40, budget: 2500000, manager: 'Amanda Lee' },
 ];
 
-export function getTableData(tableName: string) {
+export function getTableData(tableName: TableName): Array<{ id: string }> {
   switch (tableName) {
     case 'states':
       return statesData;

@@ -1,0 +1,3 @@
+module.exports=[33290,a=>{"use strict";var b=a.i(7997);function c({children:a}){return(0,b.jsx)("html",{lang:"en",suppressHydrationWarning:!0,children:(0,b.jsx)("body",{children:a})})}a.s(["default",()=>c,"metadata",0,{title:"RDM Dashboard - Reference Data Management",description:"Reference Data Management Dashboard for viewing and managing data tables"}])}];
+
+//# sourceMappingURL=app_layout_tsx_271801d7._.js.map
