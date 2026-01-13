@@ -1,4 +1,6 @@
 "use client";
+
+// Animated gradient border effect
 import { cn } from "../../lib/utils";
 
 interface BorderBeamProps {
@@ -22,10 +24,7 @@ export function BorderBeam({
 }: BorderBeamProps) {
   return (
     <div
-      className={cn(
-        "pointer-events-none absolute inset-0 rounded-[inherit]",
-        className
-      )}
+      className={cn("pointer-events-none absolute inset-0 rounded-[inherit]", className)}
       style={{
         ["--size" as string]: size,
         ["--duration" as string]: `${duration}s`,

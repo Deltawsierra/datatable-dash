@@ -2,20 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   THEME VARIABLES - Light Mode (Default)
+   ============================================ */
 :root {
   --sidebar-width: 280px;
   --header-height: 64px;
   
+  /* Primary colors */
   --primary: #3b82f6;
   --primary-hover: #2563eb;
   
+  /* Base colors */
   --background: #f8fafc;
   --foreground: #1e293b;
   --muted: #64748b;
   
+  /* Header gradient */
   --header-bg: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
   --header-text: #ffffff;
   
+  /* Sidebar gradient */
   --sidebar-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
   --sidebar-text: #e2e8f0;
   --sidebar-text-muted: #94a3b8;
@@ -23,13 +30,16 @@
   --sidebar-active: rgba(59, 130, 246, 0.3);
   --sidebar-border: rgba(255, 255, 255, 0.1);
   
+  /* Card styles */
   --card-bg: #ffffff;
   --card-border: #e2e8f0;
-  
   --content-bg: #f1f5f9;
   --border-color: #e2e8f0;
 }
 
+/* ============================================
+   THEME VARIABLES - Dark Mode
+   ============================================ */
 .dark {
   --background: #0f172a;
   --foreground: #f1f5f9;
@@ -47,19 +57,16 @@
   
   --card-bg: #1e293b;
   --card-border: #334155;
-  
   --content-bg: #0f172a;
   --border-color: #334155;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+/* ============================================
+   BASE STYLES
+   ============================================ */
+* { box-sizing: border-box; padding: 0; margin: 0; }
 
-html,
-body {
+html, body {
   max-width: 100vw;
   overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -71,83 +78,45 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.ant-layout {
-  min-height: 100vh;
-  background: transparent !important;
-}
+/* ============================================
+   ANT DESIGN OVERRIDES
+   ============================================ */
 
-.ant-layout-content {
-  background: var(--content-bg) !important;
-}
+/* Layout */
+.ant-layout { min-height: 100vh; background: transparent !important; }
+.ant-layout-content { background: var(--content-bg) !important; }
 
-.ant-card {
-  background: var(--card-bg) !important;
-  border-color: var(--card-border) !important;
-}
+/* Cards */
+.ant-card { background: var(--card-bg) !important; border-color: var(--card-border) !important; }
+.dark .ant-card { color: var(--foreground); }
+.dark .ant-card-head { color: var(--foreground); border-color: var(--card-border); }
 
-.dark .ant-card {
-  color: var(--foreground);
-}
+/* Tables */
+.dark .ant-table { background: var(--card-bg); color: var(--foreground); }
+.dark .ant-table-thead > tr > th { background: var(--sidebar-bg) !important; color: var(--sidebar-text) !important; border-color: var(--border-color) !important; }
+.dark .ant-table-tbody > tr > td { border-color: var(--border-color) !important; }
+.dark .ant-table-tbody > tr:hover > td { background: rgba(59, 130, 246, 0.1) !important; }
 
-.dark .ant-card-head {
-  color: var(--foreground);
-  border-color: var(--card-border);
-}
+/* Pagination */
+.dark .ant-pagination-item { background: var(--card-bg) !important; border-color: var(--border-color) !important; }
+.dark .ant-pagination-item a { color: var(--foreground) !important; }
+.dark .ant-pagination-item-active { border-color: var(--primary) !important; }
+.dark .ant-select-selector { background: var(--card-bg) !important; border-color: var(--border-color) !important; color: var(--foreground) !important; }
 
-.dark .ant-table {
-  background: var(--card-bg);
-  color: var(--foreground);
-}
+/* ============================================
+   ANIMATIONS
+   ============================================ */
 
-.dark .ant-table-thead > tr > th {
-  background: var(--sidebar-bg) !important;
-  color: var(--sidebar-text) !important;
-  border-color: var(--border-color) !important;
-}
-
-.dark .ant-table-tbody > tr > td {
-  border-color: var(--border-color) !important;
-}
-
-.dark .ant-table-tbody > tr:hover > td {
-  background: rgba(59, 130, 246, 0.1) !important;
-}
-
-.dark .ant-pagination-item {
-  background: var(--card-bg) !important;
-  border-color: var(--border-color) !important;
-}
-
-.dark .ant-pagination-item a {
-  color: var(--foreground) !important;
-}
-
-.dark .ant-pagination-item-active {
-  border-color: var(--primary) !important;
-}
-
-.dark .ant-select-selector {
-  background: var(--card-bg) !important;
-  border-color: var(--border-color) !important;
-  color: var(--foreground) !important;
-}
-
+/* Border beam effect */
 @keyframes border-beam {
-  0% {
-    offset-distance: 0%;
-  }
-  100% {
-    offset-distance: 100%;
-  }
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
 }
 
+/* Header gradient animation */
 @keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .animate-gradient {

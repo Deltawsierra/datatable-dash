@@ -2,14 +2,14 @@
 
 import { useParams, notFound } from 'next/navigation';
 import DataTable from '../../../../components/DataTable';
-import { getTableData } from '../../../../lib/mockData';
-import { getColumns } from '../../../../lib/columns';
-import { tableConfigs, type TableName } from '../../../../lib/types';
+import { getTableData, getColumns, tableConfigs, type TableName } from '../../../../lib/tableRegistry';
 
+// Dynamic table page - renders based on URL slug
 export default function TablePage() {
   const params = useParams();
   const slug = params.slug as string;
   
+  // Validate table exists
   const validTables = tableConfigs.map(t => t.key);
   if (!validTables.includes(slug as TableName)) {
     notFound();

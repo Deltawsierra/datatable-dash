@@ -7,7 +7,7 @@
   "static/chunks/node_modules_@rc-component_trigger_es_20355146._.js",
   "static/chunks/node_modules_@rc-component_form_es_9e966f63._.js",
   "static/chunks/node_modules_5f6cb01c._.js",
-  "static/chunks/_55f3696c._.js"
+  "static/chunks/_40175a05._.js"
 ],
     source: "dynamic"
 });

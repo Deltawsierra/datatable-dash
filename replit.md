@@ -1,23 +1,23 @@
 # RDM Dashboard - Reference Data Management
 
 ## Overview
-A Next.js App Router dashboard for viewing and managing reference data tables. Built with Ant Design components, MagicUI animated effects, and Tailwind CSS. Desktop-focused design.
+Next.js App Router dashboard for viewing reference data tables. Built with Ant Design, MagicUI animations, and Tailwind CSS. Desktop-focused design optimized for fast load times.
 
 ## Tech Stack
 - **Framework**: Next.js 16+ (App Router)
 - **UI Library**: Ant Design 6.x
-- **Animations**: MagicUI (NumberTicker, BorderBeam, DotPattern)
+- **Animations**: MagicUI (NumberTicker, BorderBeam)
 - **Styling**: Tailwind CSS
 - **Language**: TypeScript
 
-## Project Structure
+## Project Structure (Optimized)
 ```
 app/                           # Next.js App Router
   layout.tsx                   # Root layout with metadata
-  globals.css                  # Global styles + theme variables
+  globals.css                  # Theme variables + Ant Design overrides
   (dashboard)/                 # Dashboard route group
-    layout.tsx                 # Dashboard layout with ThemeProvider
-    page.tsx                   # Overview page with animated stats
+    layout.tsx                 # Dashboard shell with sidebar/header
+    page.tsx                   # Overview page with stat cards
     tables/[slug]/             # Dynamic table routes
       page.tsx                 # Table page component
       not-found.tsx            # 404 for invalid tables
@@ -25,21 +25,18 @@ app/                           # Next.js App Router
 components/                    # React components
   DashboardSidebar.tsx         # Left navigation (280px, collapsible)
   DashboardHeader.tsx          # Top header with theme toggle
-  DataTable.tsx                # Generic Ant Design Table component
-  ThemeProvider.tsx            # Light/dark mode context
-  magicui/                     # MagicUI animated components
+  DataTable.tsx                # Generic Ant Design Table wrapper
+  ThemeProvider.tsx            # Light/dark mode with localStorage
+  magicui/                     # Animation components
     NumberTicker.tsx           # Animated number counter
-    BorderBeam.tsx             # Animated border effect
-    DotPattern.tsx             # SVG dot pattern
+    BorderBeam.tsx             # Gradient border effect
 
 lib/                           # Utilities
-  types.ts                     # TypeScript interfaces
-  mockData.ts                  # Mock data for tables
-  columns.tsx                  # Ant Design table column definitions
+  tableRegistry.ts             # MAIN: Types, columns, mock data (replace with API)
   utils.ts                     # Utility functions (cn)
 
-server/                        # Server entry point
-  index.ts                     # Spawns Next.js dev server
+server/                        # Server entry
+  index.ts                     # Next.js dev launcher
 ```
 
 ## Routes
@@ -49,25 +46,43 @@ server/                        # Server entry point
 - `/tables/departments` - Departments data table
 
 ## Features
-- **Animated Statistics**: Overview page with NumberTicker animations
-- **Border Beam Effects**: Gradient animated borders on stat cards
-- **Collapsible Sidebar**: 280px sidebar with collapse to 80px
-- **Light/Dark Mode**: Theme toggle in header, persists to localStorage
-- **Desktop-First Design**: Optimized for desktop viewing
-- **Type-Safe Tables**: Generic DataTable component with TypeScript
+- Animated statistics with NumberTicker
+- Gradient animated borders on cards
+- Collapsible sidebar (280px → 80px)
+- Light/dark mode with localStorage persistence
+- Desktop-first responsive design
 
 ## Running the App
 ```bash
 npm install
 npm run dev
 ```
-Opens on port 5000. Works with both Next.js Turbopack (dev) and Webpack (production build).
+Opens on port 5000.
 
-## Build for Production
+## Production Build
 ```bash
 npm run build
 npm start
 ```
 
-## Future API Integration
-The mock data in `lib/mockData.ts` is structured to easily replace with real API calls. Update `getTableData()` and `getColumns()` functions to fetch from Azure Databricks backend.
+## Python API Integration
+Replace mock data in `lib/tableRegistry.ts`:
+1. Update `getTableData()` to fetch from Python API
+2. Update `getColumns()` if column structure changes
+3. Mark with TODO comments for easy location
+
+## File Comments
+Strategic 1-5 word comments mark major code blocks:
+- `// Logo and branding`
+- `// Navigation menu`
+- `// Sidebar toggle`
+- `// Theme toggle`
+- `// Stats grid`
+- `// Table header`
+- etc.
+
+## Deployment
+Ready for GitHub/GitLab deployment. Configure:
+- Environment: `PORT=5000`
+- Build: `npm run build`
+- Start: `npm start`

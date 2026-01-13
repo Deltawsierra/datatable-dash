@@ -1,4 +1,6 @@
 "use client";
+
+// Animated number counter with spring physics
 import { useEffect, useRef, useState } from "react";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
 import { cn } from "../../lib/utils";
@@ -24,6 +26,7 @@ export function NumberTicker({
   const isInView = useInView(ref, { once: true, margin: "0px" });
   const [hasAnimated, setHasAnimated] = useState(false);
 
+  // Trigger animation when in view
   useEffect(() => {
     if (isInView && !hasAnimated) {
       const timer = setTimeout(() => {
@@ -34,6 +37,7 @@ export function NumberTicker({
     }
   }, [motionValue, isInView, delay, value, direction, startValue, hasAnimated]);
 
+  // Update display value on spring change
   useEffect(() => {
     return springValue.on("change", (latest) => {
       if (ref.current) {
