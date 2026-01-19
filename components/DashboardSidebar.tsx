@@ -65,8 +65,8 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
           </div>
           {!collapsed && (
             <div>
-              <Title level={5} style={{ margin: 0, fontSize: 16, color: 'var(--sidebar-text)' }}>RDM Dashboard</Title>
-              <span style={{ fontSize: 12, color: 'var(--sidebar-text-muted)' }}>Reference Data</span>
+              <Title level={5} style={{ margin: 0, fontSize: 16, color: 'var(--sidebar-text)' }}>RDM Lighthouse</Title>
+              <span style={{ fontSize: 12, color: 'var(--sidebar-text-muted)' }}>Data Governance</span>
             </div>
           )}
         </div>

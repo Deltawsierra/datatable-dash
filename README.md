@@ -1,6 +1,8 @@
-# RDM Dashboard - Reference Data Management
+# RDM Lighthouse - Reference Data Management
 
 A Next.js App Router dashboard for viewing and managing reference data tables. Built with Ant Design, MagicUI animated components, and Tailwind CSS.
+
+Developed by the **Genworth Data Governance** team.
 
 ## Features
 
@@ -8,7 +10,7 @@ A Next.js App Router dashboard for viewing and managing reference data tables. B
 - Three data tables: States, Countries, Departments
 - Collapsible sidebar navigation
 - Light/Dark mode toggle
-- Responsive design
+- Desktop-optimized design
 
 ## Local Development
 
@@ -34,8 +36,6 @@ A Next.js App Router dashboard for viewing and managing reference data tables. B
 
 ### Alternative: Direct Next.js Command
 
-If the default script doesn't work, you can run Next.js directly:
-
 ```bash
 npx next dev -p 5000
 ```
@@ -46,35 +46,34 @@ Or use the default Next.js port (3000):
 npx next dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000)
-
 ## Project Structure
 
 ```
 app/                           # Next.js App Router
-  layout.tsx                   # Root layout with Ant Design provider
-  globals.css                  # Global styles + theme variables
+  layout.tsx                   # Root layout with metadata
+  globals.css                  # Theme variables + Ant Design overrides
   (dashboard)/                 # Dashboard route group
-    layout.tsx                 # Dashboard layout (sidebar + header)
-    page.tsx                   # Overview page with animated stats
+    layout.tsx                 # Dashboard shell with sidebar/header
+    page.tsx                   # Overview page with stat cards
     tables/[slug]/             # Dynamic table routes
       page.tsx                 # Table page component
+      not-found.tsx            # 404 for invalid tables
 
 components/                    # React components
   DashboardSidebar.tsx         # Left navigation (280px, collapsible)
   DashboardHeader.tsx          # Top header with theme toggle
-  DataTable.tsx                # Generic table component
-  ThemeProvider.tsx            # Light/dark mode context
-  magicui/                     # MagicUI animated components
+  DataTable.tsx                # Generic Ant Design Table wrapper
+  ThemeProvider.tsx            # Light/dark mode with localStorage
+  magicui/                     # Animation components
     NumberTicker.tsx           # Animated number counter
-    BorderBeam.tsx             # Animated border effect
-    DotPattern.tsx             # SVG dot pattern
+    BorderBeam.tsx             # Gradient border effect
 
 lib/                           # Utilities
-  types.ts                     # TypeScript interfaces
-  mockData.ts                  # Mock data for tables
-  columns.tsx                  # Table column definitions
-  utils.ts                     # Utility functions
+  tableRegistry.ts             # Types, columns, mock data
+  utils.ts                     # Utility functions (cn)
+
+server/                        # Server entry
+  index.ts                     # Next.js dev launcher
 ```
 
 ## Routes
@@ -101,4 +100,8 @@ npm start
 
 ## Future API Integration
 
-The mock data in `lib/mockData.ts` is structured to easily replace with real API calls. Update `getTableData()` and `getColumns()` functions to fetch from your backend.
+The mock data in `lib/tableRegistry.ts` is structured to easily replace with real API calls. Update `getTableData()` and `getColumns()` functions to fetch from your Python backend.
+
+## License
+
+MIT License - Genworth Data Governance

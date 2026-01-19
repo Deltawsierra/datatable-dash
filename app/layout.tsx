@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'RDM Dashboard - Reference Data Management',
-  description: 'Reference Data Management Dashboard for viewing and managing data tables',
+  title: 'RDM Lighthouse - Reference Data Management',
+  description: 'Reference Data Management Dashboard by Genworth Data Governance',
 };
 
 export default function RootLayout({

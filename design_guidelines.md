@@ -1,4 +1,6 @@
-# Design Guidelines: RDM Frontend Dashboard
+# Design Guidelines: RDM Lighthouse
+
+Developed by the Genworth Data Governance team.
 
 ## Design Approach
 

@@ -1,4 +1,4 @@
-// Next.js dev server launcher for Replit
+// RDM Lighthouse dev server
 import { spawn } from 'child_process';
 
 const port = process.env.PORT || '5000';

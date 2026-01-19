@@ -1,88 +1,69 @@
-# RDM Dashboard - Reference Data Management
+# RDM Lighthouse - Reference Data Management Dashboard
 
 ## Overview
-Next.js App Router dashboard for viewing reference data tables. Built with Ant Design, MagicUI animations, and Tailwind CSS. Desktop-focused design optimized for fast load times.
 
-## Tech Stack
-- **Framework**: Next.js 16+ (App Router)
-- **UI Library**: Ant Design 6.x
-- **Animations**: MagicUI (NumberTicker, BorderBeam)
-- **Styling**: Tailwind CSS
-- **Language**: TypeScript
+RDM Lighthouse is a Next.js 16+ dashboard application for viewing and managing reference data tables. Built for the Genworth Data Governance team, it provides an enterprise-grade interface for browsing States, Countries, and Departments reference data. The application emphasizes desktop optimization, fast load times, and a professional data-focused user experience using Ant Design components with MagicUI animations.
 
-## Project Structure (Optimized)
-```
-app/                           # Next.js App Router
-  layout.tsx                   # Root layout with metadata
-  globals.css                  # Theme variables + Ant Design overrides
-  (dashboard)/                 # Dashboard route group
-    layout.tsx                 # Dashboard shell with sidebar/header
-    page.tsx                   # Overview page with stat cards
-    tables/[slug]/             # Dynamic table routes
-      page.tsx                 # Table page component
-      not-found.tsx            # 404 for invalid tables
+## User Preferences
 
-components/                    # React components
-  DashboardSidebar.tsx         # Left navigation (280px, collapsible)
-  DashboardHeader.tsx          # Top header with theme toggle
-  DataTable.tsx                # Generic Ant Design Table wrapper
-  ThemeProvider.tsx            # Light/dark mode with localStorage
-  magicui/                     # Animation components
-    NumberTicker.tsx           # Animated number counter
-    BorderBeam.tsx             # Gradient border effect
+Preferred communication style: Simple, everyday language.
 
-lib/                           # Utilities
-  tableRegistry.ts             # MAIN: Types, columns, mock data (replace with API)
-  utils.ts                     # Utility functions (cn)
+## System Architecture
 
-server/                        # Server entry
-  index.ts                     # Next.js dev launcher
-```
+### Frontend Framework
+- **Next.js 16+ with App Router**: Uses the modern App Router pattern with route groups for dashboard organization
+- **Route Structure**: 
+  - `/` - Dashboard overview with animated statistics
+  - `/tables/[slug]` - Dynamic routing for data tables (states, countries, departments)
+- **Rationale**: App Router provides better layouts, server components support, and simplified routing over Pages Router
 
-## Routes
-- `/` - Dashboard Overview with animated statistics
-- `/tables/states` - US States data table
-- `/tables/countries` - Countries data table
-- `/tables/departments` - Departments data table
+### UI Component Strategy
+- **Ant Design 6.x**: Primary component library for tables, cards, menus, and layout primitives
+- **MagicUI Components**: Custom animated components (NumberTicker, BorderBeam) for visual polish
+- **Tailwind CSS**: Utility-first styling for custom layouts and spacing
+- **Rationale**: Ant Design provides enterprise-grade data components; MagicUI adds subtle animations without heavyweight dependencies
 
-## Features
-- Animated statistics with NumberTicker
-- Gradient animated borders on cards
-- Collapsible sidebar (280px → 80px)
-- Light/dark mode with localStorage persistence
-- Desktop-first responsive design
+### Layout Architecture
+- **Dashboard Shell Pattern**: Fixed sidebar (280px collapsible) + sticky header (64px) + scrollable content area
+- **Theme System**: CSS variables for light/dark mode with localStorage persistence
+- **Gradient Styling**: Header and sidebar use CSS gradients for visual hierarchy
 
-## Running the App
-```bash
-npm install
-npm run dev
-```
-Opens on port 5000.
+### State Management
+- **Local Component State**: React useState for UI state (sidebar collapse, theme toggle)
+- **Context API**: ThemeProvider wraps dashboard for theme access
+- **No Redux/Zustand**: Simple data display app doesn't require complex state management
 
-## Production Build
-```bash
-npm run build
-npm start
-```
+### Data Layer
+- **Table Registry Pattern**: Centralized `lib/tableRegistry.ts` contains all type definitions, column configurations, and mock data
+- **Mock Data**: Currently uses hardcoded arrays - designed for easy replacement with API calls
+- **Generic DataTable Component**: Type-safe table wrapper supporting any data shape with `{ id: string }` constraint
 
-## Python API Integration
-Replace mock data in `lib/tableRegistry.ts`:
-1. Update `getTableData()` to fetch from Python API
-2. Update `getColumns()` if column structure changes
-3. Mark with TODO comments for easy location
+### Build & Development
+- **Dev Server**: Custom `server/index.ts` spawns Next.js dev process on port 5000
+- **TypeScript**: Strict mode enabled with path aliases (`@/*`)
+- **Build Script**: Uses tsx for TypeScript execution
 
-## File Comments
-Strategic 1-5 word comments mark major code blocks:
-- `// Logo and branding`
-- `// Navigation menu`
-- `// Sidebar toggle`
-- `// Theme toggle`
-- `// Stats grid`
-- `// Table header`
-- etc.
+## External Dependencies
 
-## Deployment
-Ready for GitHub/GitLab deployment. Configure:
-- Environment: `PORT=5000`
-- Build: `npm run build`
-- Start: `npm start`
+### Core Dependencies
+- **next**: React framework with App Router
+- **antd + @ant-design/icons + @ant-design/cssinjs**: UI component library and styling
+- **react + react-dom**: React 18.3.x
+
+### Animation & Styling
+- **framer-motion**: Powers NumberTicker spring animations
+- **tailwindcss + autoprefixer + postcss**: Utility CSS framework
+- **clsx + tailwind-merge**: Class name utilities
+
+### Icons
+- **lucide-react**: Icon library for dashboard stats cards
+- **@ant-design/icons**: Ant Design's icon set for navigation
+
+### Development Tools
+- **typescript**: Type checking
+- **tsx**: TypeScript execution for dev server and build scripts
+- **@types/node, @types/react, @types/react-dom**: Type definitions
+
+### Future Integration Points
+- **API Layer**: `lib/tableRegistry.ts` mock data designed to be replaced with fetch calls to Python backend
+- **Database**: No current database; Drizzle references in package.json suggest planned database integration
