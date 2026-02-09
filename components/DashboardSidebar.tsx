@@ -1,13 +1,16 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Layout, Menu, Input, Typography } from 'antd';
-import { TableOutlined, DatabaseOutlined, DashboardOutlined, SearchOutlined } from '@ant-design/icons';
+import { Layout, Menu, Input, Typography, Popover, Checkbox, Radio, Badge } from 'antd';
+import { TableOutlined, DatabaseOutlined, DashboardOutlined, SearchOutlined, FilterOutlined, SortAscendingOutlined } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
-import { tableConfigs } from '../lib/tableRegistry';
+import { tableConfigs, allDepartments, allDataTypes } from '../lib/tableRegistry';
+import type { TableDepartment, TableDataType, TableConfig } from '../lib/tableRegistry';
 
 const { Sider } = Layout;
 const { Title } = Typography;
+
+type SortOption = 'az' | 'za' | 'most-used' | 'newest';
 
 interface DashboardSidebarProps {
   collapsed: boolean;
@@ -19,22 +22,80 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
   const pathname = usePathname();
   const router = useRouter();
   const [searchText, setSearchText] = useState('');
-  
+  const [selectedDepartments, setSelectedDepartments] = useState<TableDepartment[]>([]);
+  const [selectedDataTypes, setSelectedDataTypes] = useState<TableDataType[]>([]);
+  const [sortOption, setSortOption] = useState<SortOption>('az');
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
+
   // Get selected menu key from URL
   const getSelectedKey = () => {
     if (pathname === '/') return 'overview';
     return pathname.split('/').pop() || 'overview';
   };
-  
-  // Filter tables by search text
+
+  // Active filter count
+  const activeFilterCount = selectedDepartments.length + selectedDataTypes.length;
+
+  // Sort helper
+  const sortTables = (tables: TableConfig[]): TableConfig[] => {
+    const sorted = [...tables];
+    switch (sortOption) {
+      case 'az':
+        return sorted.sort((a, b) => a.label.localeCompare(b.label));
+      case 'za':
+        return sorted.sort((a, b) => b.label.localeCompare(a.label));
+      case 'most-used':
+        return sorted.sort((a, b) => b.usageCount - a.usageCount);
+      case 'newest':
+        return sorted.sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime());
+      default:
+        return sorted;
+    }
+  };
+
+  // Filter and sort tables
   const filteredTableItems = useMemo(() => {
+    let filtered = tableConfigs;
+
     const query = searchText.toLowerCase().trim();
-    if (!query) return tableConfigs;
-    return tableConfigs.filter((config) =>
-      config.label.toLowerCase().includes(query) ||
-      config.key.toLowerCase().includes(query)
+    if (query) {
+      filtered = filtered.filter((config) =>
+        config.label.toLowerCase().includes(query) ||
+        config.key.toLowerCase().includes(query)
+      );
+    }
+
+    if (selectedDepartments.length > 0) {
+      filtered = filtered.filter((config) => selectedDepartments.includes(config.department));
+    }
+
+    if (selectedDataTypes.length > 0) {
+      filtered = filtered.filter((config) => selectedDataTypes.includes(config.dataType));
+    }
+
+    return sortTables(filtered);
+  }, [searchText, selectedDepartments, selectedDataTypes, sortOption]);
+
+  // Toggle department filter
+  const toggleDepartment = (dept: TableDepartment) => {
+    setSelectedDepartments((prev) =>
+      prev.includes(dept) ? prev.filter((d) => d !== dept) : [...prev, dept]
     );
-  }, [searchText]);
+  };
+
+  // Toggle data type filter
+  const toggleDataType = (dt: TableDataType) => {
+    setSelectedDataTypes((prev) =>
+      prev.includes(dt) ? prev.filter((d) => d !== dt) : [...prev, dt]
+    );
+  };
+
+  // Clear all filters
+  const clearFilters = () => {
+    setSelectedDepartments([]);
+    setSelectedDataTypes([]);
+  };
 
   // Overview menu item
   const overviewItem = {
@@ -51,6 +112,87 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
     label: config.label,
     onClick: () => router.push(config.path),
   }));
+
+  // Sort label
+  const sortLabels: Record<SortOption, string> = {
+    'az': 'A → Z',
+    'za': 'Z → A',
+    'most-used': 'Most Used',
+    'newest': 'Newest Added',
+  };
+
+  // Filter popup content
+  const filterContent = (
+    <div style={{ width: 220 }} data-testid="popup-filter">
+      <div className="flex items-center justify-between mb-3">
+        <span style={{ fontWeight: 600, fontSize: 13 }}>Filter Tables</span>
+        {activeFilterCount > 0 && (
+          <button
+            onClick={clearFilters}
+            style={{ fontSize: 12, color: '#3b82f6', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+            data-testid="button-clear-filters"
+          >
+            Clear all
+          </button>
+        )}
+      </div>
+
+      <div className="mb-3">
+        <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, color: '#888' }}>
+          Department
+        </div>
+        <div className="flex flex-col gap-1">
+          {allDepartments.map((dept) => (
+            <Checkbox
+              key={dept}
+              checked={selectedDepartments.includes(dept)}
+              onChange={() => toggleDepartment(dept)}
+              data-testid={`checkbox-dept-${dept.toLowerCase()}`}
+            >
+              <span style={{ fontSize: 13 }}>{dept}</span>
+            </Checkbox>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, color: '#888' }}>
+          Data Type
+        </div>
+        <div className="flex flex-col gap-1">
+          {allDataTypes.map((dt) => (
+            <Checkbox
+              key={dt}
+              checked={selectedDataTypes.includes(dt)}
+              onChange={() => toggleDataType(dt)}
+              data-testid={`checkbox-type-${dt.toLowerCase()}`}
+            >
+              <span style={{ fontSize: 13 }}>{dt}</span>
+            </Checkbox>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  // Sort popup content
+  const sortContent = (
+    <div style={{ width: 180 }} data-testid="popup-sort">
+      <div className="mb-2">
+        <span style={{ fontWeight: 600, fontSize: 13 }}>Sort Tables</span>
+      </div>
+      <Radio.Group
+        value={sortOption}
+        onChange={(e) => { setSortOption(e.target.value); setSortOpen(false); }}
+        className="flex flex-col gap-1"
+      >
+        <Radio value="az" data-testid="radio-sort-az"><span style={{ fontSize: 13 }}>Alphabetical A → Z</span></Radio>
+        <Radio value="za" data-testid="radio-sort-za"><span style={{ fontSize: 13 }}>Alphabetical Z → A</span></Radio>
+        <Radio value="most-used" data-testid="radio-sort-most-used"><span style={{ fontSize: 13 }}>Most Used</span></Radio>
+        <Radio value="newest" data-testid="radio-sort-newest"><span style={{ fontSize: 13 }}>Newest Added</span></Radio>
+      </Radio.Group>
+    </div>
+  );
 
   return (
     <Sider
@@ -94,7 +236,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
         />
       </div>
 
-      {/* Tables section with search */}
+      {/* Tables section */}
       <div className="px-2 mt-1 flex flex-col" style={{ minHeight: 0, flex: 1 }}>
         {!collapsed && (
           <>
@@ -103,6 +245,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                 Tables
               </span>
             </div>
+
             {/* Search input */}
             <div className="px-2 mb-2">
               <Input
@@ -120,6 +263,71 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                 }}
               />
             </div>
+
+            {/* Filter and Sort controls */}
+            <div className="px-3 mb-2 flex items-center gap-3">
+              <Popover
+                content={filterContent}
+                trigger="click"
+                open={filterOpen}
+                onOpenChange={setFilterOpen}
+                placement="rightTop"
+              >
+                <button
+                  className="flex items-center gap-1"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '2px 0',
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: activeFilterCount > 0 ? '#3b82f6' : 'var(--sidebar-text-muted)',
+                    transition: 'color 0.2s',
+                  }}
+                  data-testid="button-filter"
+                >
+                  <FilterOutlined style={{ fontSize: 12 }} />
+                  <span>Filter</span>
+                  {activeFilterCount > 0 && (
+                    <Badge
+                      count={activeFilterCount}
+                      size="small"
+                      style={{ marginLeft: 2 }}
+                      data-testid="badge-filter-count"
+                    />
+                  )}
+                </button>
+              </Popover>
+
+              <span style={{ color: 'var(--sidebar-border)', fontSize: 12 }}>|</span>
+
+              <Popover
+                content={sortContent}
+                trigger="click"
+                open={sortOpen}
+                onOpenChange={setSortOpen}
+                placement="rightTop"
+              >
+                <button
+                  className="flex items-center gap-1"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '2px 0',
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: sortOption !== 'az' ? '#3b82f6' : 'var(--sidebar-text-muted)',
+                    transition: 'color 0.2s',
+                  }}
+                  data-testid="button-sort"
+                >
+                  <SortAscendingOutlined style={{ fontSize: 12 }} />
+                  <span>Sort: {sortLabels[sortOption]}</span>
+                </button>
+              </Popover>
+            </div>
           </>
         )}
 
@@ -136,7 +344,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
           ) : (
             !collapsed && (
               <div className="px-4 py-3 text-center" style={{ color: 'var(--sidebar-text-muted)', fontSize: 13 }} data-testid="text-no-tables-found">
-                No tables match &ldquo;{searchText}&rdquo;
+                No tables found
               </div>
             )
           )}

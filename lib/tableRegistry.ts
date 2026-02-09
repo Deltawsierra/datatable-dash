@@ -38,19 +38,31 @@ export interface Department {
 
 export type TableName = 'states' | 'countries' | 'departments';
 
+export type TableDepartment = 'Geography' | 'Corporate' | 'Reference';
+export type TableDataType = 'Location' | 'Organizational' | 'Lookup';
+
 export interface TableConfig {
   key: TableName;
   label: string;
   path: string;
+  department: TableDepartment;
+  dataType: TableDataType;
+  usageCount: number;
+  dateAdded: string;
 }
 
 // --- Navigation Config ---
 
 export const tableConfigs: TableConfig[] = [
-  { key: 'states', label: 'States', path: '/tables/states' },
-  { key: 'countries', label: 'Countries', path: '/tables/countries' },
-  { key: 'departments', label: 'Departments', path: '/tables/departments' },
+  { key: 'states', label: 'States', path: '/tables/states', department: 'Geography', dataType: 'Location', usageCount: 342, dateAdded: '2024-01-15' },
+  { key: 'countries', label: 'Countries', path: '/tables/countries', department: 'Geography', dataType: 'Location', usageCount: 528, dateAdded: '2023-11-02' },
+  { key: 'departments', label: 'Departments', path: '/tables/departments', department: 'Corporate', dataType: 'Organizational', usageCount: 187, dateAdded: '2024-06-20' },
 ];
+
+// --- Filter/Sort Helpers ---
+
+export const allDepartments: TableDepartment[] = ['Geography', 'Corporate', 'Reference'];
+export const allDataTypes: TableDataType[] = ['Location', 'Organizational', 'Lookup'];
 
 // --- Column Definitions ---
 
