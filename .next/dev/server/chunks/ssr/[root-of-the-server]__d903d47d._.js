@@ -516,15 +516,19 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/styled-jsx/style.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$layout$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Layout$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/layout/index.js [app-ssr] (ecmascript) <export default as Layout>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$menu$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/menu/index.js [app-ssr] (ecmascript) <export default as Menu>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$input$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Input$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/input/index.js [app-ssr] (ecmascript) <export default as Input>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$typography$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/typography/index.js [app-ssr] (ecmascript) <export default as Typography>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$TableOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TableOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/TableOutlined.js [app-ssr] (ecmascript) <export default as TableOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DatabaseOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__DatabaseOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/DatabaseOutlined.js [app-ssr] (ecmascript) <export default as DatabaseOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DashboardOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__DashboardOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/DashboardOutlined.js [app-ssr] (ecmascript) <export default as DashboardOutlined>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SearchOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SearchOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/SearchOutlined.js [app-ssr] (ecmascript) <export default as SearchOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tableRegistry$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/tableRegistry.ts [app-ssr] (ecmascript)");
 'use client';
+;
 ;
 ;
 ;
@@ -536,12 +540,21 @@ const { Title } = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2
 function DashboardSidebar({ collapsed, onCollapse }) {
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const [searchText, setSearchText] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     // Get selected menu key from URL
     const getSelectedKey = ()=>{
         if (pathname === '/') return 'overview';
         return pathname.split('/').pop() || 'overview';
     };
-    // Menu items
+    // Filter tables by search text
+    const filteredTableItems = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
+        const query = searchText.toLowerCase().trim();
+        if (!query) return __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tableRegistry$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tableConfigs"];
+        return __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tableRegistry$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tableConfigs"].filter((config)=>config.label.toLowerCase().includes(query) || config.key.toLowerCase().includes(query));
+    }, [
+        searchText
+    ]);
+    // Overview menu item
     const overviewItem = {
         key: 'overview',
         icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DashboardOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__DashboardOutlined$3e$__["DashboardOutlined"], {
@@ -550,13 +563,14 @@ function DashboardSidebar({ collapsed, onCollapse }) {
             }
         }, void 0, false, {
             fileName: "[project]/components/DashboardSidebar.tsx",
-            lineNumber: 30,
+            lineNumber: 42,
             columnNumber: 11
         }, this),
         label: 'Overview',
         onClick: ()=>router.push('/')
     };
-    const tableItems = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tableRegistry$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tableConfigs"].map((config)=>({
+    // Filtered table menu items
+    const tableMenuItems = filteredTableItems.map((config)=>({
             key: config.key,
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$TableOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TableOutlined$3e$__["TableOutlined"], {
                 style: {
@@ -564,16 +578,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 37,
+                lineNumber: 50,
                 columnNumber: 11
             }, this),
             label: config.label,
             onClick: ()=>router.push(config.path)
         }));
-    const menuItems = [
-        overviewItem,
-        ...tableItems
-    ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Sider, {
         width: 280,
         collapsible: true,
@@ -593,16 +603,16 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                 style: {
                     borderBottom: '1px solid var(--sidebar-border)'
                 },
-                className: "jsx-852106b64001aec5" + " " + "p-4 mb-2",
+                className: "jsx-27a6f7b40e5c915a" + " " + "p-4 mb-2",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-852106b64001aec5" + " " + "flex items-center gap-3",
+                    className: "jsx-27a6f7b40e5c915a" + " " + "flex items-center gap-3",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             style: {
                                 background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
                                 boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)'
                             },
-                            className: "jsx-852106b64001aec5" + " " + "flex items-center justify-center w-10 h-10 rounded-lg",
+                            className: "jsx-27a6f7b40e5c915a" + " " + "flex items-center justify-center w-10 h-10 rounded-lg",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DatabaseOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__DatabaseOutlined$3e$__["DatabaseOutlined"], {
                                 style: {
                                     color: 'white',
@@ -610,16 +620,16 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardSidebar.tsx",
-                                lineNumber: 64,
+                                lineNumber: 75,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 60,
+                            lineNumber: 71,
                             columnNumber: 11
                         }, this),
                         !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-852106b64001aec5",
+                            className: "jsx-27a6f7b40e5c915a",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Title, {
                                     level: 5,
@@ -631,7 +641,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     children: "RDM Lighthouse"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 68,
+                                    lineNumber: 79,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -639,85 +649,177 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                         fontSize: 12,
                                         color: 'var(--sidebar-text-muted)'
                                     },
-                                    className: "jsx-852106b64001aec5",
+                                    className: "jsx-27a6f7b40e5c915a",
                                     children: "Data Governance"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 69,
+                                    lineNumber: 80,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 67,
+                            lineNumber: 78,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/DashboardSidebar.tsx",
-                    lineNumber: 59,
+                    lineNumber: 70,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 58,
+                lineNumber: 69,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-852106b64001aec5" + " " + "px-2",
+                className: "jsx-27a6f7b40e5c915a" + " " + "px-2",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$menu$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
+                    mode: "inline",
+                    selectedKeys: [
+                        getSelectedKey()
+                    ],
+                    items: [
+                        overviewItem
+                    ],
+                    style: {
+                        border: 'none',
+                        background: 'transparent'
+                    },
+                    "data-testid": "sidebar-overview-menu"
+                }, void 0, false, {
+                    fileName: "[project]/components/DashboardSidebar.tsx",
+                    lineNumber: 88,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/DashboardSidebar.tsx",
+                lineNumber: 87,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                style: {
+                    minHeight: 0,
+                    flex: 1
+                },
+                className: "jsx-27a6f7b40e5c915a" + " " + "px-2 mt-1 flex flex-col",
                 children: [
-                    !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-852106b64001aec5" + " " + "px-4 py-2 mb-2",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                    !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "jsx-27a6f7b40e5c915a" + " " + "px-4 py-2 mb-1",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    style: {
+                                        fontSize: 11,
+                                        fontWeight: 600,
+                                        color: 'var(--sidebar-text-muted)',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.05em'
+                                    },
+                                    className: "jsx-27a6f7b40e5c915a",
+                                    children: "Tables"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/DashboardSidebar.tsx",
+                                    lineNumber: 102,
+                                    columnNumber: 15
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/DashboardSidebar.tsx",
+                                lineNumber: 101,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "jsx-27a6f7b40e5c915a" + " " + "px-2 mb-2",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$input$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Input$3e$__["Input"], {
+                                    placeholder: "Search tables...",
+                                    prefix: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SearchOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SearchOutlined$3e$__["SearchOutlined"], {
+                                        style: {
+                                            color: 'var(--sidebar-text-muted)'
+                                        }
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/DashboardSidebar.tsx",
+                                        lineNumber: 110,
+                                        columnNumber: 25
+                                    }, void 0),
+                                    value: searchText,
+                                    onChange: (e)=>setSearchText(e.target.value),
+                                    allowClear: true,
+                                    size: "small",
+                                    "data-testid": "input-table-search",
+                                    style: {
+                                        background: 'var(--sidebar-hover)',
+                                        borderColor: 'var(--sidebar-border)',
+                                        color: 'var(--sidebar-text)'
+                                    }
+                                }, void 0, false, {
+                                    fileName: "[project]/components/DashboardSidebar.tsx",
+                                    lineNumber: 108,
+                                    columnNumber: 15
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/DashboardSidebar.tsx",
+                                lineNumber: 107,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        style: {
+                            flex: 1
+                        },
+                        className: "jsx-27a6f7b40e5c915a" + " " + "overflow-y-auto",
+                        children: tableMenuItems.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$menu$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
+                            mode: "inline",
+                            selectedKeys: [
+                                getSelectedKey()
+                            ],
+                            items: tableMenuItems,
                             style: {
-                                fontSize: 11,
-                                fontWeight: 600,
-                                color: 'var(--sidebar-text-muted)',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.05em'
+                                border: 'none',
+                                background: 'transparent'
                             },
-                            className: "jsx-852106b64001aec5",
-                            children: "Navigation"
+                            "data-testid": "sidebar-table-menu"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 79,
+                            lineNumber: 129,
                             columnNumber: 13
+                        }, this) : !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            style: {
+                                color: 'var(--sidebar-text-muted)',
+                                fontSize: 13
+                            },
+                            "data-testid": "text-no-tables-found",
+                            className: "jsx-27a6f7b40e5c915a" + " " + "px-4 py-3 text-center",
+                            children: [
+                                "No tables match “",
+                                searchText,
+                                "”"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/DashboardSidebar.tsx",
+                            lineNumber: 138,
+                            columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 78,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$menu$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
-                        mode: "inline",
-                        selectedKeys: [
-                            getSelectedKey()
-                        ],
-                        items: menuItems,
-                        style: {
-                            border: 'none',
-                            background: 'transparent'
-                        },
-                        "data-testid": "sidebar-menu"
-                    }, void 0, false, {
-                        fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 84,
+                        lineNumber: 127,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 76,
+                lineNumber: 98,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                id: "852106b64001aec5",
-                children: ".ant-layout-sider{background:var(--sidebar-bg)!important}.ant-layout-sider .ant-menu{background:0 0!important}.ant-layout-sider .ant-menu-item{color:var(--sidebar-text)!important;border-radius:8px!important;margin:4px 8px!important;transition:all .2s!important}.ant-layout-sider .ant-menu-item:hover{background:var(--sidebar-hover)!important}.ant-layout-sider .ant-menu-item-selected{background:var(--sidebar-active)!important;color:#fff!important}.ant-layout-sider .ant-menu-item-selected:after{display:none!important}.ant-layout-sider .ant-menu-item .anticon{color:inherit!important}.ant-layout-sider-trigger{background:var(--sidebar-hover)!important;color:var(--sidebar-text)!important}"
+                id: "27a6f7b40e5c915a",
+                children: ".ant-layout-sider{background:var(--sidebar-bg)!important}.ant-layout-sider .ant-menu{background:0 0!important}.ant-layout-sider .ant-menu-item{color:var(--sidebar-text)!important;border-radius:8px!important;margin:4px 8px!important;transition:all .2s!important}.ant-layout-sider .ant-menu-item:hover{background:var(--sidebar-hover)!important}.ant-layout-sider .ant-menu-item-selected{background:var(--sidebar-active)!important;color:#fff!important}.ant-layout-sider .ant-menu-item-selected:after{display:none!important}.ant-layout-sider .ant-menu-item .anticon{color:inherit!important}.ant-layout-sider-trigger{background:var(--sidebar-hover)!important;color:var(--sidebar-text)!important}.ant-layout-sider .ant-input-affix-wrapper{background:var(--sidebar-hover)!important;border-color:var(--sidebar-border)!important}.ant-layout-sider .ant-input-affix-wrapper .ant-input{color:var(--sidebar-text)!important;background:0 0!important}.ant-layout-sider .ant-input-affix-wrapper .ant-input::placeholder,.ant-layout-sider .ant-input-affix-wrapper .ant-input-clear-icon{color:var(--sidebar-text-muted)!important}"
             }, void 0, false, void 0, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/DashboardSidebar.tsx",
-        lineNumber: 45,
+        lineNumber: 56,
         columnNumber: 5
     }, this);
 }

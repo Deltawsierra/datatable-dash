@@ -1,7 +1,8 @@
 'use client';
 
-import { Layout, Menu, Typography } from 'antd';
-import { TableOutlined, DatabaseOutlined, DashboardOutlined } from '@ant-design/icons';
+import { useState, useMemo } from 'react';
+import { Layout, Menu, Input, Typography } from 'antd';
+import { TableOutlined, DatabaseOutlined, DashboardOutlined, SearchOutlined } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { tableConfigs } from '../lib/tableRegistry';
 
@@ -17,6 +18,7 @@ interface DashboardSidebarProps {
 export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [searchText, setSearchText] = useState('');
   
   // Get selected menu key from URL
   const getSelectedKey = () => {
@@ -24,22 +26,31 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
     return pathname.split('/').pop() || 'overview';
   };
   
-  // Menu items
+  // Filter tables by search text
+  const filteredTableItems = useMemo(() => {
+    const query = searchText.toLowerCase().trim();
+    if (!query) return tableConfigs;
+    return tableConfigs.filter((config) =>
+      config.label.toLowerCase().includes(query) ||
+      config.key.toLowerCase().includes(query)
+    );
+  }, [searchText]);
+
+  // Overview menu item
   const overviewItem = {
     key: 'overview',
     icon: <DashboardOutlined style={{ fontSize: 16 }} />,
     label: 'Overview',
     onClick: () => router.push('/'),
   };
-  
-  const tableItems = tableConfigs.map((config) => ({
+
+  // Filtered table menu items
+  const tableMenuItems = filteredTableItems.map((config) => ({
     key: config.key,
     icon: <TableOutlined style={{ fontSize: 16 }} />,
     label: config.label,
     onClick: () => router.push(config.path),
   }));
-  
-  const menuItems = [overviewItem, ...tableItems];
 
   return (
     <Sider
@@ -71,23 +82,65 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
           )}
         </div>
       </div>
-      
-      {/* Navigation menu */}
+
+      {/* Overview nav */}
       <div className="px-2">
-        {!collapsed && (
-          <div className="px-4 py-2 mb-2">
-            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--sidebar-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Navigation
-            </span>
-          </div>
-        )}
         <Menu
           mode="inline"
           selectedKeys={[getSelectedKey()]}
-          items={menuItems}
+          items={[overviewItem]}
           style={{ border: 'none', background: 'transparent' }}
-          data-testid="sidebar-menu"
+          data-testid="sidebar-overview-menu"
         />
+      </div>
+
+      {/* Tables section with search */}
+      <div className="px-2 mt-1 flex flex-col" style={{ minHeight: 0, flex: 1 }}>
+        {!collapsed && (
+          <>
+            <div className="px-4 py-2 mb-1">
+              <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--sidebar-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Tables
+              </span>
+            </div>
+            {/* Search input */}
+            <div className="px-2 mb-2">
+              <Input
+                placeholder="Search tables..."
+                prefix={<SearchOutlined style={{ color: 'var(--sidebar-text-muted)' }} />}
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                allowClear
+                size="small"
+                data-testid="input-table-search"
+                style={{
+                  background: 'var(--sidebar-hover)',
+                  borderColor: 'var(--sidebar-border)',
+                  color: 'var(--sidebar-text)',
+                }}
+              />
+            </div>
+          </>
+        )}
+
+        {/* Scrollable table list */}
+        <div className="overflow-y-auto" style={{ flex: 1 }}>
+          {tableMenuItems.length > 0 ? (
+            <Menu
+              mode="inline"
+              selectedKeys={[getSelectedKey()]}
+              items={tableMenuItems}
+              style={{ border: 'none', background: 'transparent' }}
+              data-testid="sidebar-table-menu"
+            />
+          ) : (
+            !collapsed && (
+              <div className="px-4 py-3 text-center" style={{ color: 'var(--sidebar-text-muted)', fontSize: 13 }} data-testid="text-no-tables-found">
+                No tables match &ldquo;{searchText}&rdquo;
+              </div>
+            )
+          )}
+        </div>
       </div>
       
       {/* Sidebar theme overrides */}
@@ -100,6 +153,10 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
         .ant-layout-sider .ant-menu-item-selected::after { display: none !important; }
         .ant-layout-sider .ant-menu-item .anticon { color: inherit !important; }
         .ant-layout-sider-trigger { background: var(--sidebar-hover) !important; color: var(--sidebar-text) !important; }
+        .ant-layout-sider .ant-input-affix-wrapper { background: var(--sidebar-hover) !important; border-color: var(--sidebar-border) !important; }
+        .ant-layout-sider .ant-input-affix-wrapper .ant-input { background: transparent !important; color: var(--sidebar-text) !important; }
+        .ant-layout-sider .ant-input-affix-wrapper .ant-input::placeholder { color: var(--sidebar-text-muted) !important; }
+        .ant-layout-sider .ant-input-affix-wrapper .ant-input-clear-icon { color: var(--sidebar-text-muted) !important; }
       `}</style>
     </Sider>
   );
