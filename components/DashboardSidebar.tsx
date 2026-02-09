@@ -274,7 +274,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                 placement="rightTop"
               >
                 <button
-                  className="flex items-center gap-1"
+                  className="flex items-center gap-1 sidebar-clickable-link"
                   style={{
                     background: 'none',
                     border: 'none',
@@ -288,7 +288,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                   data-testid="button-filter"
                 >
                   <FilterOutlined style={{ fontSize: 12 }} />
-                  <span>Filter</span>
+                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Filter</span>
                   {activeFilterCount > 0 && (
                     <Badge
                       count={activeFilterCount}
@@ -310,7 +310,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                 placement="rightTop"
               >
                 <button
-                  className="flex items-center gap-1"
+                  className="flex items-center gap-1 sidebar-clickable-link"
                   style={{
                     background: 'none',
                     border: 'none',
@@ -324,7 +324,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                   data-testid="button-sort"
                 >
                   <SortAscendingOutlined style={{ fontSize: 12 }} />
-                  <span>Sort: {sortLabels[sortOption]}</span>
+                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Sort: {sortLabels[sortOption]}</span>
                 </button>
               </Popover>
             </div>
@@ -365,6 +365,8 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
         .ant-layout-sider .ant-input-affix-wrapper .ant-input { background: transparent !important; color: var(--sidebar-text) !important; }
         .ant-layout-sider .ant-input-affix-wrapper .ant-input::placeholder { color: var(--sidebar-text-muted) !important; }
         .ant-layout-sider .ant-input-affix-wrapper .ant-input-clear-icon { color: var(--sidebar-text-muted) !important; }
+        .sidebar-clickable-link { opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
+        .sidebar-clickable-link:hover { opacity: 1; color: #3b82f6 !important; }
       `}</style>
     </Sider>
   );

@@ -953,16 +953,16 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                 style: {
                     borderBottom: '1px solid var(--sidebar-border)'
                 },
-                className: "jsx-27a6f7b40e5c915a" + " " + "p-4 mb-2",
+                className: "jsx-47c60ffea24c6ef2" + " " + "p-4 mb-2",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-27a6f7b40e5c915a" + " " + "flex items-center gap-3",
+                    className: "jsx-47c60ffea24c6ef2" + " " + "flex items-center gap-3",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             style: {
                                 background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
                                 boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)'
                             },
-                            className: "jsx-27a6f7b40e5c915a" + " " + "flex items-center justify-center w-10 h-10 rounded-lg",
+                            className: "jsx-47c60ffea24c6ef2" + " " + "flex items-center justify-center w-10 h-10 rounded-lg",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DatabaseOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__DatabaseOutlined$3e$__["DatabaseOutlined"], {
                                 style: {
                                     color: 'white',
@@ -979,7 +979,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                             columnNumber: 11
                         }, this),
                         !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-27a6f7b40e5c915a",
+                            className: "jsx-47c60ffea24c6ef2",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Title, {
                                     level: 5,
@@ -999,7 +999,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                         fontSize: 12,
                                         color: 'var(--sidebar-text-muted)'
                                     },
-                                    className: "jsx-27a6f7b40e5c915a",
+                                    className: "jsx-47c60ffea24c6ef2",
                                     children: "Data Governance"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
@@ -1024,7 +1024,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-27a6f7b40e5c915a" + " " + "px-2",
+                className: "jsx-47c60ffea24c6ef2" + " " + "px-2",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$menu$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
                     mode: "inline",
                     selectedKeys: [
@@ -1053,12 +1053,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                     minHeight: 0,
                     flex: 1
                 },
-                className: "jsx-27a6f7b40e5c915a" + " " + "px-2 mt-1 flex flex-col",
+                className: "jsx-47c60ffea24c6ef2" + " " + "px-2 mt-1 flex flex-col",
                 children: [
                     !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-27a6f7b40e5c915a" + " " + "px-4 py-2 mb-1",
+                                className: "jsx-47c60ffea24c6ef2" + " " + "px-4 py-2 mb-1",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     style: {
                                         fontSize: 11,
@@ -1067,7 +1067,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                         textTransform: 'uppercase',
                                         letterSpacing: '0.05em'
                                     },
-                                    className: "jsx-27a6f7b40e5c915a",
+                                    className: "jsx-47c60ffea24c6ef2",
                                     children: "Tables"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
@@ -1080,7 +1080,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-27a6f7b40e5c915a" + " " + "px-2 mb-2",
+                                className: "jsx-47c60ffea24c6ef2" + " " + "px-2 mb-2",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$input$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Input$3e$__["Input"], {
                                     placeholder: "Search tables...",
                                     prefix: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SearchOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__SearchOutlined$3e$__["SearchOutlined"], {
@@ -1113,7 +1113,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-27a6f7b40e5c915a" + " " + "px-3 mb-2 flex items-center gap-3",
+                                className: "jsx-47c60ffea24c6ef2" + " " + "px-3 mb-2 flex items-center gap-3",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$popover$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Popover$3e$__["Popover"], {
                                         content: filterContent,
@@ -1133,7 +1133,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                 transition: 'color 0.2s'
                                             },
                                             "data-testid": "button-filter",
-                                            className: "jsx-27a6f7b40e5c915a" + " " + "flex items-center gap-1",
+                                            className: "jsx-47c60ffea24c6ef2" + " " + "flex items-center gap-1 sidebar-clickable-link",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$FilterOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FilterOutlined$3e$__["FilterOutlined"], {
                                                     style: {
@@ -1145,7 +1145,11 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "jsx-27a6f7b40e5c915a",
+                                                    style: {
+                                                        textDecoration: 'underline',
+                                                        textUnderlineOffset: '3px'
+                                                    },
+                                                    className: "jsx-47c60ffea24c6ef2",
                                                     children: "Filter"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/DashboardSidebar.tsx",
@@ -1180,7 +1184,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                             color: 'var(--sidebar-border)',
                                             fontSize: 12
                                         },
-                                        className: "jsx-27a6f7b40e5c915a",
+                                        className: "jsx-47c60ffea24c6ef2",
                                         children: "|"
                                     }, void 0, false, {
                                         fileName: "[project]/components/DashboardSidebar.tsx",
@@ -1205,7 +1209,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                 transition: 'color 0.2s'
                                             },
                                             "data-testid": "button-sort",
-                                            className: "jsx-27a6f7b40e5c915a" + " " + "flex items-center gap-1",
+                                            className: "jsx-47c60ffea24c6ef2" + " " + "flex items-center gap-1 sidebar-clickable-link",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SortAscendingOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__SortAscendingOutlined$3e$__["SortAscendingOutlined"], {
                                                     style: {
@@ -1217,7 +1221,11 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "jsx-27a6f7b40e5c915a",
+                                                    style: {
+                                                        textDecoration: 'underline',
+                                                        textUnderlineOffset: '3px'
+                                                    },
+                                                    className: "jsx-47c60ffea24c6ef2",
                                                     children: [
                                                         "Sort: ",
                                                         sortLabels[sortOption]
@@ -1250,7 +1258,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                         style: {
                             flex: 1
                         },
-                        className: "jsx-27a6f7b40e5c915a" + " " + "overflow-y-auto",
+                        className: "jsx-47c60ffea24c6ef2" + " " + "overflow-y-auto",
                         children: tableMenuItems.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$menu$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
                             mode: "inline",
                             selectedKeys: [
@@ -1272,7 +1280,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                 fontSize: 13
                             },
                             "data-testid": "text-no-tables-found",
-                            className: "jsx-27a6f7b40e5c915a" + " " + "px-4 py-3 text-center",
+                            className: "jsx-47c60ffea24c6ef2" + " " + "px-4 py-3 text-center",
                             children: "No tables found"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
@@ -1291,8 +1299,8 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                id: "27a6f7b40e5c915a",
-                children: ".ant-layout-sider{background:var(--sidebar-bg)!important}.ant-layout-sider .ant-menu{background:0 0!important}.ant-layout-sider .ant-menu-item{color:var(--sidebar-text)!important;border-radius:8px!important;margin:4px 8px!important;transition:all .2s!important}.ant-layout-sider .ant-menu-item:hover{background:var(--sidebar-hover)!important}.ant-layout-sider .ant-menu-item-selected{background:var(--sidebar-active)!important;color:#fff!important}.ant-layout-sider .ant-menu-item-selected:after{display:none!important}.ant-layout-sider .ant-menu-item .anticon{color:inherit!important}.ant-layout-sider-trigger{background:var(--sidebar-hover)!important;color:var(--sidebar-text)!important}.ant-layout-sider .ant-input-affix-wrapper{background:var(--sidebar-hover)!important;border-color:var(--sidebar-border)!important}.ant-layout-sider .ant-input-affix-wrapper .ant-input{color:var(--sidebar-text)!important;background:0 0!important}.ant-layout-sider .ant-input-affix-wrapper .ant-input::placeholder,.ant-layout-sider .ant-input-affix-wrapper .ant-input-clear-icon{color:var(--sidebar-text-muted)!important}"
+                id: "47c60ffea24c6ef2",
+                children: ".ant-layout-sider{background:var(--sidebar-bg)!important}.ant-layout-sider .ant-menu{background:0 0!important}.ant-layout-sider .ant-menu-item{color:var(--sidebar-text)!important;border-radius:8px!important;margin:4px 8px!important;transition:all .2s!important}.ant-layout-sider .ant-menu-item:hover{background:var(--sidebar-hover)!important}.ant-layout-sider .ant-menu-item-selected{background:var(--sidebar-active)!important;color:#fff!important}.ant-layout-sider .ant-menu-item-selected:after{display:none!important}.ant-layout-sider .ant-menu-item .anticon{color:inherit!important}.ant-layout-sider-trigger{background:var(--sidebar-hover)!important;color:var(--sidebar-text)!important}.ant-layout-sider .ant-input-affix-wrapper{background:var(--sidebar-hover)!important;border-color:var(--sidebar-border)!important}.ant-layout-sider .ant-input-affix-wrapper .ant-input{color:var(--sidebar-text)!important;background:0 0!important}.ant-layout-sider .ant-input-affix-wrapper .ant-input::placeholder,.ant-layout-sider .ant-input-affix-wrapper .ant-input-clear-icon{color:var(--sidebar-text-muted)!important}.sidebar-clickable-link{opacity:.85;transition:opacity .2s,color .2s}.sidebar-clickable-link:hover{opacity:1;color:#3b82f6!important}"
             }, void 0, false, void 0, this)
         ]
     }, void 0, true, {
