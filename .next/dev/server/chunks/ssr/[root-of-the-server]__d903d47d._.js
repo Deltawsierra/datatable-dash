@@ -628,7 +628,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                         fontSize: 16,
                                         color: 'var(--sidebar-text)'
                                     },
-                                    children: "RDM Dashboard"
+                                    children: "RDM Lighthouse"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
                                     lineNumber: 68,
@@ -640,7 +640,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                         color: 'var(--sidebar-text-muted)'
                                     },
                                     className: "jsx-852106b64001aec5",
-                                    children: "Reference Data"
+                                    children: "Data Governance"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
                                     lineNumber: 69,
