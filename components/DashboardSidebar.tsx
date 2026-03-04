@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { Layout, Menu, Input, Typography, Popover, Checkbox, Radio, Badge } from 'antd';
-import { TableOutlined, DatabaseOutlined, DashboardOutlined, SearchOutlined, FilterOutlined, SortAscendingOutlined } from '@ant-design/icons';
+import { TableOutlined, DatabaseOutlined, HomeOutlined, SearchOutlined, FilterOutlined, SortAscendingOutlined } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { tableConfigs, allDepartments, allDataTypes } from '../lib/tableRegistry';
 import type { TableDepartment, TableDataType, TableConfig } from '../lib/tableRegistry';
@@ -30,8 +30,8 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
 
   // Get selected menu key from URL
   const getSelectedKey = () => {
-    if (pathname === '/') return 'overview';
-    return pathname.split('/').pop() || 'overview';
+    if (pathname === '/') return 'home';
+    return pathname.split('/').pop() || 'home';
   };
 
   // Active filter count
@@ -97,11 +97,10 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
     setSelectedDataTypes([]);
   };
 
-  // Overview menu item
-  const overviewItem = {
-    key: 'overview',
-    icon: <DashboardOutlined style={{ fontSize: 16 }} />,
-    label: 'Overview',
+  const homeItem = {
+    key: 'home',
+    icon: <HomeOutlined style={{ fontSize: 16 }} />,
+    label: 'Home',
     onClick: () => router.push('/'),
   };
 
@@ -225,14 +224,14 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
         </div>
       </div>
 
-      {/* Overview nav */}
+      {/* Home nav */}
       <div className="px-2">
         <Menu
           mode="inline"
           selectedKeys={[getSelectedKey()]}
-          items={[overviewItem]}
+          items={[homeItem]}
           style={{ border: 'none', background: 'transparent' }}
-          data-testid="sidebar-overview-menu"
+          data-testid="sidebar-home-menu"
         />
       </div>
 

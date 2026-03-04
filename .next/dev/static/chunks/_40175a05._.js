@@ -532,7 +532,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$badge$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Badge$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/badge/index.js [app-client] (ecmascript) <export default as Badge>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$TableOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TableOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/TableOutlined.js [app-client] (ecmascript) <export default as TableOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DatabaseOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__DatabaseOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/DatabaseOutlined.js [app-client] (ecmascript) <export default as DatabaseOutlined>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DashboardOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__DashboardOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/DashboardOutlined.js [app-client] (ecmascript) <export default as DashboardOutlined>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$HomeOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HomeOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/HomeOutlined.js [app-client] (ecmascript) <export default as HomeOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SearchOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__SearchOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/SearchOutlined.js [app-client] (ecmascript) <export default as SearchOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$FilterOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FilterOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/FilterOutlined.js [app-client] (ecmascript) <export default as FilterOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SortAscendingOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__SortAscendingOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/SortAscendingOutlined.js [app-client] (ecmascript) <export default as SortAscendingOutlined>");
@@ -561,8 +561,8 @@ function DashboardSidebar({ collapsed, onCollapse }) {
     const [sortOpen, setSortOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     // Get selected menu key from URL
     const getSelectedKey = ()=>{
-        if (pathname === '/') return 'overview';
-        return pathname.split('/').pop() || 'overview';
+        if (pathname === '/') return 'home';
+        return pathname.split('/').pop() || 'home';
     };
     // Active filter count
     const activeFilterCount = selectedDepartments.length + selectedDataTypes.length;
@@ -631,19 +631,18 @@ function DashboardSidebar({ collapsed, onCollapse }) {
         setSelectedDepartments([]);
         setSelectedDataTypes([]);
     };
-    // Overview menu item
-    const overviewItem = {
-        key: 'overview',
-        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$DashboardOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__DashboardOutlined$3e$__["DashboardOutlined"], {
+    const homeItem = {
+        key: 'home',
+        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$HomeOutlined$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HomeOutlined$3e$__["HomeOutlined"], {
             style: {
                 fontSize: 16
             }
         }, void 0, false, {
             fileName: "[project]/components/DashboardSidebar.tsx",
-            lineNumber: 103,
+            lineNumber: 102,
             columnNumber: 11
         }, this),
-        label: 'Overview',
+        label: 'Home',
         onClick: ()=>router.push('/')
     };
     // Filtered table menu items
@@ -655,7 +654,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 111,
+                lineNumber: 110,
                 columnNumber: 11
             }, this),
             label: config.label,
@@ -686,7 +685,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                         children: "Filter Tables"
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 128,
+                        lineNumber: 127,
                         columnNumber: 9
                     }, this),
                     activeFilterCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -703,13 +702,13 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                         children: "Clear all"
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 130,
+                        lineNumber: 129,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 127,
+                lineNumber: 126,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -727,7 +726,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                         children: "Department"
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 141,
+                        lineNumber: 140,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -743,23 +742,23 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     children: dept
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 152,
+                                    lineNumber: 151,
                                     columnNumber: 15
                                 }, this)
                             }, dept, false, {
                                 fileName: "[project]/components/DashboardSidebar.tsx",
-                                lineNumber: 146,
+                                lineNumber: 145,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 144,
+                        lineNumber: 143,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 140,
+                lineNumber: 139,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -776,7 +775,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                         children: "Data Type"
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 159,
+                        lineNumber: 158,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -792,29 +791,29 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     children: dt
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 170,
+                                    lineNumber: 169,
                                     columnNumber: 15
                                 }, this)
                             }, dt, false, {
                                 fileName: "[project]/components/DashboardSidebar.tsx",
-                                lineNumber: 164,
+                                lineNumber: 163,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 162,
+                        lineNumber: 161,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 158,
+                lineNumber: 157,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/DashboardSidebar.tsx",
-        lineNumber: 126,
+        lineNumber: 125,
         columnNumber: 5
     }, this);
     // Sort popup content
@@ -834,12 +833,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                     children: "Sort Tables"
                 }, void 0, false, {
                     fileName: "[project]/components/DashboardSidebar.tsx",
-                    lineNumber: 182,
+                    lineNumber: 181,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 181,
+                lineNumber: 180,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$radio$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__Radio$3e$__["Radio"].Group, {
@@ -860,12 +859,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                             children: "Alphabetical A → Z"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 189,
+                            lineNumber: 188,
                             columnNumber: 55
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 189,
+                        lineNumber: 188,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$radio$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__Radio$3e$__["Radio"], {
@@ -878,12 +877,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                             children: "Alphabetical Z → A"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 190,
+                            lineNumber: 189,
                             columnNumber: 55
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 190,
+                        lineNumber: 189,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$radio$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__Radio$3e$__["Radio"], {
@@ -896,12 +895,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                             children: "Most Used"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 191,
+                            lineNumber: 190,
                             columnNumber: 69
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 191,
+                        lineNumber: 190,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$radio$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__Radio$3e$__["Radio"], {
@@ -914,24 +913,24 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                             children: "Newest Added"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 192,
+                            lineNumber: 191,
                             columnNumber: 63
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 192,
+                        lineNumber: 191,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 184,
+                lineNumber: 183,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/DashboardSidebar.tsx",
-        lineNumber: 180,
+        lineNumber: 179,
         columnNumber: 5
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Sider, {
@@ -970,12 +969,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardSidebar.tsx",
-                                lineNumber: 217,
+                                lineNumber: 216,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 213,
+                            lineNumber: 212,
                             columnNumber: 11
                         }, this),
                         !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -991,7 +990,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     children: "RDM Lighthouse"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 221,
+                                    lineNumber: 220,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1003,24 +1002,24 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     children: "Data Governance"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 222,
+                                    lineNumber: 221,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 220,
+                            lineNumber: 219,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/DashboardSidebar.tsx",
-                    lineNumber: 212,
+                    lineNumber: 211,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 211,
+                lineNumber: 210,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1031,21 +1030,21 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                         getSelectedKey()
                     ],
                     items: [
-                        overviewItem
+                        homeItem
                     ],
                     style: {
                         border: 'none',
                         background: 'transparent'
                     },
-                    "data-testid": "sidebar-overview-menu"
+                    "data-testid": "sidebar-home-menu"
                 }, void 0, false, {
                     fileName: "[project]/components/DashboardSidebar.tsx",
-                    lineNumber: 230,
+                    lineNumber: 229,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 229,
+                lineNumber: 228,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1071,12 +1070,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     children: "Tables"
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 244,
+                                    lineNumber: 243,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardSidebar.tsx",
-                                lineNumber: 243,
+                                lineNumber: 242,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1089,7 +1088,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/components/DashboardSidebar.tsx",
-                                        lineNumber: 253,
+                                        lineNumber: 252,
                                         columnNumber: 25
                                     }, void 0),
                                     value: searchText,
@@ -1104,12 +1103,12 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                    lineNumber: 251,
+                                    lineNumber: 250,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardSidebar.tsx",
-                                lineNumber: 250,
+                                lineNumber: 249,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1141,7 +1140,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                     }
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                                    lineNumber: 290,
+                                                    lineNumber: 289,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1153,7 +1152,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                     children: "Filter"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                                    lineNumber: 291,
+                                                    lineNumber: 290,
                                                     columnNumber: 19
                                                 }, this),
                                                 activeFilterCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$badge$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Badge$3e$__["Badge"], {
@@ -1165,18 +1164,18 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                     "data-testid": "badge-filter-count"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                                    lineNumber: 293,
+                                                    lineNumber: 292,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/DashboardSidebar.tsx",
-                                            lineNumber: 276,
+                                            lineNumber: 275,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/DashboardSidebar.tsx",
-                                        lineNumber: 269,
+                                        lineNumber: 268,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1188,7 +1187,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                         children: "|"
                                     }, void 0, false, {
                                         fileName: "[project]/components/DashboardSidebar.tsx",
-                                        lineNumber: 303,
+                                        lineNumber: 302,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$popover$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Popover$3e$__["Popover"], {
@@ -1217,7 +1216,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                     }
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                                    lineNumber: 326,
+                                                    lineNumber: 325,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1232,24 +1231,24 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/DashboardSidebar.tsx",
-                                                    lineNumber: 327,
+                                                    lineNumber: 326,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/DashboardSidebar.tsx",
-                                            lineNumber: 312,
+                                            lineNumber: 311,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/DashboardSidebar.tsx",
-                                        lineNumber: 305,
+                                        lineNumber: 304,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/DashboardSidebar.tsx",
-                                lineNumber: 268,
+                                lineNumber: 267,
                                 columnNumber: 13
                             }, this)
                         ]
@@ -1272,7 +1271,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                             "data-testid": "sidebar-table-menu"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 337,
+                            lineNumber: 336,
                             columnNumber: 13
                         }, this) : !collapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             style: {
@@ -1284,18 +1283,18 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                             children: "No tables found"
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardSidebar.tsx",
-                            lineNumber: 346,
+                            lineNumber: 345,
                             columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardSidebar.tsx",
-                        lineNumber: 335,
+                        lineNumber: 334,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardSidebar.tsx",
-                lineNumber: 240,
+                lineNumber: 239,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1305,7 +1304,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
         ]
     }, void 0, true, {
         fileName: "[project]/components/DashboardSidebar.tsx",
-        lineNumber: 198,
+        lineNumber: 197,
         columnNumber: 5
     }, this);
 }

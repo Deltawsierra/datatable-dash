@@ -7,7 +7,7 @@
   "static/chunks/node_modules_@rc-component_menu_es_4d40768f._.js",
   "static/chunks/node_modules_@rc-component_trigger_es_20355146._.js",
   "static/chunks/node_modules_@rc-component_form_es_7dc6cc77._.js",
-  "static/chunks/node_modules_cb5b1c31._.js",
+  "static/chunks/node_modules_928f644e._.js",
   "static/chunks/_40175a05._.js"
 ],
     source: "dynamic"
