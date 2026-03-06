@@ -1,5 +1,9 @@
 import { spawn } from 'child_process';
 
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'development';
+}
+
 const port = process.env.PORT || '5000';
 const apiPort = '8000';
 
