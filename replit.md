@@ -50,7 +50,8 @@ Preferred communication style: Simple, everyday language.
 - **No Redux/Zustand**: Simple data display app doesn't require complex state management
 
 ### Data Layer
-- **API Service**: `lib/api.ts` provides typed fetch functions for all backend endpoints
+- **API Proxy**: Next.js API route (`app/api/proxy/[...path]/route.ts`) proxies frontend requests to the FastAPI backend, avoiding CORS issues
+- **API Service**: `lib/api.ts` provides typed fetch functions that call through the proxy (`/api/proxy/v1/...`)
 - **Table Registry**: `lib/tableRegistry.ts` contains mock data used as fallback when API is unavailable
 - **Graceful Fallback**: Table pages try the API first, then fall back to mock data
 - **Generic DataTable Component**: Type-safe table wrapper supporting any data shape

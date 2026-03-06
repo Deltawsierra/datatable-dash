@@ -148,7 +148,7 @@ __turbopack_context__.s([
     "isApiAvailable",
     ()=>isApiAvailable
 ]);
-const API_BASE_URL = ("TURBOPACK compile-time value", "http://localhost:8000") || 'http://localhost:8000';
+const API_BASE_URL = '/api/proxy';
 async function apiFetch(path) {
     const res = await fetch(`${API_BASE_URL}${path}`, {
         headers: {
