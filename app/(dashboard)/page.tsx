@@ -33,6 +33,7 @@ function formatDate(): string {
 }
 
 export default function HomePage() {
+  const [greeting, setGreeting] = useState('Welcome');
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [apiStatus, setApiStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
@@ -40,6 +41,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const updateTime = () => {
+      setGreeting(getGreeting());
       setCurrentTime(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
       setCurrentDate(formatDate());
     };
@@ -61,7 +63,7 @@ export default function HomePage() {
           <HomeIcon style={{ width: 28, height: 28, color: '#1677ff' }} />
           <Title level={2} style={{ margin: 0 }} data-testid="title-home">
             <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              {getGreeting()}, {userName}
+              {greeting}, {userName}
             </span>
           </Title>
         </div>
