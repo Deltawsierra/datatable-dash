@@ -815,6 +815,11 @@ img, video {
   --card-bg: #fff;
   --card-border: #e7e5e4;
   --border-color: #e7e5e4;
+  --header-text: #1c1917;
+  --sidebar-text: #292524;
+  --sidebar-text-muted: #78716c;
+  --sidebar-border: #44403c33;
+  --sidebar-hover: #44403c1a;
   --table-header-bg: #f5f5f4;
   --table-row-hover: #44403c0a;
 }
@@ -1003,6 +1008,10 @@ img, video {
   --card-bg: #fff;
   --card-border: #d9770640;
   --border-color: #d9770633;
+  --sidebar-text: #fef3e2;
+  --sidebar-text-muted: #fde1aaa6;
+  --sidebar-border: #d9770633;
+  --sidebar-hover: #d9770626;
   --table-header-bg: #f5dba0;
   --table-row-hover: #d977060f;
 }
@@ -1047,6 +1056,10 @@ img, video {
   --card-bg: #fff;
   --card-border: #fcd34d4d;
   --border-color: #fcd34d33;
+  --sidebar-text: #fff7ed;
+  --sidebar-text-muted: #fdebaaa6;
+  --sidebar-border: #fcd34d40;
+  --sidebar-hover: #fcd34d2e;
   --table-header-bg: #fde8b0;
   --table-row-hover: #fcd34d12;
 }

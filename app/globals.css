@@ -151,6 +151,9 @@
   --background: #fafaf9; --foreground: #1c1917;
   --foreground-muted: #78716c; --content-bg: #f5f5f4;
   --card-bg: #ffffff; --card-border: #e7e5e4; --border-color: #e7e5e4;
+  --header-text: #1c1917;
+  --sidebar-text: #292524; --sidebar-text-muted: #78716c;
+  --sidebar-border: rgba(68,64,60,0.2); --sidebar-hover: rgba(68,64,60,0.1);
   --table-header-bg: #f5f5f4; --table-row-hover: rgba(68,64,60,0.04);
 }
 
@@ -261,6 +264,8 @@
   --foreground-muted: #a16207; --content-bg: #f8e8d0;
   --card-bg: #ffffff; --card-border: rgba(217,119,6,0.25);
   --border-color: rgba(217,119,6,0.2);
+  --sidebar-text: #fef3e2; --sidebar-text-muted: rgba(253,225,170,0.65);
+  --sidebar-border: rgba(217,119,6,0.2); --sidebar-hover: rgba(217,119,6,0.15);
   --table-header-bg: #f5dba0; --table-row-hover: rgba(217,119,6,0.06);
 }
 [data-scheme="hockey"] {
@@ -286,6 +291,8 @@
   --foreground-muted: #c2410c; --content-bg: #feebd2;
   --card-bg: #ffffff; --card-border: rgba(252,211,77,0.3);
   --border-color: rgba(252,211,77,0.2);
+  --sidebar-text: #fff7ed; --sidebar-text-muted: rgba(253,235,170,0.65);
+  --sidebar-border: rgba(252,211,77,0.25); --sidebar-hover: rgba(252,211,77,0.18);
   --table-header-bg: #fde8b0; --table-row-hover: rgba(252,211,77,0.07);
 }
 [data-scheme="nascar"] {
@@ -592,32 +599,57 @@
 .dark[data-scheme="aurora"] {
   --background: #010e0a; --foreground: #d1fae5; --foreground-muted: #34d399;
   --content-bg: #010a07; --card-bg: rgba(1,10,7,0.95);
+  --card-border: rgba(52,211,153,0.22); --border-color: rgba(52,211,153,0.16);
+  --sidebar-text: #d1fae5; --sidebar-text-muted: rgba(110,231,183,0.6);
+  --sidebar-border: rgba(52,211,153,0.18); --sidebar-hover: rgba(52,211,153,0.1);
   --table-header-bg: rgba(0,5,4,0.98); --table-row-hover: rgba(52,211,153,0.09);
 }
 .dark[data-scheme="underwater"] {
   --background: #031830; --foreground: #cce8ff; --foreground-muted: #5ab0d8;
   --content-bg: #021020; --card-bg: rgba(3,20,40,0.90);
+  --card-border: rgba(34,211,238,0.22); --border-color: rgba(34,211,238,0.16);
+  --sidebar-text: #cce8ff; --sidebar-text-muted: rgba(100,200,240,0.65);
+  --sidebar-border: rgba(34,211,238,0.18); --sidebar-hover: rgba(34,211,238,0.12);
   --table-header-bg: #020c18; --table-row-hover: rgba(34,211,238,0.09);
 }
 .dark[data-scheme="deep-sea"] {
   --background: #010408; --content-bg: #000205;
+  --card-bg: rgba(1,4,12,0.96); --card-border: rgba(34,211,238,0.18); --border-color: rgba(34,211,238,0.13);
+  --foreground: #cce8ff; --foreground-muted: #5ab0d8;
+  --sidebar-text: #cce8ff; --sidebar-text-muted: rgba(100,180,220,0.6);
+  --sidebar-border: rgba(34,211,238,0.15); --sidebar-hover: rgba(34,211,238,0.09);
   --table-header-bg: rgba(0,1,5,0.98); --table-row-hover: rgba(34,211,238,0.09);
 }
 .dark[data-scheme="lava"] {
   --background: #0e0400; --content-bg: #0a0300;
+  --card-bg: rgba(15,5,0,0.96); --card-border: rgba(249,115,22,0.22); --border-color: rgba(249,115,22,0.16);
+  --foreground: #fde8cc; --foreground-muted: #fb923c;
+  --sidebar-text: #fde8cc; --sidebar-text-muted: rgba(253,180,100,0.55);
+  --sidebar-border: rgba(249,115,22,0.18); --sidebar-hover: rgba(249,115,22,0.1);
   --table-header-bg: rgba(8,2,0,0.98); --table-row-hover: rgba(249,115,22,0.09);
 }
 .dark[data-scheme="storm"] {
   --background: #0e0e18; --content-bg: #0a0a12;
+  --card-bg: rgba(14,14,28,0.96); --card-border: rgba(96,165,250,0.2); --border-color: rgba(96,165,250,0.14);
+  --foreground: #dde6f8; --foreground-muted: #8899cc;
+  --sidebar-text: #dde6f8; --sidebar-text-muted: rgba(136,153,204,0.6);
+  --sidebar-border: rgba(96,165,250,0.15); --sidebar-hover: rgba(96,165,250,0.09);
   --table-header-bg: rgba(7,7,12,0.98); --table-row-hover: rgba(96,165,250,0.09);
 }
 .dark[data-scheme="fog"] {
   --background: #1a1e25; --foreground: #d0d8e8; --foreground-muted: #7888aa;
   --content-bg: #131820; --card-bg: rgba(25,30,40,0.90);
+  --card-border: rgba(107,114,128,0.22); --border-color: rgba(107,114,128,0.16);
+  --sidebar-text: #d0d8e8; --sidebar-text-muted: rgba(160,175,200,0.6);
+  --sidebar-border: rgba(107,114,128,0.2); --sidebar-hover: rgba(107,114,128,0.12);
   --table-header-bg: #0f1318; --table-row-hover: rgba(107,114,128,0.09);
 }
 .dark[data-scheme="volcano"] {
   --background: #0d0000; --content-bg: #080000;
+  --card-bg: rgba(12,0,0,0.96); --card-border: rgba(239,68,68,0.22); --border-color: rgba(239,68,68,0.16);
+  --foreground: #ffd8d8; --foreground-muted: #ff6b6b;
+  --sidebar-text: #ffd8d8; --sidebar-text-muted: rgba(255,140,140,0.55);
+  --sidebar-border: rgba(239,68,68,0.18); --sidebar-hover: rgba(239,68,68,0.1);
   --table-header-bg: rgba(5,0,0,0.98); --table-row-hover: rgba(239,68,68,0.09);
 }
 
@@ -625,40 +657,65 @@
 .dark[data-scheme="soccer"] {
   --background: #0a1f0a; --foreground: #c8e6c9; --foreground-muted: #4caf50;
   --content-bg: #071508; --card-bg: rgba(10,30,10,0.92);
+  --card-border: rgba(34,197,94,0.22); --border-color: rgba(34,197,94,0.16);
+  --sidebar-text: #c8e6c9; --sidebar-text-muted: rgba(168,220,170,0.65);
+  --sidebar-border: rgba(34,197,94,0.18); --sidebar-hover: rgba(34,197,94,0.12);
   --table-header-bg: #050f06; --table-row-hover: rgba(34,197,94,0.09);
 }
 .dark[data-scheme="football"] {
   --background: #071508; --foreground: #c8e6c9; --foreground-muted: #66bb6a;
   --content-bg: #050f06; --card-bg: rgba(7,20,8,0.92);
+  --card-border: rgba(245,158,11,0.22); --border-color: rgba(245,158,11,0.16);
+  --sidebar-text: #c8e6c9; --sidebar-text-muted: rgba(168,220,170,0.65);
+  --sidebar-border: rgba(245,158,11,0.18); --sidebar-hover: rgba(245,158,11,0.12);
   --table-header-bg: #030b04; --table-row-hover: rgba(245,158,11,0.09);
 }
 .dark[data-scheme="basketball"] {
   --background: #1c0c00; --foreground: #fde8cc; --foreground-muted: #f97316;
   --content-bg: #140800; --card-bg: rgba(28,12,0,0.92);
+  --card-border: rgba(249,115,22,0.22); --border-color: rgba(249,115,22,0.16);
+  --sidebar-text: #fde8cc; --sidebar-text-muted: rgba(253,210,150,0.65);
+  --sidebar-border: rgba(249,115,22,0.18); --sidebar-hover: rgba(249,115,22,0.12);
   --table-header-bg: #0e0500; --table-row-hover: rgba(249,115,22,0.09);
 }
 .dark[data-scheme="baseball"] {
   --background: #1a0d00; --foreground: #fde8cc; --foreground-muted: #d97706;
   --content-bg: #120800; --card-bg: rgba(26,13,0,0.92);
+  --card-border: rgba(217,119,6,0.22); --border-color: rgba(217,119,6,0.16);
+  --sidebar-text: #fde8cc; --sidebar-text-muted: rgba(253,210,150,0.65);
+  --sidebar-border: rgba(217,119,6,0.18); --sidebar-hover: rgba(217,119,6,0.12);
   --table-header-bg: #0c0600; --table-row-hover: rgba(217,119,6,0.09);
 }
 .dark[data-scheme="hockey"] {
   --background: #0a1535; --foreground: #dbeafe; --foreground-muted: #60a5fa;
   --content-bg: #071028; --card-bg: rgba(10,21,53,0.92);
+  --card-border: rgba(59,130,246,0.22); --border-color: rgba(59,130,246,0.16);
+  --sidebar-text: #dbeafe; --sidebar-text-muted: rgba(147,197,253,0.65);
+  --sidebar-border: rgba(59,130,246,0.18); --sidebar-hover: rgba(59,130,246,0.12);
   --table-header-bg: #050b1a; --table-row-hover: rgba(59,130,246,0.09);
 }
 .dark[data-scheme="golf"] {
   --background: #0a1f0a; --foreground: #ccebb0; --foreground-muted: #84cc16;
   --content-bg: #071508; --card-bg: rgba(10,30,10,0.92);
+  --card-border: rgba(132,204,22,0.22); --border-color: rgba(132,204,22,0.16);
+  --sidebar-text: #ccebb0; --sidebar-text-muted: rgba(180,220,150,0.65);
+  --sidebar-border: rgba(132,204,22,0.18); --sidebar-hover: rgba(132,204,22,0.12);
   --table-header-bg: #050f06; --table-row-hover: rgba(132,204,22,0.09);
 }
 .dark[data-scheme="tennis"] {
   --background: #1c0a00; --foreground: #fde8cc; --foreground-muted: #f97316;
   --content-bg: #140800; --card-bg: rgba(28,10,0,0.92);
+  --card-border: rgba(252,211,77,0.22); --border-color: rgba(252,211,77,0.16);
+  --sidebar-text: #fde8cc; --sidebar-text-muted: rgba(253,225,170,0.65);
+  --sidebar-border: rgba(252,211,77,0.18); --sidebar-hover: rgba(252,211,77,0.12);
   --table-header-bg: #0e0500; --table-row-hover: rgba(252,211,77,0.09);
 }
 .dark[data-scheme="nascar"] {
   --background: #050505; --content-bg: #030303;
+  --card-bg: rgba(8,8,8,0.96); --card-border: rgba(251,191,36,0.2); --border-color: rgba(251,191,36,0.14);
+  --foreground: #f0f0f0; --foreground-muted: #aaa;
+  --sidebar-text: #f0f0f0; --sidebar-text-muted: rgba(200,200,200,0.6);
+  --sidebar-border: rgba(251,191,36,0.15); --sidebar-hover: rgba(251,191,36,0.1);
   --table-header-bg: rgba(2,2,2,0.98); --table-row-hover: rgba(251,191,36,0.09);
 }
 
