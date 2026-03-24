@@ -1047,6 +1047,80 @@ function StainedGlassEffect() {
   );
 }
 
+/* ── New: Animated Beams (Data Flow) ─────────────────── */
+function AnimatedBeamsEffect() {
+  const beams = useMemo(() => [
+    { id: 0, top: '8%',  width: '38%', speed: 9,  delay: 0,   opacity: 0.35, color: '#38bdf8' },
+    { id: 1, top: '18%', width: '62%', speed: 13, delay: 2.5, opacity: 0.22, color: '#0ea5e9' },
+    { id: 2, top: '31%', width: '48%', speed: 8,  delay: 4.5, opacity: 0.40, color: '#38bdf8' },
+    { id: 3, top: '44%', width: '72%', speed: 16, delay: 1.0, opacity: 0.18, color: '#7dd3fc' },
+    { id: 4, top: '57%', width: '35%', speed: 11, delay: 3.0, opacity: 0.30, color: '#0ea5e9' },
+    { id: 5, top: '68%', width: '55%', speed: 10, delay: 6.5, opacity: 0.25, color: '#38bdf8' },
+    { id: 6, top: '79%', width: '28%', speed: 14, delay: 5.0, opacity: 0.20, color: '#7dd3fc' },
+    { id: 7, top: '90%', width: '44%', speed: 12, delay: 7.5, opacity: 0.15, color: '#0ea5e9' },
+  ], []);
+
+  return (
+    <div className="theme-effect-layer" aria-hidden="true">
+      {beams.map((b) => (
+        <div
+          key={b.id}
+          className="animated-beam"
+          style={{
+            top: b.top,
+            width: b.width,
+            animationDuration: `${b.speed}s`,
+            animationDelay: `${b.delay}s`,
+            opacity: b.opacity,
+            ['--beam-color' as string]: b.color,
+          } as CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ── New: Screen Vignette (Terminal Amber / Circuit) ─── */
+function ScreenVignetteEffect() {
+  return (
+    <div className="screen-vignette" aria-hidden="true" />
+  );
+}
+
+/* ── New: Space Meteor Streaks (white/blue for space) ── */
+function SpaceMeteorEffect() {
+  const meteors = useMemo(() => Array.from({ length: 16 }, (_, i) => ({
+    id: i,
+    x: random(0, 80),
+    y: random(0, 65),
+    delay: random(0, 14),
+    duration: random(1.2, 3.0),
+    length: random(55, 160),
+    opacity: random(0.25, 0.65),
+    color: (['rgba(255,255,255,0.85)', 'rgba(165,180,252,0.75)', 'rgba(147,210,255,0.80)', 'rgba(216,220,255,0.70)'] as const)[i % 4],
+  })), []);
+
+  return (
+    <div className="theme-effect-layer" aria-hidden="true">
+      {meteors.map((m) => (
+        <div
+          key={m.id}
+          className="meteor-streak"
+          style={{
+            left: `${m.x}%`,
+            top: `${m.y}%`,
+            width: m.length,
+            color: m.color,
+            animationDelay: `${m.delay}s`,
+            animationDuration: `${m.duration}s`,
+            opacity: m.opacity,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 /* ── Main export ─────────────────────────────────────── */
 export default function ThemeEffectsLayer() {
   const { currentScheme } = useTheme();
@@ -1056,6 +1130,7 @@ export default function ThemeEffectsLayer() {
   if (!mounted) return null;
 
   const effect = currentScheme.backgroundEffect;
+  const schemeKey = currentScheme.key;
 
   return (
     <>
@@ -1088,10 +1163,17 @@ export default function ThemeEffectsLayer() {
       {effect === 'vaporwave-grid'&& <VaporwaveGridEffect />}
       {effect === 'matrix-rain'   && <MatrixRainEffect />}
       {effect === 'circuit-pulse' && <CircuitPulseEffect />}
-      {effect === 'checkered'           && <CheckeredEffect />}
-      {effect === 'meteor-streaks'      && <MeteorStreaksEffect />}
-      {effect === 'neural-network'      && <NeuralNetworkEffect />}
-      {effect === 'stained-glass-overlay' && <StainedGlassEffect />}
+      {effect === 'checkered'              && <CheckeredEffect />}
+      {effect === 'meteor-streaks'         && <MeteorStreaksEffect />}
+      {effect === 'neural-network'         && <NeuralNetworkEffect />}
+      {effect === 'stained-glass-overlay'  && <StainedGlassEffect />}
+      {effect === 'animated-beams'         && <AnimatedBeamsEffect />}
+
+      {/* Space theme gets stars + bonus white/blue meteor streaks */}
+      {schemeKey === 'space' && <SpaceMeteorEffect />}
+
+      {/* Terminal Amber and Circuit Board get a screen vignette */}
+      {(schemeKey === 'terminal-amber' || schemeKey === 'circuit') && <ScreenVignetteEffect />}
     </>
   );
 }

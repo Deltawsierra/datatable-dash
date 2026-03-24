@@ -1595,7 +1595,7 @@ const COLOR_SCHEMES = [
         darkSidebarStart: '#010305',
         darkSidebarEnd: '#010305',
         sidebarActive: 'rgba(56,189,248,0.25)',
-        backgroundEffect: 'data-packets',
+        backgroundEffect: 'animated-beams',
         cardStyle: 'glass',
         scanlines: false,
         glowColor: '#38bdf8'
@@ -1752,12 +1752,12 @@ function ThemeProvider({ children }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/components/ThemeProvider.tsx",
-            lineNumber: 662,
+            lineNumber: 663,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ThemeProvider.tsx",
-        lineNumber: 661,
+        lineNumber: 662,
         columnNumber: 5
     }, this);
 }
@@ -2622,8 +2622,11 @@ function DashboardHeader({ collapsed, onToggle }) {
     const { colorMode, colorScheme, toggleColorMode, setColorScheme, currentScheme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useTheme"])();
     const [themeModalOpen, setThemeModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [activeCategory, setActiveCategory] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('all');
+    const [modeKey, setModeKey] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const hasGlow = !!currentScheme.glowColor;
     const hasFont = !!currentScheme.fontOverride;
+    const isFlat = !!currentScheme.flatHeader;
+    const titleClass = currentScheme.key === 'aurora' ? 'aurora-text' : currentScheme.key === 'terminal-amber' ? 'typewriter-cursor' : hasGlow ? 'neon-glow' : hasFont || isFlat ? '' : 'shiny-text';
     const btnStyle = {
         background: 'rgba(255,255,255,0.15)',
         color: 'var(--header-text)'
@@ -2631,30 +2634,17 @@ function DashboardHeader({ collapsed, onToggle }) {
     const btnHover = (e, hover)=>{
         e.currentTarget.style.background = hover ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.15)';
     };
+    const handleToggleMode = ()=>{
+        toggleColorMode();
+        setModeKey((k)=>k + 1);
+    };
     const filteredSchemes = activeCategory === 'all' ? __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["COLOR_SCHEMES"] : __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["COLOR_SCHEMES"].filter((s)=>s.category === activeCategory);
     const userMenuItems = [
-        {
-            key: 'toggle-mode',
-            icon: colorMode === 'light' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MoonOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MoonOutlined$3e$__["MoonOutlined"], {}, void 0, false, {
-                fileName: "[project]/components/DashboardHeader.tsx",
-                lineNumber: 67,
-                columnNumber: 37
-            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SunOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SunOutlined$3e$__["SunOutlined"], {}, void 0, false, {
-                fileName: "[project]/components/DashboardHeader.tsx",
-                lineNumber: 67,
-                columnNumber: 56
-            }, this),
-            label: colorMode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode',
-            onClick: toggleColorMode
-        },
-        {
-            type: 'divider'
-        },
         {
             key: 'theme',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$BgColorsOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__BgColorsOutlined$3e$__["BgColorsOutlined"], {}, void 0, false, {
                 fileName: "[project]/components/DashboardHeader.tsx",
-                lineNumber: 74,
+                lineNumber: 81,
                 columnNumber: 13
             }, this),
             label: 'Theme',
@@ -2664,7 +2654,7 @@ function DashboardHeader({ collapsed, onToggle }) {
             key: 'settings',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SettingOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SettingOutlined$3e$__["SettingOutlined"], {}, void 0, false, {
                 fileName: "[project]/components/DashboardHeader.tsx",
-                lineNumber: 80,
+                lineNumber: 87,
                 columnNumber: 13
             }, this),
             label: 'Settings',
@@ -2701,7 +2691,7 @@ function DashboardHeader({ collapsed, onToggle }) {
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardHeader.tsx",
-                                    lineNumber: 103,
+                                    lineNumber: 110,
                                     columnNumber: 26
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MenuFoldOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuFoldOutlined$3e$__["MenuFoldOutlined"], {
                                     style: {
@@ -2709,20 +2699,20 @@ function DashboardHeader({ collapsed, onToggle }) {
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/components/DashboardHeader.tsx",
-                                    lineNumber: 103,
+                                    lineNumber: 110,
                                     columnNumber: 76
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardHeader.tsx",
-                                lineNumber: 94,
+                                lineNumber: 101,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Text, {
                                 strong: true,
-                                className: hasGlow ? 'neon-glow' : '',
+                                className: titleClass,
                                 style: {
                                     fontSize: hasFont ? 11 : 16,
-                                    color: hasGlow ? 'var(--glow-color)' : 'var(--header-text)',
+                                    color: hasGlow && currentScheme.key !== 'aurora' && currentScheme.key !== 'terminal-amber' ? 'var(--glow-color)' : titleClass === '' ? 'var(--header-text)' : undefined,
                                     fontFamily: hasFont ? 'var(--theme-font)' : undefined,
                                     letterSpacing: hasFont ? '0.04em' : undefined,
                                     lineHeight: hasFont ? '1.6' : undefined
@@ -2730,56 +2720,93 @@ function DashboardHeader({ collapsed, onToggle }) {
                                 children: "Reference Data Management"
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardHeader.tsx",
-                                lineNumber: 105,
+                                lineNumber: 112,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/DashboardHeader.tsx",
-                        lineNumber: 93,
+                        lineNumber: 100,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center gap-3",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$dropdown$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Dropdown$3e$__["Dropdown"], {
-                            menu: {
-                                items: userMenuItems
-                            },
-                            trigger: [
-                                'click'
-                            ],
-                            placement: "bottomRight",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$avatar$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Avatar$3e$__["Avatar"], {
-                                icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$UserOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserOutlined$3e$__["UserOutlined"], {}, void 0, false, {
+                        className: "flex items-center gap-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: handleToggleMode,
+                                className: "flex items-center justify-center w-9 h-9 rounded-md transition-all cursor-pointer border-none",
+                                style: btnStyle,
+                                onMouseEnter: (e)=>btnHover(e, true),
+                                onMouseLeave: (e)=>btnHover(e, false),
+                                "data-testid": "button-toggle-mode",
+                                "aria-label": colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode',
+                                title: colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode',
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "toggle-icon-enter",
+                                    style: {
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        fontSize: 17
+                                    },
+                                    children: colorMode === 'light' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MoonOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MoonOutlined$3e$__["MoonOutlined"], {}, void 0, false, {
+                                        fileName: "[project]/components/DashboardHeader.tsx",
+                                        lineNumber: 142,
+                                        columnNumber: 40
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SunOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SunOutlined$3e$__["SunOutlined"], {}, void 0, false, {
+                                        fileName: "[project]/components/DashboardHeader.tsx",
+                                        lineNumber: 142,
+                                        columnNumber: 59
+                                    }, this)
+                                }, modeKey, false, {
                                     fileName: "[project]/components/DashboardHeader.tsx",
-                                    lineNumber: 127,
-                                    columnNumber: 21
-                                }, void 0),
-                                style: {
-                                    backgroundColor: 'rgba(255,255,255,0.2)',
-                                    border: '2px solid rgba(255,255,255,0.3)',
-                                    cursor: 'pointer'
-                                },
-                                "data-testid": "avatar-user"
+                                    lineNumber: 141,
+                                    columnNumber: 13
+                                }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardHeader.tsx",
-                                lineNumber: 126,
-                                columnNumber: 13
+                                lineNumber: 131,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$dropdown$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Dropdown$3e$__["Dropdown"], {
+                                menu: {
+                                    items: userMenuItems
+                                },
+                                trigger: [
+                                    'click'
+                                ],
+                                placement: "bottomRight",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$avatar$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Avatar$3e$__["Avatar"], {
+                                    icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$UserOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserOutlined$3e$__["UserOutlined"], {}, void 0, false, {
+                                        fileName: "[project]/components/DashboardHeader.tsx",
+                                        lineNumber: 152,
+                                        columnNumber: 21
+                                    }, void 0),
+                                    style: {
+                                        backgroundColor: 'rgba(255,255,255,0.2)',
+                                        border: '2px solid rgba(255,255,255,0.3)',
+                                        cursor: 'pointer'
+                                    },
+                                    "data-testid": "avatar-user"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/DashboardHeader.tsx",
+                                    lineNumber: 151,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/DashboardHeader.tsx",
+                                lineNumber: 146,
+                                columnNumber: 11
                             }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/components/DashboardHeader.tsx",
-                            lineNumber: 121,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/components/DashboardHeader.tsx",
-                        lineNumber: 120,
+                        lineNumber: 129,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardHeader.tsx",
-                lineNumber: 88,
+                lineNumber: 95,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$modal$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Modal$3e$__["Modal"], {
@@ -2843,7 +2870,7 @@ function DashboardHeader({ collapsed, onToggle }) {
                                             children: CATEGORY_EMOJIS[cat]
                                         }, void 0, false, {
                                             fileName: "[project]/components/DashboardHeader.tsx",
-                                            lineNumber: 185,
+                                            lineNumber: 210,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2853,7 +2880,7 @@ function DashboardHeader({ collapsed, onToggle }) {
                                             children: CATEGORY_LABELS[cat]
                                         }, void 0, false, {
                                             fileName: "[project]/components/DashboardHeader.tsx",
-                                            lineNumber: 186,
+                                            lineNumber: 211,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2869,19 +2896,19 @@ function DashboardHeader({ collapsed, onToggle }) {
                                             children: count
                                         }, void 0, false, {
                                             fileName: "[project]/components/DashboardHeader.tsx",
-                                            lineNumber: 187,
+                                            lineNumber: 212,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, cat, true, {
                                     fileName: "[project]/components/DashboardHeader.tsx",
-                                    lineNumber: 164,
+                                    lineNumber: 189,
                                     columnNumber: 17
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardHeader.tsx",
-                            lineNumber: 147,
+                            lineNumber: 172,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2896,8 +2923,8 @@ function DashboardHeader({ collapsed, onToggle }) {
                             "data-testid": "theme-scheme-list",
                             children: filteredSchemes.map((scheme)=>{
                                 const isSelected = colorScheme === scheme.key;
-                                const isFlat = scheme.flatHeader || scheme.cardStyle === 'flat';
-                                const swatchBg = isFlat ? scheme.gradientStart : `linear-gradient(135deg, ${scheme.gradientStart} 0%, ${scheme.gradientMid} 50%, ${scheme.gradientEnd} 100%)`;
+                                const isSchemeFlat = scheme.flatHeader || scheme.cardStyle === 'flat';
+                                const swatchBg = isSchemeFlat ? scheme.gradientStart : `linear-gradient(135deg, ${scheme.gradientStart} 0%, ${scheme.gradientMid} 50%, ${scheme.gradientEnd} 100%)`;
                                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>{
                                         setColorScheme(scheme.key);
@@ -2922,7 +2949,7 @@ function DashboardHeader({ collapsed, onToggle }) {
                                             style: {
                                                 width: 40,
                                                 height: 24,
-                                                borderRadius: isFlat ? 3 : 5,
+                                                borderRadius: isSchemeFlat ? 3 : 5,
                                                 background: swatchBg,
                                                 flexShrink: 0,
                                                 boxShadow: scheme.glowColor ? `0 0 6px ${scheme.glowColor}, 0 2px 4px rgba(0,0,0,0.3)` : '0 2px 4px rgba(0,0,0,0.18)',
@@ -2931,7 +2958,7 @@ function DashboardHeader({ collapsed, onToggle }) {
                                             "data-testid": `swatch-${scheme.key}`
                                         }, void 0, false, {
                                             fileName: "[project]/components/DashboardHeader.tsx",
-                                            lineNumber: 236,
+                                            lineNumber: 261,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2948,7 +2975,7 @@ function DashboardHeader({ collapsed, onToggle }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/DashboardHeader.tsx",
-                                            lineNumber: 250,
+                                            lineNumber: 275,
                                             columnNumber: 19
                                         }, this),
                                         isSelected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2961,30 +2988,30 @@ function DashboardHeader({ collapsed, onToggle }) {
                                             children: "Active"
                                         }, void 0, false, {
                                             fileName: "[project]/components/DashboardHeader.tsx",
-                                            lineNumber: 254,
+                                            lineNumber: 279,
                                             columnNumber: 21
                                         }, this)
                                     ]
                                 }, scheme.key, true, {
                                     fileName: "[project]/components/DashboardHeader.tsx",
-                                    lineNumber: 218,
+                                    lineNumber: 243,
                                     columnNumber: 17
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardHeader.tsx",
-                            lineNumber: 206,
+                            lineNumber: 231,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/DashboardHeader.tsx",
-                    lineNumber: 145,
+                    lineNumber: 170,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/DashboardHeader.tsx",
-                lineNumber: 136,
+                lineNumber: 161,
                 columnNumber: 7
             }, this)
         ]
@@ -4301,6 +4328,158 @@ function TorchEffect() {
         columnNumber: 5
     }, this);
 }
+/* ── New: Animated Beams (Data Flow) ─────────────────── */ function AnimatedBeamsEffect() {
+    const beams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>[
+            {
+                id: 0,
+                top: '8%',
+                width: '38%',
+                speed: 9,
+                delay: 0,
+                opacity: 0.35,
+                color: '#38bdf8'
+            },
+            {
+                id: 1,
+                top: '18%',
+                width: '62%',
+                speed: 13,
+                delay: 2.5,
+                opacity: 0.22,
+                color: '#0ea5e9'
+            },
+            {
+                id: 2,
+                top: '31%',
+                width: '48%',
+                speed: 8,
+                delay: 4.5,
+                opacity: 0.40,
+                color: '#38bdf8'
+            },
+            {
+                id: 3,
+                top: '44%',
+                width: '72%',
+                speed: 16,
+                delay: 1.0,
+                opacity: 0.18,
+                color: '#7dd3fc'
+            },
+            {
+                id: 4,
+                top: '57%',
+                width: '35%',
+                speed: 11,
+                delay: 3.0,
+                opacity: 0.30,
+                color: '#0ea5e9'
+            },
+            {
+                id: 5,
+                top: '68%',
+                width: '55%',
+                speed: 10,
+                delay: 6.5,
+                opacity: 0.25,
+                color: '#38bdf8'
+            },
+            {
+                id: 6,
+                top: '79%',
+                width: '28%',
+                speed: 14,
+                delay: 5.0,
+                opacity: 0.20,
+                color: '#7dd3fc'
+            },
+            {
+                id: 7,
+                top: '90%',
+                width: '44%',
+                speed: 12,
+                delay: 7.5,
+                opacity: 0.15,
+                color: '#0ea5e9'
+            }
+        ], []);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "theme-effect-layer",
+        "aria-hidden": "true",
+        children: beams.map((b)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "animated-beam",
+                style: {
+                    top: b.top,
+                    width: b.width,
+                    animationDuration: `${b.speed}s`,
+                    animationDelay: `${b.delay}s`,
+                    opacity: b.opacity,
+                    ['--beam-color']: b.color
+                }
+            }, b.id, false, {
+                fileName: "[project]/components/ThemeEffectsLayer.tsx",
+                lineNumber: 1066,
+                columnNumber: 9
+            }, this))
+    }, void 0, false, {
+        fileName: "[project]/components/ThemeEffectsLayer.tsx",
+        lineNumber: 1064,
+        columnNumber: 5
+    }, this);
+}
+/* ── New: Screen Vignette (Terminal Amber / Circuit) ─── */ function ScreenVignetteEffect() {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "screen-vignette",
+        "aria-hidden": "true"
+    }, void 0, false, {
+        fileName: "[project]/components/ThemeEffectsLayer.tsx",
+        lineNumber: 1086,
+        columnNumber: 5
+    }, this);
+}
+/* ── New: Space Meteor Streaks (white/blue for space) ── */ function SpaceMeteorEffect() {
+    const meteors = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>Array.from({
+            length: 16
+        }, (_, i)=>({
+                id: i,
+                x: random(0, 80),
+                y: random(0, 65),
+                delay: random(0, 14),
+                duration: random(1.2, 3.0),
+                length: random(55, 160),
+                opacity: random(0.25, 0.65),
+                color: [
+                    'rgba(255,255,255,0.85)',
+                    'rgba(165,180,252,0.75)',
+                    'rgba(147,210,255,0.80)',
+                    'rgba(216,220,255,0.70)'
+                ][i % 4]
+            })), []);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "theme-effect-layer",
+        "aria-hidden": "true",
+        children: meteors.map((m)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "meteor-streak",
+                style: {
+                    left: `${m.x}%`,
+                    top: `${m.y}%`,
+                    width: m.length,
+                    color: m.color,
+                    animationDelay: `${m.delay}s`,
+                    animationDuration: `${m.duration}s`,
+                    opacity: m.opacity
+                }
+            }, m.id, false, {
+                fileName: "[project]/components/ThemeEffectsLayer.tsx",
+                lineNumber: 1106,
+                columnNumber: 9
+            }, this))
+    }, void 0, false, {
+        fileName: "[project]/components/ThemeEffectsLayer.tsx",
+        lineNumber: 1104,
+        columnNumber: 5
+    }, this);
+}
 function ThemeEffectsLayer() {
     const { currentScheme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useTheme"])();
     const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -4309,162 +4488,178 @@ function ThemeEffectsLayer() {
     }, []);
     if (!mounted) return null;
     const effect = currentScheme.backgroundEffect;
+    const schemeKey = currentScheme.key;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             currentScheme.scanlines && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ScanlinesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1062,
+                lineNumber: 1137,
                 columnNumber: 35
             }, this),
             effect === 'snow' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SnowEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1064,
+                lineNumber: 1139,
                 columnNumber: 38
             }, this),
             effect === 'stars' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(StarsEffectStable, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1065,
+                lineNumber: 1140,
                 columnNumber: 38
             }, this),
             effect === 'leaves' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(LeavesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1066,
+                lineNumber: 1141,
                 columnNumber: 38
             }, this),
             effect === 'petals' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PetalsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1067,
+                lineNumber: 1142,
                 columnNumber: 38
             }, this),
             effect === 'bats' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(BatsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1068,
+                lineNumber: 1143,
                 columnNumber: 38
             }, this),
             effect === 'waves' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(WavesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1069,
+                lineNumber: 1144,
                 columnNumber: 38
             }, this),
             effect === 'pixels' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PixelsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1070,
+                lineNumber: 1145,
                 columnNumber: 38
             }, this),
             effect === 'sakura-petals' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SakuraPetalsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1072,
+                lineNumber: 1147,
                 columnNumber: 38
             }, this),
             effect === 'aurora' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AuroraEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1073,
+                lineNumber: 1148,
                 columnNumber: 38
             }, this),
             effect === 'bubbles' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(BubblesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1074,
+                lineNumber: 1149,
                 columnNumber: 38
             }, this),
             effect === 'orbs' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(OrbsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1075,
+                lineNumber: 1150,
                 columnNumber: 38
             }, this),
             effect === 'embers' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(EmbersEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1076,
+                lineNumber: 1151,
                 columnNumber: 38
             }, this),
             effect === 'lightning-rain' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(LightningRainEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1077,
+                lineNumber: 1152,
                 columnNumber: 38
             }, this),
             effect === 'rain' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(RainEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1078,
+                lineNumber: 1153,
                 columnNumber: 38
             }, this),
             effect === 'fog' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FogEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1079,
+                lineNumber: 1154,
                 columnNumber: 38
             }, this),
             effect === 'field-lines' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FieldLinesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1080,
+                lineNumber: 1155,
                 columnNumber: 38
             }, this),
             effect === 'hearts' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeartsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1081,
+                lineNumber: 1156,
                 columnNumber: 38
             }, this),
             effect === 'shamrocks' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ShamrocksEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1082,
+                lineNumber: 1157,
                 columnNumber: 38
             }, this),
             effect === 'confetti' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ConfettiEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1083,
+                lineNumber: 1158,
                 columnNumber: 38
             }, this),
             effect === 'olympic-rings' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(OlympicRingsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1084,
+                lineNumber: 1159,
                 columnNumber: 38
             }, this),
             effect === 'steam' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SteamEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1085,
+                lineNumber: 1160,
                 columnNumber: 38
             }, this),
             effect === 'data-packets' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(DataPacketsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1086,
+                lineNumber: 1161,
                 columnNumber: 38
             }, this),
             effect === 'torch' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(TorchEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1087,
+                lineNumber: 1162,
                 columnNumber: 38
             }, this),
             effect === 'vaporwave-grid' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(VaporwaveGridEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1088,
+                lineNumber: 1163,
                 columnNumber: 38
             }, this),
             effect === 'matrix-rain' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(MatrixRainEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1089,
+                lineNumber: 1164,
                 columnNumber: 38
             }, this),
             effect === 'circuit-pulse' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CircuitPulseEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1090,
+                lineNumber: 1165,
                 columnNumber: 38
             }, this),
             effect === 'checkered' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CheckeredEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1091,
-                columnNumber: 44
+                lineNumber: 1166,
+                columnNumber: 47
             }, this),
             effect === 'meteor-streaks' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(MeteorStreaksEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1092,
-                columnNumber: 44
+                lineNumber: 1167,
+                columnNumber: 47
             }, this),
             effect === 'neural-network' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(NeuralNetworkEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1093,
-                columnNumber: 44
+                lineNumber: 1168,
+                columnNumber: 47
             }, this),
             effect === 'stained-glass-overlay' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(StainedGlassEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 1094,
-                columnNumber: 46
+                lineNumber: 1169,
+                columnNumber: 47
+            }, this),
+            effect === 'animated-beams' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AnimatedBeamsEffect, {}, void 0, false, {
+                fileName: "[project]/components/ThemeEffectsLayer.tsx",
+                lineNumber: 1170,
+                columnNumber: 47
+            }, this),
+            schemeKey === 'space' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SpaceMeteorEffect, {}, void 0, false, {
+                fileName: "[project]/components/ThemeEffectsLayer.tsx",
+                lineNumber: 1173,
+                columnNumber: 33
+            }, this),
+            (schemeKey === 'terminal-amber' || schemeKey === 'circuit') && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ScreenVignetteEffect, {}, void 0, false, {
+                fileName: "[project]/components/ThemeEffectsLayer.tsx",
+                lineNumber: 1176,
+                columnNumber: 71
             }, this)
         ]
     }, void 0, true);

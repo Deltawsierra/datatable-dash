@@ -48,13 +48,27 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
   const { colorMode, colorScheme, toggleColorMode, setColorScheme, currentScheme } = useTheme();
   const [themeModalOpen, setThemeModalOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
+  const [modeKey, setModeKey] = useState(0);
 
   const hasGlow = !!currentScheme.glowColor;
   const hasFont = !!currentScheme.fontOverride;
+  const isFlat  = !!currentScheme.flatHeader;
+
+  const titleClass =
+    currentScheme.key === 'aurora'          ? 'aurora-text' :
+    currentScheme.key === 'terminal-amber'  ? 'typewriter-cursor' :
+    hasGlow                                 ? 'neon-glow' :
+    (hasFont || isFlat)                     ? '' :
+    'shiny-text';
 
   const btnStyle = { background: 'rgba(255,255,255,0.15)', color: 'var(--header-text)' };
   const btnHover = (e: React.MouseEvent<HTMLButtonElement>, hover: boolean) => {
     e.currentTarget.style.background = hover ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.15)';
+  };
+
+  const handleToggleMode = () => {
+    toggleColorMode();
+    setModeKey((k) => k + 1);
   };
 
   const filteredSchemes = activeCategory === 'all'
@@ -62,13 +76,6 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
     : COLOR_SCHEMES.filter(s => s.category === activeCategory);
 
   const userMenuItems: MenuProps['items'] = [
-    {
-      key: 'toggle-mode',
-      icon: colorMode === 'light' ? <MoonOutlined /> : <SunOutlined />,
-      label: colorMode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode',
-      onClick: toggleColorMode,
-    },
-    { type: 'divider' },
     {
       key: 'theme',
       icon: <BgColorsOutlined />,
@@ -104,10 +111,12 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
           </button>
           <Text
             strong
-            className={hasGlow ? 'neon-glow' : ''}
+            className={titleClass}
             style={{
               fontSize: hasFont ? 11 : 16,
-              color: hasGlow ? 'var(--glow-color)' : 'var(--header-text)',
+              color: (hasGlow && currentScheme.key !== 'aurora' && currentScheme.key !== 'terminal-amber')
+                ? 'var(--glow-color)'
+                : titleClass === '' ? 'var(--header-text)' : undefined,
               fontFamily: hasFont ? 'var(--theme-font)' : undefined,
               letterSpacing: hasFont ? '0.04em' : undefined,
               lineHeight: hasFont ? '1.6' : undefined,
@@ -117,7 +126,23 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
           </Text>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          {/* Animated light/dark mode toggle */}
+          <button
+            onClick={handleToggleMode}
+            className="flex items-center justify-center w-9 h-9 rounded-md transition-all cursor-pointer border-none"
+            style={btnStyle}
+            onMouseEnter={(e) => btnHover(e, true)}
+            onMouseLeave={(e) => btnHover(e, false)}
+            data-testid="button-toggle-mode"
+            aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+            title={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+          >
+            <span key={modeKey} className="toggle-icon-enter" style={{ display: 'flex', alignItems: 'center', fontSize: 17 }}>
+              {colorMode === 'light' ? <MoonOutlined /> : <SunOutlined />}
+            </span>
+          </button>
+
           <Dropdown
             menu={{ items: userMenuItems }}
             trigger={['click']}
@@ -209,8 +234,8 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
           >
             {filteredSchemes.map((scheme) => {
               const isSelected = colorScheme === scheme.key;
-              const isFlat = scheme.flatHeader || scheme.cardStyle === 'flat';
-              const swatchBg = isFlat
+              const isSchemeFlat = scheme.flatHeader || scheme.cardStyle === 'flat';
+              const swatchBg = isSchemeFlat
                 ? scheme.gradientStart
                 : `linear-gradient(135deg, ${scheme.gradientStart} 0%, ${scheme.gradientMid} 50%, ${scheme.gradientEnd} 100%)`;
 
@@ -237,7 +262,7 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
                     style={{
                       width: 40,
                       height: 24,
-                      borderRadius: isFlat ? 3 : 5,
+                      borderRadius: isSchemeFlat ? 3 : 5,
                       background: swatchBg,
                       flexShrink: 0,
                       boxShadow: scheme.glowColor

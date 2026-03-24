@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
-import { Table, Card, Typography, Empty, Spin, Tag, Input, Button, Space } from 'antd';
+import { useState, useMemo, useCallback, useRef } from 'react';
+import { Table, Card, Typography, Empty, Spin, Tag, Input, Space } from 'antd';
 import { TableOutlined, DownloadOutlined, SearchOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
+import { BorderBeam } from './magicui/BorderBeam';
+import { useTheme } from './ThemeProvider';
 
 const { Title, Text } = Typography;
 
@@ -27,6 +29,8 @@ function escapeCSV(value: unknown): string {
 
 export default function DataTable<T extends { id: string }>({ title, data, columns, loading = false, totalRows, usingApi }: DataTableProps<T>) {
   const [searchText, setSearchText] = useState('');
+  const { currentScheme } = useTheme();
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
@@ -63,12 +67,34 @@ export default function DataTable<T extends { id: string }>({ title, data, colum
     URL.revokeObjectURL(url);
   }, [data, columns, title]);
 
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty('--mouse-x', `${x}%`);
+    el.style.setProperty('--mouse-y', `${y}%`);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty('--mouse-x', '50%');
+    el.style.setProperty('--mouse-y', '50%');
+  }, []);
+
   const totalCount = totalRows ?? data.length;
   const filteredCount = filteredData.length;
   const isFiltered = searchText.trim().length > 0;
   const countLabel = isFiltered
     ? `${filteredCount} of ${totalCount} records`
     : `${totalCount} records`;
+
+  const beamFrom = currentScheme.primaryAccent;
+  const beamTo = currentScheme.gradientMid !== currentScheme.primaryAccent
+    ? currentScheme.gradientMid
+    : '#8b5cf6';
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)', overflow: 'hidden' }}>
@@ -85,14 +111,15 @@ export default function DataTable<T extends { id: string }>({ title, data, colum
             )}
           </div>
           <Space>
-            <Button
-              icon={<DownloadOutlined />}
+            <button
+              className="shimmer-btn"
               onClick={handleDownloadCSV}
               disabled={data.length === 0 || loading}
               data-testid={`button-download-csv-${title}`}
             >
+              <DownloadOutlined style={{ fontSize: 13 }} />
               Download as CSV
-            </Button>
+            </button>
           </Space>
         </div>
 
@@ -119,13 +146,20 @@ export default function DataTable<T extends { id: string }>({ title, data, colum
       </div>
 
       {/* Table card - fills remaining height */}
-      <div style={{ flex: 1, overflow: 'hidden', padding: '0 24px 24px' }}>
+      <div
+        ref={cardRef}
+        className="magic-card-wrap"
+        style={{ flex: 1, overflow: 'hidden', padding: '0 24px 24px' }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
         <Card
           className="shadow-sm"
           styles={{ body: { padding: 0, height: '100%' } }}
-          style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}
+          style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}
           data-testid={`card-table-${title}`}
         >
+          <BorderBeam colorFrom={beamFrom} colorTo={beamTo} duration={9} borderWidth={1.5} />
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <Spin size="large" data-testid="loading-spinner" />

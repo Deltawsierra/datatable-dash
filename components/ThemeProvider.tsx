@@ -30,7 +30,8 @@ export type BackgroundEffect =
   | 'sakura-petals' | 'aurora' | 'bubbles' | 'orbs' | 'embers' | 'lightning-rain' | 'rain' | 'fog'
   | 'field-lines' | 'hearts' | 'shamrocks' | 'confetti' | 'olympic-rings'
   | 'steam' | 'data-packets' | 'torch' | 'vaporwave-grid' | 'matrix-rain' | 'circuit-pulse'
-  | 'checkered' | 'meteor-streaks' | 'neural-network' | 'stained-glass-overlay';
+  | 'checkered' | 'meteor-streaks' | 'neural-network' | 'stained-glass-overlay'
+  | 'animated-beams';
 
 export type CardStyle = 'default' | 'glass' | 'neon' | 'flat' | 'sharp';
 
@@ -537,7 +538,7 @@ export const COLOR_SCHEMES: ColorSchemeDefinition[] = [
     sidebarStart: '#020a14', sidebarEnd: '#010508',
     darkSidebarStart: '#010305', darkSidebarEnd: '#010305',
     sidebarActive: 'rgba(56,189,248,0.25)',
-    backgroundEffect: 'data-packets', cardStyle: 'glass', scanlines: false, glowColor: '#38bdf8',
+    backgroundEffect: 'animated-beams', cardStyle: 'glass', scanlines: false, glowColor: '#38bdf8',
   },
   {
     key: 'dungeon', name: 'Dungeon RPG', emoji: '⚔️', category: 'tech', forceDark: true,

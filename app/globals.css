@@ -1142,3 +1142,187 @@ h4.ant-typography, h5.ant-typography { color: var(--foreground) !important; }
   0%, 100% { filter: brightness(1); }
   50% { filter: brightness(2); }
 }
+
+/* ============================================================
+   MAGIC UI EFFECTS (Task #4)
+   ============================================================ */
+
+/* ── Shiny Text sweep (header title on most themes) ── */
+@keyframes shiny-sweep {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.shiny-text {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.85) 0%,
+    rgba(200,228,255,0.95) 20%,
+    rgba(255,255,255,1.0) 30%,
+    rgba(200,210,255,0.55) 43%,
+    rgba(255,255,255,1.0) 57%,
+    rgba(220,210,255,0.9) 75%,
+    rgba(255,255,255,0.85) 100%
+  );
+  background-size: 300% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent !important;
+  animation: shiny-sweep 5s linear infinite;
+}
+
+/* ── Aurora Text (aurora theme header) ── */
+@keyframes aurora-text-sweep {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.aurora-text {
+  background: linear-gradient(90deg, #34d399, #60a5fa, #a78bfa, #22d3ee, #34d399);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent !important;
+  animation: aurora-text-sweep 5s ease infinite;
+}
+
+/* ── Typewriter cursor (terminal-amber theme) ── */
+@keyframes typewriter-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.typewriter-cursor::after {
+  content: '_';
+  color: #f59e0b;
+  animation: typewriter-blink 1.2s step-end infinite;
+  margin-left: 2px;
+}
+
+/* ── Blur Fade In (stat cards entrance) ── */
+@keyframes blur-fade-up {
+  0%   { opacity: 0; transform: translateY(16px); filter: blur(5px); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+.blur-fade-in {
+  animation: blur-fade-up 0.55s ease forwards;
+  opacity: 0;
+}
+
+/* ── Sparkle animated text (greeting) ── */
+@keyframes sparkle-shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.sparkle-text {
+  background: linear-gradient(90deg, #1677ff, #7c3aed, #ec4899, #f97316, #1677ff);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: sparkle-shimmer 5s ease infinite;
+  display: inline-block;
+}
+
+/* ── Magic Card spotlight (data table card) ── */
+.magic-card-wrap {
+  position: relative;
+}
+.magic-card-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255,255,255,0.08) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.magic-card-wrap:hover::before {
+  opacity: 1;
+}
+
+/* ── Shimmer Button (CSV download) ── */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 15px;
+  height: 32px;
+  font-size: 14px;
+  border: 1px solid var(--border-color, #d9d9d9);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--foreground, #1e293b);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.shimmer-btn:hover:not(:disabled) {
+  border-color: var(--primary, #3b82f6);
+  color: var(--primary, #3b82f6);
+}
+.shimmer-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.32), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.shimmer-btn:hover:not(:disabled)::after {
+  animation: shimmer-btn-sweep 0.65s ease forwards;
+}
+@keyframes shimmer-btn-sweep {
+  0%   { left: -100%; }
+  100% { left: 150%; }
+}
+
+/* ── Animated Beams (Data Flow theme) ── */
+@keyframes beam-flow {
+  0%   { transform: translateX(-110%); opacity: 0; }
+  5%   { opacity: 1; }
+  90%  { opacity: 0.7; }
+  100% { transform: translateX(120vw); opacity: 0; }
+}
+.animated-beam {
+  position: absolute;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--beam-color, #38bdf8) 50%, transparent 100%);
+  pointer-events: none;
+  animation: beam-flow linear infinite;
+}
+
+/* ── Screen Vignette (terminal-amber / circuit board) ── */
+.screen-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.5) 100%);
+}
+
+/* ── Animated toggle button icon ── */
+@keyframes toggle-icon-in {
+  from { transform: rotate(-180deg) scale(0.3); opacity: 0; }
+  to   { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+.toggle-icon-enter {
+  display: inline-flex;
+  align-items: center;
+  animation: toggle-icon-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
