@@ -1421,7 +1421,7 @@ const COLOR_SCHEMES = [
         key: 'halloween',
         name: 'Halloween',
         emoji: '🎃',
-        category: 'special',
+        category: 'holiday',
         forceDark: true,
         gradientStart: '#1a0a00',
         gradientMid: '#4a1200',
