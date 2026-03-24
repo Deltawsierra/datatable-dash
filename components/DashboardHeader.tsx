@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Layout, Typography, Avatar, Dropdown, Modal } from 'antd';
 import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SunOutlined, MoonOutlined, BgColorsOutlined, SettingOutlined } from '@ant-design/icons';
-import { useTheme, COLOR_SCHEMES, type ColorScheme } from './ThemeProvider';
+import { useTheme, COLOR_SCHEMES, type ColorScheme, type ThemeCategory } from './ThemeProvider';
 import type { MenuProps } from 'antd';
 
 const { Header } = Layout;
@@ -14,9 +14,26 @@ interface DashboardHeaderProps {
   onToggle: () => void;
 }
 
+type CategoryFilter = 'all' | ThemeCategory;
+
+const CATEGORY_LABELS: Record<CategoryFilter, string> = {
+  all:      'All',
+  classic:  'Classic',
+  seasonal: 'Seasonal',
+  special:  'Special',
+};
+
+const CATEGORY_EMOJIS: Record<CategoryFilter, string> = {
+  all:      '🎨',
+  classic:  '🖼️',
+  seasonal: '🌿',
+  special:  '⚡',
+};
+
 export default function DashboardHeader({ collapsed, onToggle }: DashboardHeaderProps) {
   const { colorMode, colorScheme, toggleColorMode, setColorScheme, currentScheme } = useTheme();
   const [themeModalOpen, setThemeModalOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
 
   const hasGlow = !!currentScheme.glowColor;
   const hasFont = !!currentScheme.fontOverride;
@@ -25,6 +42,10 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
   const btnHover = (e: React.MouseEvent<HTMLButtonElement>, hover: boolean) => {
     e.currentTarget.style.background = hover ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.15)';
   };
+
+  const filteredSchemes = activeCategory === 'all'
+    ? COLOR_SCHEMES
+    : COLOR_SCHEMES.filter(s => s.category === activeCategory);
 
   const userMenuItems: MenuProps['items'] = [
     {
@@ -108,59 +129,122 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
         open={themeModalOpen}
         onCancel={() => setThemeModalOpen(false)}
         footer={null}
-        width={520}
+        width={580}
         data-testid="modal-theme-picker"
+        styles={{ body: { padding: 0 } }}
       >
-        <div className="flex flex-col gap-2 mt-4" data-testid="theme-scheme-list">
-          {COLOR_SCHEMES.map((scheme) => {
-            const isSelected = colorScheme === scheme.key;
-            const isFlat = scheme.flatHeader || scheme.cardStyle === 'flat';
-            const swatchBg = isFlat
-              ? scheme.gradientStart
-              : `linear-gradient(135deg, ${scheme.gradientStart} 0%, ${scheme.gradientMid} 50%, ${scheme.gradientEnd} 100%)`;
-
-            return (
-              <button
-                key={scheme.key}
-                onClick={() => { setColorScheme(scheme.key as ColorScheme); setThemeModalOpen(false); }}
-                data-testid={`button-scheme-${scheme.key}`}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  padding: '10px 14px',
-                  borderRadius: 10,
-                  border: isSelected ? `2px solid ${scheme.primaryAccent}` : '2px solid transparent',
-                  background: isSelected ? `${scheme.primaryAccent}15` : 'transparent',
-                  cursor: 'pointer',
-                  width: '100%',
-                  textAlign: 'left',
-                  transition: 'all 0.2s',
-                }}
-              >
-                <div
+        <div style={{ display: 'flex', minHeight: 340 }}>
+          {/* Left category sidebar */}
+          <div
+            style={{
+              width: 120,
+              borderRight: '1px solid var(--border-color, #e2e8f0)',
+              paddingTop: 12,
+              paddingBottom: 12,
+              flexShrink: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+            }}
+          >
+            {(['all', 'classic', 'seasonal', 'special'] as CategoryFilter[]).map((cat) => {
+              const isActive = activeCategory === cat;
+              const count = cat === 'all' ? COLOR_SCHEMES.length : COLOR_SCHEMES.filter(s => s.category === cat).length;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  data-testid={`button-category-${cat}`}
                   style={{
-                    width: 52,
-                    height: 28,
-                    borderRadius: isFlat ? 3 : 6,
-                    background: swatchBg,
-                    flexShrink: 0,
-                    boxShadow: scheme.glowColor
-                      ? `0 0 8px ${scheme.glowColor}, 0 2px 6px rgba(0,0,0,0.3)`
-                      : '0 2px 6px rgba(0,0,0,0.2)',
-                    border: scheme.cardStyle === 'neon' ? `1px solid ${scheme.primaryAccent}` : undefined,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 3,
+                    padding: '10px 8px',
+                    margin: '0 8px',
+                    borderRadius: 8,
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: isActive ? 'var(--table-row-hover, rgba(59,130,246,0.08))' : 'transparent',
+                    borderLeft: isActive ? '3px solid var(--primary, #3b82f6)' : '3px solid transparent',
+                    transition: 'all 0.15s',
+                    color: isActive ? 'var(--primary, #3b82f6)' : 'var(--foreground-muted, #64748b)',
+                    fontWeight: isActive ? 600 : 400,
                   }}
-                  data-testid={`swatch-${scheme.key}`}
-                />
-                <span style={{ fontWeight: isSelected ? 600 : 400, fontSize: 14 }}>
-                  {scheme.emoji} {scheme.name}
-                </span>
-                {isSelected && (
-                  <span style={{ marginLeft: 'auto', color: scheme.primaryAccent, fontWeight: 600, fontSize: 12 }}>Active</span>
-                )}
-              </button>
-            );
-          })}
+                >
+                  <span style={{ fontSize: 18, lineHeight: 1 }}>{CATEGORY_EMOJIS[cat]}</span>
+                  <span style={{ fontSize: 11 }}>{CATEGORY_LABELS[cat]}</span>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      background: isActive ? 'var(--primary, #3b82f6)' : 'var(--border-color, #e2e8f0)',
+                      color: isActive ? '#fff' : 'var(--foreground-muted, #64748b)',
+                      borderRadius: 10,
+                      padding: '1px 5px',
+                      fontWeight: 600,
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right scheme list */}
+          <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 4 }} data-testid="theme-scheme-list">
+            {filteredSchemes.map((scheme) => {
+              const isSelected = colorScheme === scheme.key;
+              const isFlat = scheme.flatHeader || scheme.cardStyle === 'flat';
+              const swatchBg = isFlat
+                ? scheme.gradientStart
+                : `linear-gradient(135deg, ${scheme.gradientStart} 0%, ${scheme.gradientMid} 50%, ${scheme.gradientEnd} 100%)`;
+
+              return (
+                <button
+                  key={scheme.key}
+                  onClick={() => { setColorScheme(scheme.key as ColorScheme); setThemeModalOpen(false); }}
+                  data-testid={`button-scheme-${scheme.key}`}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 12,
+                    padding: '9px 12px',
+                    borderRadius: 8,
+                    border: isSelected ? `2px solid ${scheme.primaryAccent}` : '2px solid transparent',
+                    background: isSelected ? `${scheme.primaryAccent}18` : 'transparent',
+                    cursor: 'pointer',
+                    width: '100%',
+                    textAlign: 'left',
+                    transition: 'all 0.15s',
+                  }}
+                >
+                  {/* Gradient swatch */}
+                  <div
+                    style={{
+                      width: 44,
+                      height: 26,
+                      borderRadius: isFlat ? 3 : 5,
+                      background: swatchBg,
+                      flexShrink: 0,
+                      boxShadow: scheme.glowColor
+                        ? `0 0 7px ${scheme.glowColor}, 0 2px 5px rgba(0,0,0,0.3)`
+                        : '0 2px 5px rgba(0,0,0,0.18)',
+                      border: scheme.cardStyle === 'neon' ? `1px solid ${scheme.primaryAccent}` : undefined,
+                    }}
+                    data-testid={`swatch-${scheme.key}`}
+                  />
+                  <span style={{ fontWeight: isSelected ? 600 : 400, fontSize: 13, color: 'var(--foreground)', flex: 1 }}>
+                    {scheme.emoji} {scheme.name}
+                  </span>
+                  {isSelected && (
+                    <span style={{ color: scheme.primaryAccent, fontWeight: 600, fontSize: 11, flexShrink: 0 }}>Active</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </Modal>
     </>
