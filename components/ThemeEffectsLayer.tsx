@@ -728,14 +728,14 @@ function MatrixRainEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    if (!canvasRef.current) return;
+    const el  = canvasRef.current as HTMLCanvasElement;
+    const ctx = el.getContext('2d') as CanvasRenderingContext2D | null;
     if (!ctx) return;
 
     const resize = () => {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
+      el.width  = window.innerWidth;
+      el.height = window.innerHeight;
     };
     resize();
     window.addEventListener('resize', resize);
@@ -743,35 +743,36 @@ function MatrixRainEffect() {
     const fontSize = 13;
     const chars    = 'アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
 
-    let cols = Math.floor(canvas.width / fontSize);
+    let cols = Math.floor(el.width / fontSize);
     const drops: number[] = Array(cols).fill(1);
 
     let raf: number;
     let last = 0;
     const interval = 55;
+    const c = ctx as CanvasRenderingContext2D;
 
-    function draw(now: number) {
+    const draw = (now: number) => {
       if (now - last < interval) { raf = requestAnimationFrame(draw); return; }
       last = now;
-      cols = Math.floor(canvas.width / fontSize);
+      cols = Math.floor(el.width / fontSize);
       while (drops.length < cols) drops.push(1);
 
-      ctx.fillStyle = 'rgba(0,0,0,0.06)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      c.fillStyle = 'rgba(0,0,0,0.06)';
+      c.fillRect(0, 0, el.width, el.height);
 
-      ctx.fillStyle = '#00ff41';
-      ctx.font      = `${fontSize}px monospace`;
+      c.fillStyle = '#00ff41';
+      c.font      = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
         const ch = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(ch, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        c.fillText(ch, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > el.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
       raf = requestAnimationFrame(draw);
-    }
+    };
     raf = requestAnimationFrame(draw);
     return () => {
       cancelAnimationFrame(raf);

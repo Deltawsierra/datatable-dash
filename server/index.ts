@@ -1,7 +1,7 @@
 import { spawn } from 'child_process';
 
 if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = 'development';
+  (process.env as Record<string, string>).NODE_ENV = 'development';
 }
 
 const port = process.env.PORT || '5000';
