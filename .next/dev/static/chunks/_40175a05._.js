@@ -1345,6 +1345,7 @@ const COLOR_SCHEMES = [
     {
         key: 'ocean-blue',
         name: 'Ocean Blue',
+        emoji: '🌊',
         gradientStart: '#3b82f6',
         gradientMid: '#6366f1',
         gradientEnd: '#8b5cf6',
@@ -1356,11 +1357,15 @@ const COLOR_SCHEMES = [
         sidebarEnd: '#0f172a',
         darkSidebarStart: '#020617',
         darkSidebarEnd: '#0f172a',
-        sidebarActive: 'rgba(59, 130, 246, 0.3)'
+        sidebarActive: 'rgba(59, 130, 246, 0.3)',
+        backgroundEffect: 'none',
+        cardStyle: 'default',
+        scanlines: false
     },
     {
         key: 'forest',
         name: 'Forest',
+        emoji: '🌲',
         gradientStart: '#16a34a',
         gradientMid: '#15803d',
         gradientEnd: '#166534',
@@ -1372,11 +1377,15 @@ const COLOR_SCHEMES = [
         sidebarEnd: '#052e16',
         darkSidebarStart: '#052e16',
         darkSidebarEnd: '#021a0e',
-        sidebarActive: 'rgba(22, 163, 74, 0.3)'
+        sidebarActive: 'rgba(22, 163, 74, 0.3)',
+        backgroundEffect: 'none',
+        cardStyle: 'default',
+        scanlines: false
     },
     {
         key: 'sunset',
         name: 'Sunset',
+        emoji: '🌅',
         gradientStart: '#f97316',
         gradientMid: '#ef4444',
         gradientEnd: '#dc2626',
@@ -1388,11 +1397,15 @@ const COLOR_SCHEMES = [
         sidebarEnd: '#431407',
         darkSidebarStart: '#431407',
         darkSidebarEnd: '#1c0a03',
-        sidebarActive: 'rgba(249, 115, 22, 0.3)'
+        sidebarActive: 'rgba(249, 115, 22, 0.3)',
+        backgroundEffect: 'none',
+        cardStyle: 'default',
+        scanlines: false
     },
     {
         key: 'midnight',
         name: 'Midnight',
+        emoji: '🌙',
         gradientStart: '#1e1b4b',
         gradientMid: '#312e81',
         gradientEnd: '#4c1d95',
@@ -1404,11 +1417,15 @@ const COLOR_SCHEMES = [
         sidebarEnd: '#0f0e27',
         darkSidebarStart: '#0f0d27',
         darkSidebarEnd: '#05040f',
-        sidebarActive: 'rgba(99, 102, 241, 0.3)'
+        sidebarActive: 'rgba(99, 102, 241, 0.3)',
+        backgroundEffect: 'none',
+        cardStyle: 'default',
+        scanlines: false
     },
     {
         key: 'rose-gold',
         name: 'Rose Gold',
+        emoji: '🌹',
         gradientStart: '#f43f5e',
         gradientMid: '#e11d48',
         gradientEnd: '#be123c',
@@ -1420,7 +1437,194 @@ const COLOR_SCHEMES = [
         sidebarEnd: '#4c0519',
         darkSidebarStart: '#4c0519',
         darkSidebarEnd: '#200210',
-        sidebarActive: 'rgba(244, 63, 94, 0.3)'
+        sidebarActive: 'rgba(244, 63, 94, 0.3)',
+        backgroundEffect: 'none',
+        cardStyle: 'default',
+        scanlines: false
+    },
+    {
+        key: 'winter',
+        name: 'Winter',
+        emoji: '❄️',
+        gradientStart: '#60a5fa',
+        gradientMid: '#93c5fd',
+        gradientEnd: '#bfdbfe',
+        darkGradientStart: '#1e3a5f',
+        darkGradientMid: '#1d4ed8',
+        darkGradientEnd: '#1e40af',
+        primaryAccent: '#60a5fa',
+        sidebarStart: '#1e3a5f',
+        sidebarEnd: '#0c1f3a',
+        darkSidebarStart: '#0c1f3a',
+        darkSidebarEnd: '#060e1c',
+        sidebarActive: 'rgba(96, 165, 250, 0.3)',
+        backgroundEffect: 'snow',
+        cardStyle: 'glass',
+        scanlines: false
+    },
+    {
+        key: 'cyberpunk',
+        name: 'Cyberpunk',
+        emoji: '🤖',
+        gradientStart: '#0a0a0a',
+        gradientMid: '#1a0030',
+        gradientEnd: '#0d0d0d',
+        darkGradientStart: '#050505',
+        darkGradientMid: '#0f0020',
+        darkGradientEnd: '#080808',
+        primaryAccent: '#00fff5',
+        sidebarStart: '#0a0a1a',
+        sidebarEnd: '#050510',
+        darkSidebarStart: '#050508',
+        darkSidebarEnd: '#020205',
+        sidebarActive: 'rgba(0, 255, 245, 0.2)',
+        backgroundEffect: 'none',
+        cardStyle: 'neon',
+        scanlines: true,
+        glowColor: '#00fff5'
+    },
+    {
+        key: 'space',
+        name: 'Space',
+        emoji: '🌌',
+        gradientStart: '#0a0a2e',
+        gradientMid: '#16213e',
+        gradientEnd: '#0f3460',
+        darkGradientStart: '#050516',
+        darkGradientMid: '#0a0f2e',
+        darkGradientEnd: '#071830',
+        primaryAccent: '#7c3aed',
+        sidebarStart: '#0a0a2e',
+        sidebarEnd: '#050516',
+        darkSidebarStart: '#030310',
+        darkSidebarEnd: '#010108',
+        sidebarActive: 'rgba(124, 58, 237, 0.3)',
+        backgroundEffect: 'stars',
+        cardStyle: 'glass',
+        scanlines: false
+    },
+    {
+        key: 'halloween',
+        name: 'Halloween',
+        emoji: '🎃',
+        gradientStart: '#1a0a00',
+        gradientMid: '#4a1200',
+        gradientEnd: '#1a0020',
+        darkGradientStart: '#0d0500',
+        darkGradientMid: '#2a0900',
+        darkGradientEnd: '#0d0010',
+        primaryAccent: '#f97316',
+        sidebarStart: '#1a0a00',
+        sidebarEnd: '#0d0500',
+        darkSidebarStart: '#0d0500',
+        darkSidebarEnd: '#060200',
+        sidebarActive: 'rgba(249, 115, 22, 0.3)',
+        backgroundEffect: 'bats',
+        cardStyle: 'sharp',
+        scanlines: false
+    },
+    {
+        key: 'autumn',
+        name: 'Autumn',
+        emoji: '🍂',
+        gradientStart: '#b45309',
+        gradientMid: '#c2410c',
+        gradientEnd: '#7c2d12',
+        darkGradientStart: '#78350f',
+        darkGradientMid: '#92400e',
+        darkGradientEnd: '#431407',
+        primaryAccent: '#d97706',
+        sidebarStart: '#78350f',
+        sidebarEnd: '#3c1a07',
+        darkSidebarStart: '#3c1a07',
+        darkSidebarEnd: '#1c0c03',
+        sidebarActive: 'rgba(217, 119, 6, 0.3)',
+        backgroundEffect: 'leaves',
+        cardStyle: 'default',
+        scanlines: false
+    },
+    {
+        key: 'summer',
+        name: 'Summer',
+        emoji: '☀️',
+        gradientStart: '#0891b2',
+        gradientMid: '#0ea5e9',
+        gradientEnd: '#38bdf8',
+        darkGradientStart: '#164e63',
+        darkGradientMid: '#0c4a6e',
+        darkGradientEnd: '#083344',
+        primaryAccent: '#f59e0b',
+        sidebarStart: '#164e63',
+        sidebarEnd: '#083344',
+        darkSidebarStart: '#083344',
+        darkSidebarEnd: '#031a22',
+        sidebarActive: 'rgba(245, 158, 11, 0.3)',
+        backgroundEffect: 'waves',
+        cardStyle: 'default',
+        scanlines: false
+    },
+    {
+        key: 'spring',
+        name: 'Spring',
+        emoji: '🌸',
+        gradientStart: '#ec4899',
+        gradientMid: '#f472b6',
+        gradientEnd: '#34d399',
+        darkGradientStart: '#831843',
+        darkGradientMid: '#9d174d',
+        darkGradientEnd: '#065f46',
+        primaryAccent: '#ec4899',
+        sidebarStart: '#831843',
+        sidebarEnd: '#3d0b1f',
+        darkSidebarStart: '#3d0b1f',
+        darkSidebarEnd: '#1c0510',
+        sidebarActive: 'rgba(236, 72, 153, 0.3)',
+        backgroundEffect: 'petals',
+        cardStyle: 'default',
+        scanlines: false
+    },
+    {
+        key: 'retro-arcade',
+        name: 'Retro Arcade',
+        emoji: '🕹️',
+        gradientStart: '#000000',
+        gradientMid: '#0a0a0a',
+        gradientEnd: '#111111',
+        darkGradientStart: '#000000',
+        darkGradientMid: '#050505',
+        darkGradientEnd: '#0a0a0a',
+        primaryAccent: '#00ff41',
+        sidebarStart: '#0a0a0a',
+        sidebarEnd: '#000000',
+        darkSidebarStart: '#000000',
+        darkSidebarEnd: '#000000',
+        sidebarActive: 'rgba(0, 255, 65, 0.2)',
+        backgroundEffect: 'pixels',
+        cardStyle: 'neon',
+        scanlines: true,
+        glowColor: '#00ff41',
+        fontOverride: "'Press Start 2P', monospace"
+    },
+    {
+        key: 'minimalist',
+        name: 'Minimalist',
+        emoji: '⬜',
+        gradientStart: '#f5f5f4',
+        gradientMid: '#e7e5e4',
+        gradientEnd: '#d6d3d1',
+        darkGradientStart: '#292524',
+        darkGradientMid: '#1c1917',
+        darkGradientEnd: '#0c0a09',
+        primaryAccent: '#44403c',
+        sidebarStart: '#f5f5f4',
+        sidebarEnd: '#e7e5e4',
+        darkSidebarStart: '#1c1917',
+        darkSidebarEnd: '#0c0a09',
+        sidebarActive: 'rgba(68, 64, 60, 0.15)',
+        backgroundEffect: 'none',
+        cardStyle: 'flat',
+        scanlines: false,
+        flatHeader: true
     }
 ];
 const ThemeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(undefined);
@@ -1439,11 +1643,20 @@ function applySchemeVars(scheme, mode) {
     const headerEnd = isDark ? scheme.darkGradientEnd : scheme.gradientEnd;
     const sidebarStart = isDark ? scheme.darkSidebarStart : scheme.sidebarStart;
     const sidebarEnd = isDark ? scheme.darkSidebarEnd : scheme.sidebarEnd;
-    root.style.setProperty('--header-bg', `linear-gradient(135deg, ${headerStart} 0%, ${headerMid} 50%, ${headerEnd} 100%)`);
+    if (scheme.flatHeader) {
+        root.style.setProperty('--header-bg', isDark ? scheme.darkGradientStart : scheme.gradientStart);
+    } else {
+        root.style.setProperty('--header-bg', `linear-gradient(135deg, ${headerStart} 0%, ${headerMid} 50%, ${headerEnd} 100%)`);
+    }
     root.style.setProperty('--primary', scheme.primaryAccent);
     root.style.setProperty('--primary-hover', scheme.primaryAccent);
     root.style.setProperty('--sidebar-bg', `linear-gradient(180deg, ${sidebarStart} 0%, ${sidebarEnd} 100%)`);
     root.style.setProperty('--sidebar-active', scheme.sidebarActive);
+    root.style.setProperty('--glow-color', scheme.glowColor ?? 'transparent');
+    root.style.setProperty('--theme-font', scheme.fontOverride ?? 'inherit');
+    root.setAttribute('data-card-style', scheme.cardStyle);
+    root.setAttribute('data-scanlines', scheme.scanlines ? 'true' : 'false');
+    root.setAttribute('data-effect', scheme.backgroundEffect);
 }
 function ThemeProvider({ children }) {
     _s1();
@@ -1502,12 +1715,12 @@ function ThemeProvider({ children }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/components/ThemeProvider.tsx",
-            lineNumber: 181,
+            lineNumber: 409,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ThemeProvider.tsx",
-        lineNumber: 180,
+        lineNumber: 408,
         columnNumber: 5
     }, this);
 }

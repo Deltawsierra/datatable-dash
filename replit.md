@@ -41,8 +41,11 @@ Preferred communication style: Simple, everyday language.
 
 ### Layout Architecture
 - **Dashboard Shell Pattern**: Fixed sidebar (280px collapsible) + sticky header (64px) + scrollable content area
-- **Theme System**: CSS variables for light/dark mode with localStorage persistence
-- **Gradient Styling**: Header and sidebar use CSS gradients for visual hierarchy
+- **Theme System**: 14 themes with CSS variables, localStorage persistence, and immersive visual effects
+  - Classic palette themes: Ocean Blue, Forest, Sunset, Midnight, Rose Gold
+  - Immersive effect themes: Winter (snow), Cyberpunk (neon + scanlines), Space (twinkling stars), Halloween (bats), Autumn (falling leaves), Summer (animated waves), Spring (cherry blossoms), Retro Arcade (pixel grid + scanlines + Press Start 2P font), Minimalist (flat/clean)
+- **ThemeEffectsLayer**: Fixed overlay component (`components/ThemeEffectsLayer.tsx`) that renders CSS-animated particles/effects based on the active scheme. Uses `pointer-events: none` so it never blocks interaction.
+- **Gradient Styling**: Header and sidebar use CSS gradients for visual hierarchy; Minimalist and Cyberpunk use flat/solid colors
 
 ### State Management
 - **Local Component State**: React useState for UI state (sidebar collapse, theme toggle)
