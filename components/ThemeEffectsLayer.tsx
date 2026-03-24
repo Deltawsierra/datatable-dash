@@ -214,6 +214,12 @@ function PixelsEffect() {
   );
 }
 
+function ScanlinesEffect() {
+  return (
+    <div className="scanlines-overlay" aria-hidden="true" />
+  );
+}
+
 export default function ThemeEffectsLayer() {
   const { currentScheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -223,13 +229,16 @@ export default function ThemeEffectsLayer() {
 
   const effect = currentScheme.backgroundEffect;
 
-  if (effect === 'snow') return <SnowEffect />;
-  if (effect === 'stars') return <StarsEffectStable />;
-  if (effect === 'leaves') return <LeavesEffect />;
-  if (effect === 'petals') return <PetalsEffect />;
-  if (effect === 'bats') return <BatsEffect />;
-  if (effect === 'waves') return <WavesEffect />;
-  if (effect === 'pixels') return <PixelsEffect />;
-
-  return null;
+  return (
+    <>
+      {currentScheme.scanlines && <ScanlinesEffect />}
+      {effect === 'snow'   && <SnowEffect />}
+      {effect === 'stars'  && <StarsEffectStable />}
+      {effect === 'leaves' && <LeavesEffect />}
+      {effect === 'petals' && <PetalsEffect />}
+      {effect === 'bats'   && <BatsEffect />}
+      {effect === 'waves'  && <WavesEffect />}
+      {effect === 'pixels' && <PixelsEffect />}
+    </>
+  );
 }

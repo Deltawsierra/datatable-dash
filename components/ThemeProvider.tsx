@@ -40,6 +40,7 @@ export interface ColorSchemeDefinition {
   glowColor?: string;
   fontOverride?: string;
   flatHeader?: boolean;
+  flatSidebar?: boolean;
 }
 
 export const COLOR_SCHEMES: ColorSchemeDefinition[] = [
@@ -102,7 +103,7 @@ export const COLOR_SCHEMES: ColorSchemeDefinition[] = [
     sidebarStart: '#f5f5f4', sidebarEnd: '#e7e5e4',
     darkSidebarStart: '#1c1917', darkSidebarEnd: '#0c0a09',
     sidebarActive: 'rgba(68, 64, 60, 0.15)',
-    backgroundEffect: 'none', cardStyle: 'flat', scanlines: false, flatHeader: true,
+    backgroundEffect: 'none', cardStyle: 'flat', scanlines: false, flatHeader: true, flatSidebar: true,
   },
 
   // ── SEASONAL ─────────────────────────────────────────
@@ -225,7 +226,11 @@ function applySchemeVars(scheme: ColorSchemeDefinition, mode: ColorMode) {
 
   root.style.setProperty('--primary',       scheme.primaryAccent);
   root.style.setProperty('--primary-hover', scheme.primaryAccent);
-  root.style.setProperty('--sidebar-bg',    `linear-gradient(180deg, ${sidebarStart} 0%, ${sidebarEnd} 100%)`);
+  if (scheme.flatSidebar) {
+    root.style.setProperty('--sidebar-bg', sidebarStart);
+  } else {
+    root.style.setProperty('--sidebar-bg', `linear-gradient(180deg, ${sidebarStart} 0%, ${sidebarEnd} 100%)`);
+  }
   root.style.setProperty('--sidebar-active', scheme.sidebarActive);
   root.style.setProperty('--glow-color',    scheme.glowColor ?? 'transparent');
   root.style.setProperty('--theme-font',    scheme.fontOverride ?? 'inherit');

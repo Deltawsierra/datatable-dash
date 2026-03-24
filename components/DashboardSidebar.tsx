@@ -6,6 +6,7 @@ import { TableOutlined, DatabaseOutlined, HomeOutlined, SearchOutlined, FilterOu
 import { usePathname, useRouter } from 'next/navigation';
 import { tableConfigs, allDepartments, allDataTypes } from '../lib/tableRegistry';
 import type { TableDepartment, TableDataType, TableConfig } from '../lib/tableRegistry';
+import { useTheme } from './ThemeProvider';
 
 const { Sider } = Layout;
 const { Title } = Typography;
@@ -21,6 +22,7 @@ interface DashboardSidebarProps {
 export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const { currentScheme } = useTheme();
   const [searchText, setSearchText] = useState('');
   const [selectedDepartments, setSelectedDepartments] = useState<TableDepartment[]>([]);
   const [selectedDataTypes, setSelectedDataTypes] = useState<TableDataType[]>([]);
@@ -217,7 +219,19 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
           </div>
           {!collapsed && (
             <div>
-              <Title level={5} style={{ margin: 0, fontSize: 16, color: 'var(--sidebar-text)' }}>RDM Lighthouse</Title>
+              <Title
+                level={5}
+                style={{
+                  margin: 0,
+                  fontSize: currentScheme.fontOverride ? 9 : 16,
+                  color: 'var(--sidebar-text)',
+                  fontFamily: currentScheme.fontOverride ? 'var(--theme-font)' : undefined,
+                  letterSpacing: currentScheme.fontOverride ? '0.03em' : undefined,
+                  lineHeight: currentScheme.fontOverride ? '1.6' : undefined,
+                }}
+              >
+                RDM Lighthouse
+              </Title>
               <span style={{ fontSize: 12, color: 'var(--sidebar-text-muted)' }}>Data Governance</span>
             </div>
           )}

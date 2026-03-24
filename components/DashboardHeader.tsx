@@ -71,11 +71,6 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
 
   return (
     <>
-      {/* Scanlines overlay */}
-      {currentScheme.scanlines && (
-        <div className="scanlines-overlay" aria-hidden="true" />
-      )}
-
       <Header
         className="flex items-center justify-between px-6 sticky top-0 z-50 animate-gradient"
         style={{ background: 'var(--header-bg)', borderBottom: 'none', height: 64, padding: '0 24px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}
