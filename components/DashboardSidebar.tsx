@@ -223,7 +223,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                 level={5}
                 style={{
                   margin: 0,
-                  fontSize: currentScheme.fontOverride ? 9 : 16,
+                  fontSize: currentScheme.fontOverride ? 12 : 16,
                   color: 'var(--sidebar-text)',
                   fontFamily: currentScheme.fontOverride ? 'var(--theme-font)' : undefined,
                   letterSpacing: currentScheme.fontOverride ? '0.03em' : undefined,

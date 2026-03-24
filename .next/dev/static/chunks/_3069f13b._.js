@@ -1689,6 +1689,7 @@ function ThemeProvider({ children }) {
     _s1();
     const [colorMode, setColorMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('light');
     const [colorScheme, setColorSchemeState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('ocean-blue');
+    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ThemeProvider.useEffect": ()=>{
             const savedMode = localStorage.getItem('colorMode');
@@ -1699,6 +1700,7 @@ function ThemeProvider({ children }) {
             }["ThemeProvider.useEffect"]) ? savedScheme : 'ocean-blue';
             setColorMode(mode);
             setColorSchemeState(scheme);
+            setMounted(true);
         }
     }["ThemeProvider.useEffect"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -1722,7 +1724,8 @@ function ThemeProvider({ children }) {
         localStorage.setItem('colorScheme', scheme);
     };
     const currentScheme = COLOR_SCHEMES.find((s)=>s.key === colorScheme) ?? COLOR_SCHEMES[0];
-    const useDarkAlgorithm = colorMode === 'dark' || currentScheme.forceDark;
+    // Defer dark algorithm until after client mount to prevent SSR/client CSS hash mismatch
+    const useDarkAlgorithm = mounted && (colorMode === 'dark' || currentScheme.forceDark);
     const antdThemeConfig = {
         algorithm: useDarkAlgorithm ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$theme$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__theme$3e$__["theme"].darkAlgorithm : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$theme$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__theme$3e$__["theme"].defaultAlgorithm,
         token: {
@@ -1743,16 +1746,16 @@ function ThemeProvider({ children }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/components/ThemeProvider.tsx",
-            lineNumber: 663,
+            lineNumber: 666,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ThemeProvider.tsx",
-        lineNumber: 662,
+        lineNumber: 665,
         columnNumber: 5
     }, this);
 }
-_s1(ThemeProvider, "fyCeleHBeSF5zsxQpKDpgMurA9U=");
+_s1(ThemeProvider, "eEiNhqGOBLhsWZl65gmCkwGykfU=");
 _c = ThemeProvider;
 var _c;
 __turbopack_context__.k.register(_c, "ThemeProvider");
@@ -2235,7 +2238,7 @@ function DashboardSidebar({ collapsed, onCollapse }) {
                                     level: 5,
                                     style: {
                                         margin: 0,
-                                        fontSize: currentScheme.fontOverride ? 9 : 16,
+                                        fontSize: currentScheme.fontOverride ? 12 : 16,
                                         color: 'var(--sidebar-text)',
                                         fontFamily: currentScheme.fontOverride ? 'var(--theme-font)' : undefined,
                                         letterSpacing: currentScheme.fontOverride ? '0.03em' : undefined,
@@ -2734,7 +2737,7 @@ function DashboardHeader({ collapsed, onToggle }) {
                                 strong: true,
                                 className: titleClass,
                                 style: {
-                                    fontSize: hasFont ? 11 : 16,
+                                    fontSize: hasFont ? 14 : 16,
                                     color: hasGlow && currentScheme.key !== 'aurora' && currentScheme.key !== 'terminal-amber' ? 'var(--glow-color)' : titleClass === '' ? 'var(--header-text)' : undefined,
                                     fontFamily: hasFont ? 'var(--theme-font)' : undefined,
                                     letterSpacing: hasFont ? '0.04em' : undefined,

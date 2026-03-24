@@ -7,6 +7,7 @@ import { NumberTicker } from '../../components/magicui/NumberTicker';
 import { BorderBeam } from '../../components/magicui/BorderBeam';
 import { tableStats } from '../../lib/tableRegistry';
 import { isApiAvailable } from '../../lib/api';
+import { useTheme } from '../../components/ThemeProvider';
 
 const { Title, Text } = Typography;
 
@@ -38,6 +39,8 @@ export default function HomePage() {
   const [currentDate, setCurrentDate] = useState('');
   const [apiStatus, setApiStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
   const userName = 'User';
+  const { currentScheme } = useTheme();
+  const showBeam = !currentScheme.glowColor;
 
   useEffect(() => {
     const updateTime = () => {
@@ -93,7 +96,7 @@ export default function HomePage() {
                 styles={{ body: { padding: 24 } }}
                 data-testid={`card-stat-${stat.title.toLowerCase()}`}
               >
-                <BorderBeam colorFrom={stat.colorFrom} colorTo={stat.colorTo} duration={4 + index} delay={index * 0.5} />
+                {showBeam && <BorderBeam colorFrom={stat.colorFrom} colorTo={stat.colorTo} duration={4 + index} delay={index * 0.5} />}
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <Text type="secondary" className="text-sm font-medium uppercase tracking-wide">{stat.title}</Text>

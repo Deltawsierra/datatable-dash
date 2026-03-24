@@ -624,6 +624,7 @@ function applySchemeVars(scheme: ColorSchemeDefinition, mode: ColorMode) {
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [colorMode, setColorMode]          = useState<ColorMode>('light');
   const [colorScheme, setColorSchemeState] = useState<ColorScheme>('ocean-blue');
+  const [mounted, setMounted]              = useState(false);
 
   useEffect(() => {
     const savedMode   = localStorage.getItem('colorMode')   as ColorMode | null;
@@ -632,6 +633,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const scheme = savedScheme && COLOR_SCHEMES.find(s => s.key === savedScheme) ? savedScheme as ColorScheme : 'ocean-blue';
     setColorMode(mode);
     setColorSchemeState(scheme);
+    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -651,7 +653,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const currentScheme = COLOR_SCHEMES.find(s => s.key === colorScheme) ?? COLOR_SCHEMES[0];
-  const useDarkAlgorithm = colorMode === 'dark' || currentScheme.forceDark;
+  // Defer dark algorithm until after client mount to prevent SSR/client CSS hash mismatch
+  const useDarkAlgorithm = mounted && (colorMode === 'dark' || currentScheme.forceDark);
 
   const antdThemeConfig = {
     algorithm: useDarkAlgorithm ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,

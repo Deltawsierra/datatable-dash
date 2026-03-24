@@ -146,17 +146,18 @@ export default function DataTable<T extends { id: string }>({ title, data, colum
       </div>
 
       {/* Table card - fills remaining height */}
-      <div
-        ref={cardRef}
-        className="magic-card-wrap"
-        style={{ flex: 1, overflow: 'hidden', padding: '0 24px 24px' }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
+      <div style={{ flex: 1, overflow: 'hidden', padding: '0 24px 24px' }}>
+        <div
+          ref={cardRef}
+          className="magic-card-wrap"
+          style={{ height: '100%', borderRadius: 8 }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
         <Card
           className="shadow-sm"
           styles={{ body: { padding: 0, height: '100%' } }}
-          style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}
+          style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'visible', position: 'relative' }}
           data-testid={`card-table-${title}`}
         >
           <BorderBeam colorFrom={beamFrom} colorTo={beamTo} duration={9} borderWidth={1.5} />
@@ -184,6 +185,7 @@ export default function DataTable<T extends { id: string }>({ title, data, colum
             />
           )}
         </Card>
+        </div>
       </div>
     </div>
   );

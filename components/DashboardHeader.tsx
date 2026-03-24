@@ -113,7 +113,7 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
             strong
             className={titleClass}
             style={{
-              fontSize: hasFont ? 11 : 16,
+              fontSize: hasFont ? 14 : 16,
               color: (hasGlow && currentScheme.key !== 'aurora' && currentScheme.key !== 'terminal-amber')
                 ? 'var(--glow-color)'
                 : titleClass === '' ? 'var(--header-text)' : undefined,
