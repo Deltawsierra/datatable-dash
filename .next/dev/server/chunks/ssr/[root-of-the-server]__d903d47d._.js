@@ -1324,6 +1324,8 @@ function DashboardSidebar({ collapsed, onCollapse }) {
 "use strict";
 
 __turbopack_context__.s([
+    "COLOR_SCHEMES",
+    ()=>COLOR_SCHEMES,
     "ThemeProvider",
     ()=>ThemeProvider,
     "useTheme",
@@ -1337,56 +1339,162 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2
 ;
 ;
 ;
+const COLOR_SCHEMES = [
+    {
+        key: 'ocean-blue',
+        name: 'Ocean Blue',
+        gradientStart: '#3b82f6',
+        gradientMid: '#6366f1',
+        gradientEnd: '#8b5cf6',
+        darkGradientStart: '#1e3a8a',
+        darkGradientMid: '#4338ca',
+        darkGradientEnd: '#6d28d9',
+        primaryAccent: '#3b82f6',
+        sidebarStart: '#1e293b',
+        sidebarEnd: '#0f172a',
+        darkSidebarStart: '#020617',
+        darkSidebarEnd: '#0f172a',
+        sidebarActive: 'rgba(59, 130, 246, 0.3)'
+    },
+    {
+        key: 'forest',
+        name: 'Forest',
+        gradientStart: '#16a34a',
+        gradientMid: '#15803d',
+        gradientEnd: '#166534',
+        darkGradientStart: '#14532d',
+        darkGradientMid: '#166534',
+        darkGradientEnd: '#052e16',
+        primaryAccent: '#16a34a',
+        sidebarStart: '#14532d',
+        sidebarEnd: '#052e16',
+        darkSidebarStart: '#052e16',
+        darkSidebarEnd: '#021a0e',
+        sidebarActive: 'rgba(22, 163, 74, 0.3)'
+    },
+    {
+        key: 'sunset',
+        name: 'Sunset',
+        gradientStart: '#f97316',
+        gradientMid: '#ef4444',
+        gradientEnd: '#dc2626',
+        darkGradientStart: '#7c2d12',
+        darkGradientMid: '#991b1b',
+        darkGradientEnd: '#7f1d1d',
+        primaryAccent: '#f97316',
+        sidebarStart: '#7c2d12',
+        sidebarEnd: '#431407',
+        darkSidebarStart: '#431407',
+        darkSidebarEnd: '#1c0a03',
+        sidebarActive: 'rgba(249, 115, 22, 0.3)'
+    },
+    {
+        key: 'midnight',
+        name: 'Midnight',
+        gradientStart: '#1e1b4b',
+        gradientMid: '#312e81',
+        gradientEnd: '#4c1d95',
+        darkGradientStart: '#0f0d27',
+        darkGradientMid: '#1e1b4b',
+        darkGradientEnd: '#2e1065',
+        primaryAccent: '#6366f1',
+        sidebarStart: '#1e1b4b',
+        sidebarEnd: '#0f0e27',
+        darkSidebarStart: '#0f0d27',
+        darkSidebarEnd: '#05040f',
+        sidebarActive: 'rgba(99, 102, 241, 0.3)'
+    },
+    {
+        key: 'rose-gold',
+        name: 'Rose Gold',
+        gradientStart: '#f43f5e',
+        gradientMid: '#e11d48',
+        gradientEnd: '#be123c',
+        darkGradientStart: '#881337',
+        darkGradientMid: '#9f1239',
+        darkGradientEnd: '#7f1d1d',
+        primaryAccent: '#f43f5e',
+        sidebarStart: '#881337',
+        sidebarEnd: '#4c0519',
+        darkSidebarStart: '#4c0519',
+        darkSidebarEnd: '#200210',
+        sidebarActive: 'rgba(244, 63, 94, 0.3)'
+    }
+];
 const ThemeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(undefined);
 function useTheme() {
     const context = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(ThemeContext);
     if (!context) throw new Error('useTheme must be used within a ThemeProvider');
     return context;
 }
+function applySchemeVars(scheme, mode) {
+    const root = document.documentElement;
+    const isDark = mode === 'dark';
+    const headerStart = isDark ? scheme.darkGradientStart : scheme.gradientStart;
+    const headerMid = isDark ? scheme.darkGradientMid : scheme.gradientMid;
+    const headerEnd = isDark ? scheme.darkGradientEnd : scheme.gradientEnd;
+    const sidebarStart = isDark ? scheme.darkSidebarStart : scheme.sidebarStart;
+    const sidebarEnd = isDark ? scheme.darkSidebarEnd : scheme.sidebarEnd;
+    root.style.setProperty('--header-bg', `linear-gradient(135deg, ${headerStart} 0%, ${headerMid} 50%, ${headerEnd} 100%)`);
+    root.style.setProperty('--primary', scheme.primaryAccent);
+    root.style.setProperty('--primary-hover', scheme.primaryAccent);
+    root.style.setProperty('--sidebar-bg', `linear-gradient(180deg, ${sidebarStart} 0%, ${sidebarEnd} 100%)`);
+    root.style.setProperty('--sidebar-active', scheme.sidebarActive);
+}
 function ThemeProvider({ children }) {
-    const [theme, setTheme] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('light');
-    // Load saved theme on mount
+    const [colorMode, setColorMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('light');
+    const [colorScheme, setColorSchemeState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('ocean-blue');
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-            setTheme(savedTheme);
-            document.documentElement.classList.remove('light', 'dark');
-            document.documentElement.classList.add(savedTheme);
-        }
+        const savedMode = localStorage.getItem('colorMode');
+        const savedScheme = localStorage.getItem('colorScheme');
+        const mode = savedMode && (savedMode === 'light' || savedMode === 'dark') ? savedMode : 'light';
+        const scheme = savedScheme && COLOR_SCHEMES.find((s)=>s.key === savedScheme) ? savedScheme : 'ocean-blue';
+        setColorMode(mode);
+        setColorSchemeState(scheme);
     }, []);
-    // Apply theme changes
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add(theme);
-        localStorage.setItem('theme', theme);
+        document.documentElement.classList.add(colorMode);
+        document.documentElement.setAttribute('data-scheme', colorScheme);
+        localStorage.setItem('colorMode', colorMode);
+        const scheme = COLOR_SCHEMES.find((s)=>s.key === colorScheme) ?? COLOR_SCHEMES[0];
+        applySchemeVars(scheme, colorMode);
     }, [
-        theme
+        colorMode,
+        colorScheme
     ]);
-    const toggleTheme = ()=>setTheme((prev)=>prev === 'light' ? 'dark' : 'light');
-    // Ant Design theme config
+    const toggleColorMode = ()=>setColorMode((prev)=>prev === 'light' ? 'dark' : 'light');
+    const setColorScheme = (scheme)=>{
+        setColorSchemeState(scheme);
+        localStorage.setItem('colorScheme', scheme);
+    };
+    const currentScheme = COLOR_SCHEMES.find((s)=>s.key === colorScheme) ?? COLOR_SCHEMES[0];
     const antdThemeConfig = {
-        algorithm: theme === 'dark' ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$theme$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__theme$3e$__["theme"].darkAlgorithm : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$theme$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__theme$3e$__["theme"].defaultAlgorithm,
+        algorithm: colorMode === 'dark' ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$theme$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__theme$3e$__["theme"].darkAlgorithm : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$theme$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__theme$3e$__["theme"].defaultAlgorithm,
         token: {
-            colorPrimary: '#3b82f6',
+            colorPrimary: currentScheme.primaryAccent,
             borderRadius: 8
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ThemeContext.Provider, {
         value: {
-            theme,
-            toggleTheme
+            colorMode,
+            colorScheme,
+            toggleColorMode,
+            setColorScheme,
+            currentScheme
         },
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$config$2d$provider$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__ConfigProvider$3e$__["ConfigProvider"], {
             theme: antdThemeConfig,
             children: children
         }, void 0, false, {
             fileName: "[project]/components/ThemeProvider.tsx",
-            lineNumber: 53,
+            lineNumber: 181,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ThemeProvider.tsx",
-        lineNumber: 52,
+        lineNumber: 180,
         columnNumber: 5
     }, this);
 }
@@ -1399,18 +1507,22 @@ __turbopack_context__.s([
     ()=>DashboardHeader
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$layout$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Layout$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/layout/index.js [app-ssr] (ecmascript) <export default as Layout>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$typography$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/typography/index.js [app-ssr] (ecmascript) <export default as Typography>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$avatar$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Avatar$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/avatar/index.js [app-ssr] (ecmascript) <export default as Avatar>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$space$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__Space$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/space/index.js [app-ssr] (ecmascript) <locals> <export default as Space>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$tooltip$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Tooltip$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/tooltip/index.js [app-ssr] (ecmascript) <export default as Tooltip>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$dropdown$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Dropdown$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/dropdown/index.js [app-ssr] (ecmascript) <export default as Dropdown>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$modal$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Modal$3e$__ = __turbopack_context__.i("[project]/node_modules/antd/es/modal/index.js [app-ssr] (ecmascript) <export default as Modal>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$UserOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/UserOutlined.js [app-ssr] (ecmascript) <export default as UserOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MenuFoldOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuFoldOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/MenuFoldOutlined.js [app-ssr] (ecmascript) <export default as MenuFoldOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MenuUnfoldOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuUnfoldOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/MenuUnfoldOutlined.js [app-ssr] (ecmascript) <export default as MenuUnfoldOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SunOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SunOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/SunOutlined.js [app-ssr] (ecmascript) <export default as SunOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MoonOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MoonOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/MoonOutlined.js [app-ssr] (ecmascript) <export default as MoonOutlined>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$BgColorsOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__BgColorsOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/BgColorsOutlined.js [app-ssr] (ecmascript) <export default as BgColorsOutlined>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SettingOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SettingOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/SettingOutlined.js [app-ssr] (ecmascript) <export default as SettingOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ThemeProvider.tsx [app-ssr] (ecmascript)");
 'use client';
+;
 ;
 ;
 ;
@@ -1418,8 +1530,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$
 const { Header } = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$layout$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Layout$3e$__["Layout"];
 const { Text } = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$typography$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__["Typography"];
 function DashboardHeader({ collapsed, onToggle }) {
-    const { theme, toggleTheme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useTheme"])();
-    // Button hover styles
+    const { colorMode, colorScheme, toggleColorMode, setColorScheme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useTheme"])();
+    const [themeModalOpen, setThemeModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const btnStyle = {
         background: 'rgba(255, 255, 255, 0.15)',
         color: 'var(--header-text)'
@@ -1427,136 +1539,242 @@ function DashboardHeader({ collapsed, onToggle }) {
     const btnHover = (e, hover)=>{
         e.currentTarget.style.background = hover ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.15)';
     };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Header, {
-        className: "flex items-center justify-between px-6 sticky top-0 z-50 animate-gradient",
-        style: {
-            background: 'var(--header-bg)',
-            borderBottom: 'none',
-            height: 64,
-            padding: '0 24px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+    const userMenuItems = [
+        {
+            key: 'toggle-mode',
+            icon: colorMode === 'light' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MoonOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MoonOutlined$3e$__["MoonOutlined"], {}, void 0, false, {
+                fileName: "[project]/components/DashboardHeader.tsx",
+                lineNumber: 29,
+                columnNumber: 37
+            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SunOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SunOutlined$3e$__["SunOutlined"], {}, void 0, false, {
+                fileName: "[project]/components/DashboardHeader.tsx",
+                lineNumber: 29,
+                columnNumber: 56
+            }, this),
+            label: colorMode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode',
+            onClick: toggleColorMode
         },
-        "data-testid": "header",
+        {
+            type: 'divider'
+        },
+        {
+            key: 'theme',
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$BgColorsOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__BgColorsOutlined$3e$__["BgColorsOutlined"], {}, void 0, false, {
+                fileName: "[project]/components/DashboardHeader.tsx",
+                lineNumber: 38,
+                columnNumber: 13
+            }, this),
+            label: 'Theme',
+            onClick: ()=>setThemeModalOpen(true)
+        },
+        {
+            key: 'settings',
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SettingOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SettingOutlined$3e$__["SettingOutlined"], {}, void 0, false, {
+                fileName: "[project]/components/DashboardHeader.tsx",
+                lineNumber: 44,
+                columnNumber: 13
+            }, this),
+            label: 'Settings',
+            disabled: true
+        }
+    ];
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex items-center gap-4",
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Header, {
+                className: "flex items-center justify-between px-6 sticky top-0 z-50 animate-gradient",
+                style: {
+                    background: 'var(--header-bg)',
+                    borderBottom: 'none',
+                    height: 64,
+                    padding: '0 24px',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                },
+                "data-testid": "header",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: onToggle,
-                        className: "flex items-center justify-center w-9 h-9 rounded-md transition-all cursor-pointer border-none",
-                        style: btnStyle,
-                        onMouseEnter: (e)=>btnHover(e, true),
-                        onMouseLeave: (e)=>btnHover(e, false),
-                        "data-testid": "button-toggle-sidebar",
-                        "aria-label": collapsed ? 'Expand sidebar' : 'Collapse sidebar',
-                        children: collapsed ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MenuUnfoldOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuUnfoldOutlined$3e$__["MenuUnfoldOutlined"], {
-                            style: {
-                                fontSize: 18
-                            }
-                        }, void 0, false, {
-                            fileName: "[project]/components/DashboardHeader.tsx",
-                            lineNumber: 42,
-                            columnNumber: 24
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MenuFoldOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuFoldOutlined$3e$__["MenuFoldOutlined"], {
-                            style: {
-                                fontSize: 18
-                            }
-                        }, void 0, false, {
-                            fileName: "[project]/components/DashboardHeader.tsx",
-                            lineNumber: 42,
-                            columnNumber: 74
-                        }, this)
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center gap-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: onToggle,
+                                className: "flex items-center justify-center w-9 h-9 rounded-md transition-all cursor-pointer border-none",
+                                style: btnStyle,
+                                onMouseEnter: (e)=>btnHover(e, true),
+                                onMouseLeave: (e)=>btnHover(e, false),
+                                "data-testid": "button-toggle-sidebar",
+                                "aria-label": collapsed ? 'Expand sidebar' : 'Collapse sidebar',
+                                children: collapsed ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MenuUnfoldOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuUnfoldOutlined$3e$__["MenuUnfoldOutlined"], {
+                                    style: {
+                                        fontSize: 18
+                                    }
+                                }, void 0, false, {
+                                    fileName: "[project]/components/DashboardHeader.tsx",
+                                    lineNumber: 67,
+                                    columnNumber: 26
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MenuFoldOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuFoldOutlined$3e$__["MenuFoldOutlined"], {
+                                    style: {
+                                        fontSize: 18
+                                    }
+                                }, void 0, false, {
+                                    fileName: "[project]/components/DashboardHeader.tsx",
+                                    lineNumber: 67,
+                                    columnNumber: 76
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/DashboardHeader.tsx",
+                                lineNumber: 58,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Text, {
+                                strong: true,
+                                style: {
+                                    fontSize: 16,
+                                    color: 'var(--header-text)'
+                                },
+                                children: "Reference Data Management"
+                            }, void 0, false, {
+                                fileName: "[project]/components/DashboardHeader.tsx",
+                                lineNumber: 69,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/components/DashboardHeader.tsx",
-                        lineNumber: 33,
+                        lineNumber: 57,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Text, {
-                        strong: true,
-                        style: {
-                            fontSize: 16,
-                            color: 'var(--header-text)'
-                        },
-                        children: "Reference Data Management"
-                    }, void 0, false, {
-                        fileName: "[project]/components/DashboardHeader.tsx",
-                        lineNumber: 44,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/components/DashboardHeader.tsx",
-                lineNumber: 31,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$space$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__Space$3e$__["Space"], {
-                size: "middle",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$tooltip$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Tooltip$3e$__["Tooltip"], {
-                        title: theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode',
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: toggleTheme,
-                            className: "flex items-center justify-center w-9 h-9 rounded-md transition-all cursor-pointer border-none",
-                            style: btnStyle,
-                            onMouseEnter: (e)=>btnHover(e, true),
-                            onMouseLeave: (e)=>btnHover(e, false),
-                            "data-testid": "button-toggle-theme",
-                            "aria-label": theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode',
-                            children: theme === 'light' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$MoonOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MoonOutlined$3e$__["MoonOutlined"], {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center gap-3",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$dropdown$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Dropdown$3e$__["Dropdown"], {
+                            menu: {
+                                items: userMenuItems
+                            },
+                            trigger: [
+                                'click'
+                            ],
+                            placement: "bottomRight",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$avatar$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Avatar$3e$__["Avatar"], {
+                                icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$UserOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserOutlined$3e$__["UserOutlined"], {}, void 0, false, {
+                                    fileName: "[project]/components/DashboardHeader.tsx",
+                                    lineNumber: 80,
+                                    columnNumber: 21
+                                }, void 0),
                                 style: {
-                                    fontSize: 18
-                                }
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                                    cursor: 'pointer'
+                                },
+                                "data-testid": "avatar-user"
                             }, void 0, false, {
                                 fileName: "[project]/components/DashboardHeader.tsx",
-                                lineNumber: 59,
-                                columnNumber: 34
-                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$SunOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__SunOutlined$3e$__["SunOutlined"], {
-                                style: {
-                                    fontSize: 18
-                                }
-                            }, void 0, false, {
-                                fileName: "[project]/components/DashboardHeader.tsx",
-                                lineNumber: 59,
-                                columnNumber: 78
+                                lineNumber: 79,
+                                columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/DashboardHeader.tsx",
-                            lineNumber: 50,
+                            lineNumber: 74,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/DashboardHeader.tsx",
-                        lineNumber: 49,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$avatar$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Avatar$3e$__["Avatar"], {
-                        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$UserOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserOutlined$3e$__["UserOutlined"], {}, void 0, false, {
-                            fileName: "[project]/components/DashboardHeader.tsx",
-                            lineNumber: 64,
-                            columnNumber: 17
-                        }, void 0),
-                        style: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                            border: '2px solid rgba(255, 255, 255, 0.3)'
-                        },
-                        "data-testid": "avatar-user"
-                    }, void 0, false, {
-                        fileName: "[project]/components/DashboardHeader.tsx",
-                        lineNumber: 63,
+                        lineNumber: 72,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/DashboardHeader.tsx",
-                lineNumber: 47,
+                lineNumber: 52,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$modal$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Modal$3e$__["Modal"], {
+                title: "Choose a Color Scheme",
+                open: themeModalOpen,
+                onCancel: ()=>setThemeModalOpen(false),
+                footer: null,
+                width: 480,
+                "data-testid": "modal-theme-picker",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex flex-col gap-3 mt-4",
+                    "data-testid": "theme-scheme-list",
+                    children: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["COLOR_SCHEMES"].map((scheme)=>{
+                        const isSelected = colorScheme === scheme.key;
+                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>{
+                                setColorScheme(scheme.key);
+                                setThemeModalOpen(false);
+                            },
+                            "data-testid": `button-scheme-${scheme.key}`,
+                            style: {
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 16,
+                                padding: '12px 16px',
+                                borderRadius: 10,
+                                border: isSelected ? `2px solid ${scheme.primaryAccent}` : '2px solid transparent',
+                                background: isSelected ? `${scheme.primaryAccent}15` : 'transparent',
+                                cursor: 'pointer',
+                                width: '100%',
+                                textAlign: 'left',
+                                transition: 'all 0.2s'
+                            },
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    style: {
+                                        width: 56,
+                                        height: 32,
+                                        borderRadius: 6,
+                                        background: `linear-gradient(135deg, ${scheme.gradientStart} 0%, ${scheme.gradientMid} 50%, ${scheme.gradientEnd} 100%)`,
+                                        flexShrink: 0,
+                                        boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+                                    },
+                                    "data-testid": `swatch-${scheme.key}`
+                                }, void 0, false, {
+                                    fileName: "[project]/components/DashboardHeader.tsx",
+                                    lineNumber: 120,
+                                    columnNumber: 17
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    style: {
+                                        fontWeight: isSelected ? 600 : 400,
+                                        fontSize: 15
+                                    },
+                                    children: scheme.name
+                                }, void 0, false, {
+                                    fileName: "[project]/components/DashboardHeader.tsx",
+                                    lineNumber: 131,
+                                    columnNumber: 17
+                                }, this),
+                                isSelected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    style: {
+                                        marginLeft: 'auto',
+                                        color: scheme.primaryAccent,
+                                        fontWeight: 600,
+                                        fontSize: 13
+                                    },
+                                    children: "Active"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/DashboardHeader.tsx",
+                                    lineNumber: 133,
+                                    columnNumber: 19
+                                }, this)
+                            ]
+                        }, scheme.key, true, {
+                            fileName: "[project]/components/DashboardHeader.tsx",
+                            lineNumber: 101,
+                            columnNumber: 15
+                        }, this);
+                    })
+                }, void 0, false, {
+                    fileName: "[project]/components/DashboardHeader.tsx",
+                    lineNumber: 97,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/DashboardHeader.tsx",
+                lineNumber: 89,
                 columnNumber: 7
             }, this)
         ]
-    }, void 0, true, {
-        fileName: "[project]/components/DashboardHeader.tsx",
-        lineNumber: 26,
-        columnNumber: 5
-    }, this);
+    }, void 0, true);
 }
 }),
 "[project]/app/(dashboard)/layout.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {

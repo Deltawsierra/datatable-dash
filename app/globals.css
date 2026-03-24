@@ -4,6 +4,7 @@
 
 /* ============================================
    THEME VARIABLES - Light Mode (Default)
+   Ocean Blue scheme is the default
    ============================================ */
 :root {
   --sidebar-width: 280px;
@@ -18,11 +19,11 @@
   --foreground: #1e293b;
   --muted: #64748b;
   
-  /* Header gradient */
+  /* Header gradient (overridden by ThemeProvider JS) */
   --header-bg: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
   --header-text: #ffffff;
   
-  /* Sidebar gradient */
+  /* Sidebar gradient (overridden by ThemeProvider JS) */
   --sidebar-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
   --sidebar-text: #e2e8f0;
   --sidebar-text-muted: #94a3b8;
@@ -38,6 +39,52 @@
 }
 
 /* ============================================
+   COLOR SCHEME CSS VARIABLES - Light
+   These are overridden at runtime by ThemeProvider,
+   but defined here as reference/fallback.
+   ============================================ */
+
+/* Ocean Blue (default) */
+[data-scheme="ocean-blue"] {
+  --header-bg: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+  --primary: #3b82f6;
+  --sidebar-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  --sidebar-active: rgba(59, 130, 246, 0.3);
+}
+
+/* Forest */
+[data-scheme="forest"] {
+  --header-bg: linear-gradient(135deg, #16a34a 0%, #15803d 50%, #166534 100%);
+  --primary: #16a34a;
+  --sidebar-bg: linear-gradient(180deg, #14532d 0%, #052e16 100%);
+  --sidebar-active: rgba(22, 163, 74, 0.3);
+}
+
+/* Sunset */
+[data-scheme="sunset"] {
+  --header-bg: linear-gradient(135deg, #f97316 0%, #ef4444 50%, #dc2626 100%);
+  --primary: #f97316;
+  --sidebar-bg: linear-gradient(180deg, #7c2d12 0%, #431407 100%);
+  --sidebar-active: rgba(249, 115, 22, 0.3);
+}
+
+/* Midnight */
+[data-scheme="midnight"] {
+  --header-bg: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+  --primary: #6366f1;
+  --sidebar-bg: linear-gradient(180deg, #1e1b4b 0%, #0f0e27 100%);
+  --sidebar-active: rgba(99, 102, 241, 0.3);
+}
+
+/* Rose Gold */
+[data-scheme="rose-gold"] {
+  --header-bg: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #be123c 100%);
+  --primary: #f43f5e;
+  --sidebar-bg: linear-gradient(180deg, #881337 0%, #4c0519 100%);
+  --sidebar-active: rgba(244, 63, 94, 0.3);
+}
+
+/* ============================================
    THEME VARIABLES - Dark Mode
    ============================================ */
 .dark {
@@ -45,9 +92,11 @@
   --foreground: #f1f5f9;
   --muted: #94a3b8;
   
+  /* Dark header (overridden per-scheme by ThemeProvider JS) */
   --header-bg: linear-gradient(135deg, #1e3a8a 0%, #4338ca 50%, #6d28d9 100%);
   --header-text: #ffffff;
   
+  /* Dark sidebar (overridden per-scheme by ThemeProvider JS) */
   --sidebar-bg: linear-gradient(180deg, #020617 0%, #0f172a 100%);
   --sidebar-text: #f1f5f9;
   --sidebar-text-muted: #64748b;
@@ -59,6 +108,42 @@
   --card-border: #334155;
   --content-bg: #0f172a;
   --border-color: #334155;
+}
+
+/* Dark variants of named schemes */
+.dark[data-scheme="ocean-blue"] {
+  --header-bg: linear-gradient(135deg, #1e3a8a 0%, #4338ca 50%, #6d28d9 100%);
+  --primary: #3b82f6;
+  --sidebar-bg: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  --sidebar-active: rgba(59, 130, 246, 0.4);
+}
+
+.dark[data-scheme="forest"] {
+  --header-bg: linear-gradient(135deg, #14532d 0%, #166534 50%, #052e16 100%);
+  --primary: #16a34a;
+  --sidebar-bg: linear-gradient(180deg, #052e16 0%, #021a0e 100%);
+  --sidebar-active: rgba(22, 163, 74, 0.4);
+}
+
+.dark[data-scheme="sunset"] {
+  --header-bg: linear-gradient(135deg, #7c2d12 0%, #991b1b 50%, #7f1d1d 100%);
+  --primary: #f97316;
+  --sidebar-bg: linear-gradient(180deg, #431407 0%, #1c0a03 100%);
+  --sidebar-active: rgba(249, 115, 22, 0.4);
+}
+
+.dark[data-scheme="midnight"] {
+  --header-bg: linear-gradient(135deg, #0f0d27 0%, #1e1b4b 50%, #2e1065 100%);
+  --primary: #6366f1;
+  --sidebar-bg: linear-gradient(180deg, #0f0d27 0%, #05040f 100%);
+  --sidebar-active: rgba(99, 102, 241, 0.4);
+}
+
+.dark[data-scheme="rose-gold"] {
+  --header-bg: linear-gradient(135deg, #881337 0%, #9f1239 50%, #7f1d1d 100%);
+  --primary: #f43f5e;
+  --sidebar-bg: linear-gradient(180deg, #4c0519 0%, #200210 100%);
+  --sidebar-active: rgba(244, 63, 94, 0.4);
 }
 
 /* ============================================
