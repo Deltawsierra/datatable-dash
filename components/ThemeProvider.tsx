@@ -30,7 +30,7 @@ export type BackgroundEffect =
   | 'sakura-petals' | 'aurora' | 'bubbles' | 'orbs' | 'embers' | 'lightning-rain' | 'rain' | 'fog'
   | 'field-lines' | 'hearts' | 'shamrocks' | 'confetti' | 'olympic-rings'
   | 'steam' | 'data-packets' | 'torch' | 'vaporwave-grid' | 'matrix-rain' | 'circuit-pulse'
-  | 'checkered' | 'meteor-streaks';
+  | 'checkered' | 'meteor-streaks' | 'neural-network' | 'stained-glass-overlay';
 
 export type CardStyle = 'default' | 'glass' | 'neon' | 'flat' | 'sharp';
 
@@ -516,7 +516,7 @@ export const COLOR_SCHEMES: ColorSchemeDefinition[] = [
     sidebarStart: '#0a0520', sidebarEnd: '#050210',
     darkSidebarStart: '#030110', darkSidebarEnd: '#030110',
     sidebarActive: 'rgba(167,139,250,0.25)',
-    backgroundEffect: 'data-packets', cardStyle: 'glass', scanlines: false, glowColor: '#a78bfa',
+    backgroundEffect: 'neural-network', cardStyle: 'glass', scanlines: false, glowColor: '#a78bfa',
   },
   {
     key: 'terminal-amber', name: 'Terminal', emoji: '🖥️', category: 'tech', forceDark: true,
@@ -567,7 +567,7 @@ export const COLOR_SCHEMES: ColorSchemeDefinition[] = [
     sidebarStart: '#1e1b4b', sidebarEnd: '#0f0d27',
     darkSidebarStart: '#0f0d27', darkSidebarEnd: '#05040f',
     sidebarActive: 'rgba(168,85,247,0.3)',
-    backgroundEffect: 'none', cardStyle: 'default', scanlines: false,
+    backgroundEffect: 'stained-glass-overlay', cardStyle: 'default', scanlines: false,
   },
 ];
 

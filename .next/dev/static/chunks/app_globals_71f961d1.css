@@ -616,6 +616,10 @@ img, video {
   transition-timing-function: cubic-bezier(.4, 0, .2, 1);
 }
 
+.ease-in-out {
+  transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+}
+
 :root {
   --sidebar-width: 280px;
   --header-height: 64px;
@@ -2753,6 +2757,16 @@ body {
   height: 2px;
   animation: linear infinite meteor-fall;
   position: absolute;
+}
+
+@keyframes stained-glass-shimmer {
+  0%, 100% {
+    filter: brightness();
+  }
+
+  50% {
+    filter: brightness(2);
+  }
 }
 
 @media (min-width: 768px) {

@@ -1136,3 +1136,9 @@ h4.ant-typography, h5.ant-typography { color: var(--foreground) !important; }
   border-radius: 1px;
   animation: meteor-fall linear infinite;
 }
+
+/* ── Stained Glass shimmer ── */
+@keyframes stained-glass-shimmer {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(2); }
+}

@@ -885,6 +885,168 @@ function MeteorStreaksEffect() {
   );
 }
 
+/* ── New: Neural Network (Canvas) ───────────────────────── */
+function NeuralNetworkEffect() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D | null;
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const NODE_COUNT = 18;
+    const CONNECT_DIST = 230;
+    const c = ctx;
+
+    type Node = { x: number; y: number; vx: number; vy: number; r: number; pulse: number };
+    type Packet = { from: number; to: number; t: number; speed: number };
+
+    const nodes: Node[] = Array.from({ length: NODE_COUNT }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 4 + 3,
+      pulse: Math.random() * Math.PI * 2,
+    }));
+
+    const packets: Packet[] = [];
+    let packetTimer = 0;
+    let raf: number;
+    let last = 0;
+
+    const draw = (now: number) => {
+      const dt = Math.min(now - last, 50);
+      last = now;
+      packetTimer += dt;
+
+      c.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const n of nodes) {
+        n.x += n.vx; n.y += n.vy; n.pulse += 0.02;
+        if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+      }
+
+      if (packetTimer > 700) {
+        packetTimer = 0;
+        const from = Math.floor(Math.random() * NODE_COUNT);
+        let best = -1; let bestD = Infinity;
+        for (let i = 0; i < NODE_COUNT; i++) {
+          if (i === from) continue;
+          const dx = nodes[i].x - nodes[from].x; const dy = nodes[i].y - nodes[from].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < CONNECT_DIST && d < bestD) { bestD = d; best = i; }
+        }
+        if (best >= 0) packets.push({ from, to: best, t: 0, speed: 0.007 + Math.random() * 0.006 });
+      }
+
+      for (let i = 0; i < NODE_COUNT; i++) {
+        for (let j = i + 1; j < NODE_COUNT; j++) {
+          const dx = nodes[i].x - nodes[j].x; const dy = nodes[i].y - nodes[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < CONNECT_DIST) {
+            const alpha = (1 - d / CONNECT_DIST) * 0.28;
+            c.strokeStyle = `rgba(167,139,250,${alpha})`;
+            c.lineWidth = 1;
+            c.beginPath();
+            c.moveTo(nodes[i].x, nodes[i].y);
+            c.lineTo(nodes[j].x, nodes[j].y);
+            c.stroke();
+          }
+        }
+      }
+
+      for (let i = packets.length - 1; i >= 0; i--) {
+        const p = packets[i]; p.t += p.speed;
+        if (p.t >= 1) { packets.splice(i, 1); continue; }
+        const fn = nodes[p.from]; const tn = nodes[p.to];
+        const px = fn.x + (tn.x - fn.x) * p.t;
+        const py = fn.y + (tn.y - fn.y) * p.t;
+        c.beginPath(); c.arc(px, py, 3, 0, Math.PI * 2);
+        c.fillStyle = 'rgba(196,181,253,0.9)'; c.fill();
+      }
+
+      for (const n of nodes) {
+        const glow = (Math.sin(n.pulse) + 1) / 2;
+        c.beginPath(); c.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        c.fillStyle = `rgba(139,92,246,${0.6 + glow * 0.4})`; c.fill();
+        c.beginPath(); c.arc(n.x, n.y, n.r + 5 * glow, 0, Math.PI * 2);
+        c.strokeStyle = `rgba(167,139,250,${0.35 * glow})`; c.lineWidth = 1.5; c.stroke();
+      }
+
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    window.addEventListener('resize', resize);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      style={{
+        position: 'fixed', inset: 0, width: '100vw', height: '100vh',
+        pointerEvents: 'none', zIndex: 0, opacity: 0.65,
+      }}
+    />
+  );
+}
+
+/* ── New: Stained Glass Geometric Overlay ───────────────────────── */
+function StainedGlassEffect() {
+  const cells = useMemo(() => {
+    const colors = ['#7c3aed', '#2563eb', '#0891b2', '#059669', '#d97706', '#dc2626', '#db2777'];
+    const shapes = [
+      'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+      'polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%)',
+      'polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%)',
+      'polygon(0% 25%, 50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%)',
+      'polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%)',
+    ];
+    return Array.from({ length: 45 }, (_, i) => ({
+      id: i,
+      x: (i % 9) * 11.5 - 2,
+      y: Math.floor(i / 9) * 22 - 5,
+      color: colors[i % colors.length],
+      opacity: 0.035 + (i % 6) * 0.015,
+      shape: shapes[i % shapes.length],
+      duration: 3 + (i % 5),
+      delay: (i % 7) * 0.4,
+    }));
+  }, []);
+
+  return (
+    <div className="theme-effect-layer" aria-hidden="true" style={{ overflow: 'hidden' }}>
+      {cells.map((cell) => (
+        <div
+          key={cell.id}
+          style={{
+            position: 'absolute',
+            left: `${cell.x}%`,
+            top: `${cell.y}%`,
+            width: '13%',
+            height: '25%',
+            background: cell.color,
+            opacity: cell.opacity,
+            border: '1.5px solid rgba(255,255,255,0.18)',
+            clipPath: cell.shape,
+            animation: `stained-glass-shimmer ${cell.duration}s ease-in-out infinite`,
+            animationDelay: `${cell.delay}s`,
+          } as CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
 /* ── Main export ─────────────────────────────────────── */
 export default function ThemeEffectsLayer() {
   const { currentScheme } = useTheme();
@@ -926,8 +1088,10 @@ export default function ThemeEffectsLayer() {
       {effect === 'vaporwave-grid'&& <VaporwaveGridEffect />}
       {effect === 'matrix-rain'   && <MatrixRainEffect />}
       {effect === 'circuit-pulse' && <CircuitPulseEffect />}
-      {effect === 'checkered'     && <CheckeredEffect />}
-      {effect === 'meteor-streaks'&& <MeteorStreaksEffect />}
+      {effect === 'checkered'           && <CheckeredEffect />}
+      {effect === 'meteor-streaks'      && <MeteorStreaksEffect />}
+      {effect === 'neural-network'      && <NeuralNetworkEffect />}
+      {effect === 'stained-glass-overlay' && <StainedGlassEffect />}
     </>
   );
 }
