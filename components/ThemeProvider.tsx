@@ -467,7 +467,7 @@ export const COLOR_SCHEMES: ColorSchemeDefinition[] = [
     backgroundEffect: 'stars', cardStyle: 'glass', scanlines: false,
   },
   {
-    key: 'halloween', name: 'Halloween', emoji: '🎃', category: 'special', forceDark: true,
+    key: 'halloween', name: 'Halloween', emoji: '🎃', category: 'holiday', forceDark: true,
     gradientStart: '#1a0a00', gradientMid: '#4a1200', gradientEnd: '#1a0020',
     darkGradientStart: '#0d0500', darkGradientMid: '#2a0900', darkGradientEnd: '#0d0010',
     primaryAccent: '#f97316',

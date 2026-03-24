@@ -1573,6 +1573,12 @@ img, video {
   --foreground-muted: #34d399;
   --content-bg: #010a07;
   --card-bg: #010a07f2;
+  --card-border: #34d39938;
+  --border-color: #34d39929;
+  --sidebar-text: #d1fae5;
+  --sidebar-text-muted: #6ee7b799;
+  --sidebar-border: #34d3992e;
+  --sidebar-hover: #34d3991a;
   --table-header-bg: #000504fa;
   --table-row-hover: #34d39917;
 }
@@ -1583,6 +1589,12 @@ img, video {
   --foreground-muted: #5ab0d8;
   --content-bg: #021020;
   --card-bg: #031428e6;
+  --card-border: #22d3ee38;
+  --border-color: #22d3ee29;
+  --sidebar-text: #cce8ff;
+  --sidebar-text-muted: #64c8f0a6;
+  --sidebar-border: #22d3ee2e;
+  --sidebar-hover: #22d3ee1f;
   --table-header-bg: #020c18;
   --table-row-hover: #22d3ee17;
 }
@@ -1590,6 +1602,15 @@ img, video {
 .dark[data-scheme="deep-sea"] {
   --background: #010408;
   --content-bg: #000205;
+  --card-bg: #01040cf5;
+  --card-border: #22d3ee2e;
+  --border-color: #22d3ee21;
+  --foreground: #cce8ff;
+  --foreground-muted: #5ab0d8;
+  --sidebar-text: #cce8ff;
+  --sidebar-text-muted: #64b4dc99;
+  --sidebar-border: #22d3ee26;
+  --sidebar-hover: #22d3ee17;
   --table-header-bg: #000105fa;
   --table-row-hover: #22d3ee17;
 }
@@ -1597,6 +1618,15 @@ img, video {
 .dark[data-scheme="lava"] {
   --background: #0e0400;
   --content-bg: #0a0300;
+  --card-bg: #0f0500f5;
+  --card-border: #f9731638;
+  --border-color: #f9731629;
+  --foreground: #fde8cc;
+  --foreground-muted: #fb923c;
+  --sidebar-text: #fde8cc;
+  --sidebar-text-muted: #fdb4648c;
+  --sidebar-border: #f973162e;
+  --sidebar-hover: #f973161a;
   --table-header-bg: #080200fa;
   --table-row-hover: #f9731617;
 }
@@ -1604,6 +1634,15 @@ img, video {
 .dark[data-scheme="storm"] {
   --background: #0e0e18;
   --content-bg: #0a0a12;
+  --card-bg: #0e0e1cf5;
+  --card-border: #60a5fa33;
+  --border-color: #60a5fa24;
+  --foreground: #dde6f8;
+  --foreground-muted: #89c;
+  --sidebar-text: #dde6f8;
+  --sidebar-text-muted: #89c9;
+  --sidebar-border: #60a5fa26;
+  --sidebar-hover: #60a5fa17;
   --table-header-bg: #07070cfa;
   --table-row-hover: #60a5fa17;
 }
@@ -1614,6 +1653,12 @@ img, video {
   --foreground-muted: #7888aa;
   --content-bg: #131820;
   --card-bg: #191e28e6;
+  --card-border: #6b728038;
+  --border-color: #6b728029;
+  --sidebar-text: #d0d8e8;
+  --sidebar-text-muted: #a0afc899;
+  --sidebar-border: #6b728033;
+  --sidebar-hover: #6b72801f;
   --table-header-bg: #0f1318;
   --table-row-hover: #6b728017;
 }
@@ -1621,6 +1666,15 @@ img, video {
 .dark[data-scheme="volcano"] {
   --background: #0d0000;
   --content-bg: #080000;
+  --card-bg: #0c0000f5;
+  --card-border: #ef444438;
+  --border-color: #ef444429;
+  --foreground: #ffd8d8;
+  --foreground-muted: #ff6b6b;
+  --sidebar-text: #ffd8d8;
+  --sidebar-text-muted: #ff8c8c8c;
+  --sidebar-border: #ef44442e;
+  --sidebar-hover: #ef44441a;
   --table-header-bg: #050000fa;
   --table-row-hover: #ef444417;
 }
@@ -1631,6 +1685,12 @@ img, video {
   --foreground-muted: #4caf50;
   --content-bg: #071508;
   --card-bg: #0a1e0aeb;
+  --card-border: #22c55e38;
+  --border-color: #22c55e29;
+  --sidebar-text: #c8e6c9;
+  --sidebar-text-muted: #a8dcaaa6;
+  --sidebar-border: #22c55e2e;
+  --sidebar-hover: #22c55e1f;
   --table-header-bg: #050f06;
   --table-row-hover: #22c55e17;
 }
@@ -1641,6 +1701,12 @@ img, video {
   --foreground-muted: #66bb6a;
   --content-bg: #050f06;
   --card-bg: #071408eb;
+  --card-border: #f59e0b38;
+  --border-color: #f59e0b29;
+  --sidebar-text: #c8e6c9;
+  --sidebar-text-muted: #a8dcaaa6;
+  --sidebar-border: #f59e0b2e;
+  --sidebar-hover: #f59e0b1f;
   --table-header-bg: #030b04;
   --table-row-hover: #f59e0b17;
 }
@@ -1651,6 +1717,12 @@ img, video {
   --foreground-muted: #f97316;
   --content-bg: #140800;
   --card-bg: #1c0c00eb;
+  --card-border: #f9731638;
+  --border-color: #f9731629;
+  --sidebar-text: #fde8cc;
+  --sidebar-text-muted: #fdd296a6;
+  --sidebar-border: #f973162e;
+  --sidebar-hover: #f973161f;
   --table-header-bg: #0e0500;
   --table-row-hover: #f9731617;
 }
@@ -1661,6 +1733,12 @@ img, video {
   --foreground-muted: #d97706;
   --content-bg: #120800;
   --card-bg: #1a0d00eb;
+  --card-border: #d9770638;
+  --border-color: #d9770629;
+  --sidebar-text: #fde8cc;
+  --sidebar-text-muted: #fdd296a6;
+  --sidebar-border: #d977062e;
+  --sidebar-hover: #d977061f;
   --table-header-bg: #0c0600;
   --table-row-hover: #d9770617;
 }
@@ -1671,6 +1749,12 @@ img, video {
   --foreground-muted: #60a5fa;
   --content-bg: #071028;
   --card-bg: #0a1535eb;
+  --card-border: #3b82f638;
+  --border-color: #3b82f629;
+  --sidebar-text: #dbeafe;
+  --sidebar-text-muted: #93c5fda6;
+  --sidebar-border: #3b82f62e;
+  --sidebar-hover: #3b82f61f;
   --table-header-bg: #050b1a;
   --table-row-hover: #3b82f617;
 }
@@ -1681,6 +1765,12 @@ img, video {
   --foreground-muted: #84cc16;
   --content-bg: #071508;
   --card-bg: #0a1e0aeb;
+  --card-border: #84cc1638;
+  --border-color: #84cc1629;
+  --sidebar-text: #ccebb0;
+  --sidebar-text-muted: #b4dc96a6;
+  --sidebar-border: #84cc162e;
+  --sidebar-hover: #84cc161f;
   --table-header-bg: #050f06;
   --table-row-hover: #84cc1617;
 }
@@ -1691,6 +1781,12 @@ img, video {
   --foreground-muted: #f97316;
   --content-bg: #140800;
   --card-bg: #1c0a00eb;
+  --card-border: #fcd34d38;
+  --border-color: #fcd34d29;
+  --sidebar-text: #fde8cc;
+  --sidebar-text-muted: #fde1aaa6;
+  --sidebar-border: #fcd34d2e;
+  --sidebar-hover: #fcd34d1f;
   --table-header-bg: #0e0500;
   --table-row-hover: #fcd34d17;
 }
@@ -1698,6 +1794,15 @@ img, video {
 .dark[data-scheme="nascar"] {
   --background: #050505;
   --content-bg: #030303;
+  --card-bg: #080808f5;
+  --card-border: #fbbf2433;
+  --border-color: #fbbf2424;
+  --foreground: #f0f0f0;
+  --foreground-muted: #aaa;
+  --sidebar-text: #f0f0f0;
+  --sidebar-text-muted: #c8c8c899;
+  --sidebar-border: #fbbf2426;
+  --sidebar-hover: #fbbf241a;
   --table-header-bg: #020202fa;
   --table-row-hover: #fbbf2417;
 }
