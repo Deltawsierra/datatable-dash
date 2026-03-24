@@ -2221,7 +2221,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ThemeProvider.tsx [app-client] (ecmascript)");
 ;
-var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature(), _s2 = __turbopack_context__.k.signature(), _s3 = __turbopack_context__.k.signature(), _s4 = __turbopack_context__.k.signature(), _s5 = __turbopack_context__.k.signature(), _s6 = __turbopack_context__.k.signature(), _s7 = __turbopack_context__.k.signature();
+var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature(), _s2 = __turbopack_context__.k.signature(), _s3 = __turbopack_context__.k.signature(), _s4 = __turbopack_context__.k.signature(), _s5 = __turbopack_context__.k.signature(), _s6 = __turbopack_context__.k.signature();
 'use client';
 ;
 ;
@@ -2284,42 +2284,8 @@ _s1(SnowEffect, "+3pJD8zUuL0wWM465AIQYPLH62I=", false, function() {
     ];
 });
 _c = SnowEffect;
-function StarsEffect() {
-    _s2();
-    const particles = useParticles(110);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "theme-effect-layer",
-        "aria-hidden": "true",
-        children: particles.map((p)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "star",
-                style: {
-                    left: `${p.x}%`,
-                    top: `${random(0, 100)}%`,
-                    width: p.size * 0.35,
-                    height: p.size * 0.35,
-                    animationDelay: `${p.delay}s`,
-                    animationDuration: `${p.duration * 0.6}s`,
-                    opacity: p.opacity
-                }
-            }, p.id, false, {
-                fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 61,
-                columnNumber: 9
-            }, this))
-    }, void 0, false, {
-        fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 59,
-        columnNumber: 5
-    }, this);
-}
-_s2(StarsEffect, "+3pJD8zUuL0wWM465AIQYPLH62I=", false, function() {
-    return [
-        useParticles
-    ];
-});
-_c1 = StarsEffect;
 function StarsEffectStable() {
-    _s3();
+    _s2();
     const stars = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "StarsEffectStable.useMemo[stars]": ()=>{
             return Array.from({
@@ -2353,19 +2319,19 @@ function StarsEffectStable() {
                 }
             }, s.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 95,
+                lineNumber: 72,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 93,
+        lineNumber: 70,
         columnNumber: 5
     }, this);
 }
-_s3(StarsEffectStable, "UO1DGuXeNG2J/D1fnIPV9cECR/c=");
-_c2 = StarsEffectStable;
+_s2(StarsEffectStable, "UO1DGuXeNG2J/D1fnIPV9cECR/c=");
+_c1 = StarsEffectStable;
 function LeavesEffect() {
-    _s4();
+    _s3();
     const particles = useParticles(28);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "theme-effect-layer",
@@ -2383,23 +2349,23 @@ function LeavesEffect() {
                 }
             }, p.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 118,
+                lineNumber: 95,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 116,
+        lineNumber: 93,
         columnNumber: 5
     }, this);
 }
-_s4(LeavesEffect, "+3pJD8zUuL0wWM465AIQYPLH62I=", false, function() {
+_s3(LeavesEffect, "+3pJD8zUuL0wWM465AIQYPLH62I=", false, function() {
     return [
         useParticles
     ];
 });
-_c3 = LeavesEffect;
+_c2 = LeavesEffect;
 function PetalsEffect() {
-    _s5();
+    _s4();
     const particles = useParticles(28);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "theme-effect-layer",
@@ -2417,21 +2383,21 @@ function PetalsEffect() {
                 }
             }, p.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 141,
+                lineNumber: 118,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 139,
+        lineNumber: 116,
         columnNumber: 5
     }, this);
 }
-_s5(PetalsEffect, "+3pJD8zUuL0wWM465AIQYPLH62I=", false, function() {
+_s4(PetalsEffect, "+3pJD8zUuL0wWM465AIQYPLH62I=", false, function() {
     return [
         useParticles
     ];
 });
-_c4 = PetalsEffect;
+_c3 = PetalsEffect;
 const BAT_SVG = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20" fill="currentColor">
   <path d="M20 8 C14 2, 4 0, 0 6 C4 6, 6 10, 8 10 C10 10, 12 8, 14 8 C16 8, 18 12, 20 12 C22 12, 24 8, 26 8 C28 8, 30 10, 32 10 C34 10, 36 6, 40 6 C36 0, 26 2, 20 8 Z"/>
@@ -2439,7 +2405,7 @@ const BAT_SVG = `
 </svg>
 `;
 function BatsEffect() {
-    _s6();
+    _s5();
     const bats = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "BatsEffect.useMemo[bats]": ()=>{
             return Array.from({
@@ -2476,17 +2442,17 @@ function BatsEffect() {
                 }
             }, b.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 182,
+                lineNumber: 159,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 180,
+        lineNumber: 157,
         columnNumber: 5
     }, this);
 }
-_s6(BatsEffect, "Mv/m3RqA5jdJKbt9xVXWseGIsGA=");
-_c5 = BatsEffect;
+_s5(BatsEffect, "Mv/m3RqA5jdJKbt9xVXWseGIsGA=");
+_c4 = BatsEffect;
 function WavesEffect() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "theme-effect-layer waves-container",
@@ -2496,55 +2462,55 @@ function WavesEffect() {
                 className: "wave wave-1"
             }, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 204,
+                lineNumber: 181,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "wave wave-2"
             }, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 205,
+                lineNumber: 182,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "wave wave-3"
             }, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 206,
+                lineNumber: 183,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 203,
+        lineNumber: 180,
         columnNumber: 5
     }, this);
 }
-_c6 = WavesEffect;
+_c5 = WavesEffect;
 function PixelsEffect() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "theme-effect-layer pixels-layer",
         "aria-hidden": "true"
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 213,
+        lineNumber: 190,
         columnNumber: 5
     }, this);
 }
-_c7 = PixelsEffect;
+_c6 = PixelsEffect;
 function ScanlinesEffect() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "scanlines-overlay",
+        className: "scanlines",
         "aria-hidden": "true"
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 219,
+        lineNumber: 196,
         columnNumber: 5
     }, this);
 }
-_c8 = ScanlinesEffect;
+_c7 = ScanlinesEffect;
 function ThemeEffectsLayer() {
-    _s7();
+    _s6();
     const { currentScheme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"])();
     const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -2558,64 +2524,63 @@ function ThemeEffectsLayer() {
         children: [
             currentScheme.scanlines && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ScanlinesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 234,
+                lineNumber: 211,
                 columnNumber: 35
             }, this),
             effect === 'snow' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SnowEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 235,
+                lineNumber: 212,
                 columnNumber: 31
             }, this),
             effect === 'stars' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StarsEffectStable, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 236,
+                lineNumber: 213,
                 columnNumber: 31
             }, this),
             effect === 'leaves' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(LeavesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 237,
+                lineNumber: 214,
                 columnNumber: 31
             }, this),
             effect === 'petals' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PetalsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 238,
+                lineNumber: 215,
                 columnNumber: 31
             }, this),
             effect === 'bats' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BatsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 239,
+                lineNumber: 216,
                 columnNumber: 31
             }, this),
             effect === 'waves' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(WavesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 240,
+                lineNumber: 217,
                 columnNumber: 31
             }, this),
             effect === 'pixels' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PixelsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 241,
+                lineNumber: 218,
                 columnNumber: 31
             }, this)
         ]
     }, void 0, true);
 }
-_s7(ThemeEffectsLayer, "ntPF2NDcdGfX5HNzqBMb1AyesmU=", false, function() {
+_s6(ThemeEffectsLayer, "ntPF2NDcdGfX5HNzqBMb1AyesmU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"]
     ];
 });
-_c9 = ThemeEffectsLayer;
-var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9;
+_c8 = ThemeEffectsLayer;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8;
 __turbopack_context__.k.register(_c, "SnowEffect");
-__turbopack_context__.k.register(_c1, "StarsEffect");
-__turbopack_context__.k.register(_c2, "StarsEffectStable");
-__turbopack_context__.k.register(_c3, "LeavesEffect");
-__turbopack_context__.k.register(_c4, "PetalsEffect");
-__turbopack_context__.k.register(_c5, "BatsEffect");
-__turbopack_context__.k.register(_c6, "WavesEffect");
-__turbopack_context__.k.register(_c7, "PixelsEffect");
-__turbopack_context__.k.register(_c8, "ScanlinesEffect");
-__turbopack_context__.k.register(_c9, "ThemeEffectsLayer");
+__turbopack_context__.k.register(_c1, "StarsEffectStable");
+__turbopack_context__.k.register(_c2, "LeavesEffect");
+__turbopack_context__.k.register(_c3, "PetalsEffect");
+__turbopack_context__.k.register(_c4, "BatsEffect");
+__turbopack_context__.k.register(_c5, "WavesEffect");
+__turbopack_context__.k.register(_c6, "PixelsEffect");
+__turbopack_context__.k.register(_c7, "ScanlinesEffect");
+__turbopack_context__.k.register(_c8, "ThemeEffectsLayer");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }

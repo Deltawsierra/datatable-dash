@@ -1078,7 +1078,7 @@ body {
   border-radius: 0 !important;
 }
 
-.scanlines-overlay {
+.scanlines, .scanlines-overlay {
   z-index: 9999;
   pointer-events: none;
   mix-blend-mode: multiply;
@@ -1125,7 +1125,7 @@ body {
 
 .theme-effect-layer {
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
   width: 100vw;
   height: 100vh;
   position: fixed;

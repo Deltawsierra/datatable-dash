@@ -402,6 +402,7 @@ h4.ant-typography, h5.ant-typography { color: var(--foreground) !important; }
    SCANLINES OVERLAY
    ============================================ */
 
+.scanlines,
 .scanlines-overlay {
   position: fixed;
   inset: 0;
@@ -469,7 +470,7 @@ h4.ant-typography, h5.ant-typography { color: var(--foreground) !important; }
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
   overflow: hidden;
 }
 

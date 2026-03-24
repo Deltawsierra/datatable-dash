@@ -53,29 +53,6 @@ function SnowEffect() {
   );
 }
 
-function StarsEffect() {
-  const particles = useParticles(110);
-  return (
-    <div className="theme-effect-layer" aria-hidden="true">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="star"
-          style={{
-            left: `${p.x}%`,
-            top: `${random(0, 100)}%`,
-            width: p.size * 0.35,
-            height: p.size * 0.35,
-            animationDelay: `${p.delay}s`,
-            animationDuration: `${p.duration * 0.6}s`,
-            opacity: p.opacity,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 function StarsEffectStable() {
   const stars = useMemo(() => {
     return Array.from({ length: 110 }, (_, i) => ({
@@ -216,7 +193,7 @@ function PixelsEffect() {
 
 function ScanlinesEffect() {
   return (
-    <div className="scanlines-overlay" aria-hidden="true" />
+    <div className="scanlines" aria-hidden="true" />
   );
 }
 
