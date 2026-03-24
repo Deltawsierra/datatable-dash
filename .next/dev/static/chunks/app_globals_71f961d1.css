@@ -265,6 +265,10 @@ img, video {
   pointer-events: none;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -387,6 +391,10 @@ img, video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.resize {
+  resize: both;
 }
 
 .grid-cols-1 {
@@ -587,6 +595,11 @@ img, video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.sepia {
+  --tw-sepia: sepia(100%);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
@@ -746,6 +759,530 @@ img, video {
   --table-row-hover: #44403c0a;
 }
 
+[data-scheme="sakura"] {
+  --background: #fff0f5;
+  --foreground: #4a0028;
+  --foreground-muted: #9d174d;
+  --content-bg: #ffe4ef;
+  --card-bg: #ffffffd9;
+  --card-border: #f472b64d;
+  --border-color: #f472b633;
+  --sidebar-text: #fce7f3;
+  --sidebar-text-muted: #fce7f399;
+  --sidebar-border: #f472b633;
+  --sidebar-hover: #f472b626;
+  --table-header-bg: #ffe0ec;
+  --table-row-hover: #f472b60f;
+}
+
+[data-scheme="aurora"] {
+  --background: #022c22;
+  --foreground: #d1fae5;
+  --foreground-muted: #6ee7b7;
+  --content-bg: #011a14;
+  --card-bg: #021e14e6;
+  --card-border: #34d39940;
+  --border-color: #34d39933;
+  --sidebar-text: #d1fae5;
+  --sidebar-text-muted: #6ee7b799;
+  --sidebar-border: #34d39933;
+  --sidebar-hover: #34d3991f;
+  --table-header-bg: #010f0ae6;
+  --table-row-hover: #34d39912;
+}
+
+[data-scheme="underwater"] {
+  --background: #e0f4ff;
+  --foreground: #0c3050;
+  --foreground-muted: #1e5a80;
+  --content-bg: #d0eeff;
+  --card-bg: #ffffffd9;
+  --card-border: #22d3ee4d;
+  --border-color: #22d3ee33;
+  --sidebar-text: #e0f4ff;
+  --sidebar-text-muted: #e0f4ff99;
+  --sidebar-border: #22d3ee33;
+  --sidebar-hover: #22d3ee26;
+  --table-header-bg: #c8e8ff;
+  --table-row-hover: #22d3ee12;
+}
+
+[data-scheme="deep-sea"] {
+  --background: #020a18;
+  --foreground: #cce8ff;
+  --foreground-muted: #5ab0d8;
+  --content-bg: #010510;
+  --card-bg: #020a19eb;
+  --card-border: #22d3ee40;
+  --border-color: #22d3ee2e;
+  --sidebar-text: #cce8ff;
+  --sidebar-text-muted: #64b4dc99;
+  --sidebar-border: #22d3ee26;
+  --sidebar-hover: #22d3ee14;
+  --table-header-bg: #01030cf2;
+  --table-row-hover: #22d3ee12;
+}
+
+[data-scheme="lava"] {
+  --background: #1c0800;
+  --foreground: #fde8cc;
+  --foreground-muted: #fb923c;
+  --content-bg: #140500;
+  --card-bg: #1c0800eb;
+  --card-border: #f973164d;
+  --border-color: #f9731633;
+  --sidebar-text: #fde8cc;
+  --sidebar-text-muted: #fde8cc80;
+  --sidebar-border: #f9731633;
+  --sidebar-hover: #f973161f;
+  --table-header-bg: #0f0400f2;
+  --table-row-hover: #f9731614;
+}
+
+[data-scheme="storm"] {
+  --background: #1c1c2e;
+  --foreground: #dde6f8;
+  --foreground-muted: #89c;
+  --content-bg: #131322;
+  --card-bg: #1c1c2eeb;
+  --card-border: #60a5fa40;
+  --border-color: #60a5fa2e;
+  --sidebar-text: #dde6f8;
+  --sidebar-text-muted: #89c9;
+  --sidebar-border: #60a5fa26;
+  --sidebar-hover: #60a5fa1a;
+  --table-header-bg: #0f0f19f2;
+  --table-row-hover: #60a5fa12;
+}
+
+[data-scheme="fog"] {
+  --background: #e8eaed;
+  --foreground: #2d3340;
+  --foreground-muted: #5a6278;
+  --content-bg: #dfe2e7;
+  --card-bg: #ffffffbf;
+  --card-border: #6b728040;
+  --border-color: #6b728033;
+  --sidebar-text: #dfe2e7;
+  --sidebar-text-muted: #b4bed299;
+  --sidebar-border: #6b728033;
+  --sidebar-hover: #6b72801f;
+  --table-header-bg: #d5d8df;
+  --table-row-hover: #6b72800f;
+}
+
+[data-scheme="volcano"] {
+  --background: #1a0000;
+  --foreground: #ffd8d8;
+  --foreground-muted: #ff6b6b;
+  --content-bg: #100000;
+  --card-bg: #1a0000eb;
+  --card-border: #ef444447;
+  --border-color: #ef444433;
+  --sidebar-text: #ffd8d8;
+  --sidebar-text-muted: #ffa0a08c;
+  --sidebar-border: #ef444433;
+  --sidebar-hover: #ef44441a;
+  --table-header-bg: #0a0000f2;
+  --table-row-hover: #ef444412;
+}
+
+[data-scheme="soccer"] {
+  --background: #e8f5e9;
+  --foreground: #1b5e20;
+  --foreground-muted: #4caf50;
+  --content-bg: #dcedc8;
+  --card-bg: #fff;
+  --card-border: #22c55e40;
+  --border-color: #22c55e33;
+  --sidebar-text: #e8f5e9;
+  --sidebar-text-muted: #c8e6c8a6;
+  --sidebar-border: #22c55e33;
+  --sidebar-hover: #22c55e26;
+  --table-header-bg: #c8e6c9;
+  --table-row-hover: #22c55e0f;
+}
+
+[data-scheme="football"] {
+  --background: #e8f5e9;
+  --foreground: #1b4e1f;
+  --foreground-muted: #558b2f;
+  --content-bg: #dcedc8;
+  --card-bg: #fff;
+  --card-border: #f59e0b40;
+  --border-color: #f59e0b33;
+  --sidebar-text: #e8f5e9;
+  --sidebar-text-muted: #c8e6c8a6;
+  --sidebar-border: #f59e0b33;
+  --sidebar-hover: #f59e0b1f;
+  --table-header-bg: #c8e6c9;
+  --table-row-hover: #f59e0b0f;
+}
+
+[data-scheme="basketball"] {
+  --background: #fef3e2;
+  --foreground: #4a2000;
+  --foreground-muted: #92400e;
+  --content-bg: #fde8c8;
+  --card-bg: #fff;
+  --card-border: #f9731640;
+  --border-color: #f9731633;
+  --sidebar-text: #fef3e2;
+  --sidebar-text-muted: #fde1aaa6;
+  --sidebar-border: #f9731633;
+  --sidebar-hover: #f9731626;
+  --table-header-bg: #fdd9a0;
+  --table-row-hover: #f973160f;
+}
+
+[data-scheme="baseball"] {
+  --background: #fdf4e8;
+  --foreground: #3d1c00;
+  --foreground-muted: #a16207;
+  --content-bg: #f8e8d0;
+  --card-bg: #fff;
+  --card-border: #d9770640;
+  --border-color: #d9770633;
+  --table-header-bg: #f5dba0;
+  --table-row-hover: #d977060f;
+}
+
+[data-scheme="hockey"] {
+  --background: #eff6ff;
+  --foreground: #1e3a8a;
+  --foreground-muted: #3b82f6;
+  --content-bg: #dbeafe;
+  --card-bg: #ffffffeb;
+  --card-border: #3b82f640;
+  --border-color: #3b82f633;
+  --sidebar-text: #eff6ff;
+  --sidebar-text-muted: #bbdefba6;
+  --sidebar-border: #3b82f633;
+  --sidebar-hover: #3b82f626;
+  --table-header-bg: #dbeafe;
+  --table-row-hover: #3b82f60f;
+}
+
+[data-scheme="golf"] {
+  --background: #e8f5e9;
+  --foreground: #1b4e20;
+  --foreground-muted: #4a7c59;
+  --content-bg: #d0ead2;
+  --card-bg: #fff;
+  --card-border: #84cc1640;
+  --border-color: #84cc1633;
+  --sidebar-text: #e8f5e9;
+  --sidebar-text-muted: #c8e6c8a6;
+  --sidebar-border: #84cc1633;
+  --sidebar-hover: #84cc161f;
+  --table-header-bg: #c8e6c9;
+  --table-row-hover: #84cc160f;
+}
+
+[data-scheme="tennis"] {
+  --background: #fff7ed;
+  --foreground: #431407;
+  --foreground-muted: #c2410c;
+  --content-bg: #feebd2;
+  --card-bg: #fff;
+  --card-border: #fcd34d4d;
+  --border-color: #fcd34d33;
+  --table-header-bg: #fde8b0;
+  --table-row-hover: #fcd34d12;
+}
+
+[data-scheme="nascar"] {
+  --background: #0a0a0a;
+  --foreground: #f0f0f0;
+  --foreground-muted: #999;
+  --content-bg: #080808;
+  --card-bg: #0f0f0ff2;
+  --card-border: #fbbf2440;
+  --border-color: #fbbf2433;
+  --sidebar-text: #f0f0f0;
+  --sidebar-text-muted: #c8c8c88c;
+  --sidebar-border: #fbbf2426;
+  --sidebar-hover: #fbbf241a;
+  --table-header-bg: #050505fa;
+  --table-row-hover: #fbbf2414;
+}
+
+[data-scheme="christmas"] {
+  --background: #faf4f4;
+  --foreground: #3d0808;
+  --foreground-muted: #8b1a1a;
+  --content-bg: #f5e8e8;
+  --card-bg: #fff;
+  --card-border: #fcd34d4d;
+  --border-color: #dc262633;
+  --table-header-bg: #f5d8d8;
+  --table-row-hover: #fcd34d12;
+}
+
+[data-scheme="new-years"] {
+  --background: #0a0a00;
+  --foreground: #ffefd0;
+  --foreground-muted: #d4a900;
+  --content-bg: #080800;
+  --card-bg: #0f0f00f2;
+  --card-border: #fbbf244d;
+  --border-color: #fbbf2433;
+  --sidebar-text: #ffefd0;
+  --sidebar-text-muted: #ffdc648c;
+  --sidebar-border: #fbbf2426;
+  --sidebar-hover: #fbbf241a;
+  --table-header-bg: #050500fa;
+  --table-row-hover: #fbbf2414;
+}
+
+[data-scheme="valentines"] {
+  --background: #fff0f3;
+  --foreground: #4a0020;
+  --foreground-muted: #9f1239;
+  --content-bg: #ffe0e8;
+  --card-bg: #fff;
+  --card-border: #f43f5e40;
+  --border-color: #f43f5e33;
+  --table-header-bg: #ffd8e0;
+  --table-row-hover: #f43f5e0f;
+}
+
+[data-scheme="st-patricks"] {
+  --background: #e8f5e9;
+  --foreground: #1b5e20;
+  --foreground-muted: #388e3c;
+  --content-bg: #d0ead2;
+  --card-bg: #fff;
+  --card-border: #4ade8040;
+  --border-color: #4ade8033;
+  --table-header-bg: #c8e6c9;
+  --table-row-hover: #4ade800f;
+}
+
+[data-scheme="olympics"] {
+  --background: #fffbf0;
+  --foreground: #2a1800;
+  --foreground-muted: #92400e;
+  --content-bg: #fff5d8;
+  --card-bg: #fff;
+  --card-border: #0284c740;
+  --border-color: #fbbf2433;
+  --table-header-bg: #fff0b0;
+  --table-row-hover: #0284c70f;
+}
+
+[data-scheme="vaporwave"] {
+  --background: #1a0030;
+  --foreground: #f0d0ff;
+  --foreground-muted: #c084fc;
+  --content-bg: #100020;
+  --card-bg: #19002deb;
+  --card-border: #f0abfc4d;
+  --border-color: #f0abfc33;
+  --sidebar-text: #f0d0ff;
+  --sidebar-text-muted: #c084fca6;
+  --sidebar-border: #f0abfc26;
+  --sidebar-hover: #f0abfc1a;
+  --table-header-bg: #0f001ef2;
+  --table-row-hover: #f0abfc12;
+}
+
+[data-scheme="lofi"] {
+  --background: #fdf6ec;
+  --foreground: #3d1a00;
+  --foreground-muted: #8b4513;
+  --content-bg: #f8ead8;
+  --card-bg: #fffaf0eb;
+  --card-border: #fcd34d40;
+  --border-color: #b4641e33;
+  --table-header-bg: #f5e0c8;
+  --table-row-hover: #fcd34d12;
+}
+
+[data-scheme="coffee"] {
+  --background: #fdf5ec;
+  --foreground: #2c1008;
+  --foreground-muted: #7c4a2c;
+  --content-bg: #f8e8d0;
+  --card-bg: #fffaf0f2;
+  --card-border: #d9770640;
+  --border-color: #6b422633;
+  --sidebar-text: #f8e8d0;
+  --sidebar-text-muted: #f0c896a6;
+  --sidebar-border: #d9770633;
+  --sidebar-hover: #d977061f;
+  --table-header-bg: #f0dfc8;
+  --table-row-hover: #d977060f;
+}
+
+[data-scheme="blueprint"] {
+  --background: #0a1535;
+  --foreground: #d0e8ff;
+  --foreground-muted: #60a5fa;
+  --content-bg: #07102a;
+  --card-bg: #0a1535eb;
+  --card-border: #93c5fd4d;
+  --border-color: #93c5fd33;
+  --sidebar-text: #d0e8ff;
+  --sidebar-text-muted: #60a5faa6;
+  --sidebar-border: #93c5fd33;
+  --sidebar-hover: #93c5fd1a;
+  --table-header-bg: #050819f2;
+  --table-row-hover: #93c5fd12;
+}
+
+[data-scheme="sepia"] {
+  --background: #fdf5e4;
+  --foreground: #2c1808;
+  --foreground-muted: #7c5025;
+  --content-bg: #f8ecd0;
+  --card-bg: #fff8e6f2;
+  --card-border: #fbbf2440;
+  --border-color: #92400e33;
+  --table-header-bg: #f0dfc0;
+  --table-row-hover: #fbbf240f;
+}
+
+[data-scheme="watercolor"] {
+  --background: #f5f0ff;
+  --foreground: #2d2060;
+  --foreground-muted: #6b5fc8;
+  --content-bg: #ede8ff;
+  --card-bg: #ffffffbf;
+  --card-border: #818cf84d;
+  --border-color: #818cf833;
+  --table-header-bg: #e8e0ff;
+  --table-row-hover: #818cf812;
+}
+
+[data-scheme="matrix"] {
+  --background: #000;
+  --foreground: #00ff41;
+  --foreground-muted: #00aa2a;
+  --content-bg: #020202;
+  --card-bg: #050a05f2;
+  --card-border: #00ff414d;
+  --border-color: #00ff4133;
+  --sidebar-text: #00ff41;
+  --sidebar-text-muted: #00b432a6;
+  --sidebar-border: #00ff4126;
+  --sidebar-hover: #00ff4114;
+  --table-header-bg: #000500fa;
+  --table-row-hover: #00ff410f;
+}
+
+[data-scheme="circuit"] {
+  --background: #000d00;
+  --foreground: #22c55e;
+  --foreground-muted: #15803d;
+  --content-bg: #000800;
+  --card-bg: #000a00f2;
+  --card-border: #22c55e4d;
+  --border-color: #22c55e33;
+  --sidebar-text: #22c55e;
+  --sidebar-text-muted: #14a046a6;
+  --sidebar-border: #22c55e26;
+  --sidebar-hover: #22c55e14;
+  --table-header-bg: #000500fa;
+  --table-row-hover: #22c55e0f;
+}
+
+[data-scheme="neural"] {
+  --background: #080215;
+  --foreground: #ddd8ff;
+  --foreground-muted: #a78bfa;
+  --content-bg: #05010e;
+  --card-bg: #0a0316eb;
+  --card-border: #a78bfa4d;
+  --border-color: #a78bfa33;
+  --sidebar-text: #ddd8ff;
+  --sidebar-text-muted: #a78bfaa6;
+  --sidebar-border: #a78bfa26;
+  --sidebar-hover: #a78bfa1a;
+  --table-header-bg: #04010af2;
+  --table-row-hover: #a78bfa12;
+}
+
+[data-scheme="terminal-amber"] {
+  --background: #0a0500;
+  --foreground: #f59e0b;
+  --foreground-muted: #b45309;
+  --content-bg: #060300;
+  --card-bg: #0c0700f2;
+  --card-border: #f59e0b4d;
+  --border-color: #f59e0b33;
+  --sidebar-text: #f59e0b;
+  --sidebar-text-muted: #b4781ea6;
+  --sidebar-border: #f59e0b26;
+  --sidebar-hover: #f59e0b14;
+  --table-header-bg: #050300fa;
+  --table-row-hover: #f59e0b0f;
+}
+
+[data-scheme="data-flow"] {
+  --background: #010a14;
+  --foreground: #cce8ff;
+  --foreground-muted: #38bdf8;
+  --content-bg: #00060e;
+  --card-bg: #020c16eb;
+  --card-border: #38bdf84d;
+  --border-color: #38bdf833;
+  --sidebar-text: #cce8ff;
+  --sidebar-text-muted: #38bdf899;
+  --sidebar-border: #38bdf826;
+  --sidebar-hover: #38bdf814;
+  --table-header-bg: #000408f2;
+  --table-row-hover: #38bdf812;
+}
+
+[data-scheme="dungeon"] {
+  --background: #1a1408;
+  --foreground: #f0d8a0;
+  --foreground-muted: #c8a040;
+  --content-bg: #120e06;
+  --card-bg: #191208eb;
+  --card-border: #f9731640;
+  --border-color: #f973162e;
+  --sidebar-text: #f0d8a0;
+  --sidebar-text-muted: #c8a0408c;
+  --sidebar-border: #f9731626;
+  --sidebar-hover: #f973161a;
+  --table-header-bg: #0a0804f2;
+  --table-row-hover: #f9731612;
+}
+
+[data-scheme="galaxy-rose"] {
+  --background: #180020;
+  --foreground: #fce7f3;
+  --foreground-muted: #f9a8d4;
+  --content-bg: #100018;
+  --card-bg: #190023eb;
+  --card-border: #f9a8d447;
+  --border-color: #f9a8d433;
+  --sidebar-text: #fce7f3;
+  --sidebar-text-muted: #f9a8d48c;
+  --sidebar-border: #f9a8d426;
+  --sidebar-hover: #f9a8d41a;
+  --table-header-bg: #0a000ff2;
+  --table-row-hover: #f9a8d412;
+}
+
+[data-scheme="stained-glass"] {
+  --background: #f5f0ff;
+  --foreground: #1e0a3c;
+  --foreground-muted: #5b21b6;
+  --content-bg: #ede8ff;
+  --card-bg: #ffffffd9;
+  --card-border: #a855f747;
+  --border-color: #a855f733;
+  --sidebar-text: #f0e8ff;
+  --sidebar-text-muted: #a78bfaa6;
+  --sidebar-border: #a855f733;
+  --sidebar-hover: #a855f71f;
+  --table-header-bg: #e8d8ff;
+  --table-row-hover: #a855f70f;
+}
+
 .dark {
   --background: #0f172a;
   --foreground: #f1f5f9;
@@ -861,6 +1398,322 @@ img, video {
   --foreground-muted: #e080b0;
   --table-header-bg: #1f0010;
   --table-row-hover: #ec489917;
+}
+
+.dark[data-scheme="sakura"] {
+  --background: #1a0010;
+  --foreground: #fce7f3;
+  --foreground-muted: #f9a8d4;
+  --content-bg: #240018;
+  --card-bg: #230014eb;
+  --card-border: #f472b640;
+  --border-color: #f472b633;
+  --table-header-bg: #200014;
+  --table-row-hover: #f472b617;
+}
+
+.dark[data-scheme="aurora"] {
+  --background: #010e0a;
+  --foreground: #d1fae5;
+  --foreground-muted: #34d399;
+  --content-bg: #010a07;
+  --card-bg: #010a07f2;
+  --table-header-bg: #000504fa;
+  --table-row-hover: #34d39917;
+}
+
+.dark[data-scheme="underwater"] {
+  --background: #031830;
+  --foreground: #cce8ff;
+  --foreground-muted: #5ab0d8;
+  --content-bg: #021020;
+  --card-bg: #031428e6;
+  --table-header-bg: #020c18;
+  --table-row-hover: #22d3ee17;
+}
+
+.dark[data-scheme="deep-sea"] {
+  --background: #010408;
+  --content-bg: #000205;
+  --table-header-bg: #000105fa;
+  --table-row-hover: #22d3ee17;
+}
+
+.dark[data-scheme="lava"] {
+  --background: #0e0400;
+  --content-bg: #0a0300;
+  --table-header-bg: #080200fa;
+  --table-row-hover: #f9731617;
+}
+
+.dark[data-scheme="storm"] {
+  --background: #0e0e18;
+  --content-bg: #0a0a12;
+  --table-header-bg: #07070cfa;
+  --table-row-hover: #60a5fa17;
+}
+
+.dark[data-scheme="fog"] {
+  --background: #1a1e25;
+  --foreground: #d0d8e8;
+  --foreground-muted: #7888aa;
+  --content-bg: #131820;
+  --card-bg: #191e28e6;
+  --table-header-bg: #0f1318;
+  --table-row-hover: #6b728017;
+}
+
+.dark[data-scheme="volcano"] {
+  --background: #0d0000;
+  --content-bg: #080000;
+  --table-header-bg: #050000fa;
+  --table-row-hover: #ef444417;
+}
+
+.dark[data-scheme="soccer"] {
+  --background: #0a1f0a;
+  --foreground: #c8e6c9;
+  --foreground-muted: #4caf50;
+  --content-bg: #071508;
+  --card-bg: #0a1e0aeb;
+  --table-header-bg: #050f06;
+  --table-row-hover: #22c55e17;
+}
+
+.dark[data-scheme="football"] {
+  --background: #071508;
+  --foreground: #c8e6c9;
+  --foreground-muted: #66bb6a;
+  --content-bg: #050f06;
+  --card-bg: #071408eb;
+  --table-header-bg: #030b04;
+  --table-row-hover: #f59e0b17;
+}
+
+.dark[data-scheme="basketball"] {
+  --background: #1c0c00;
+  --foreground: #fde8cc;
+  --foreground-muted: #f97316;
+  --content-bg: #140800;
+  --card-bg: #1c0c00eb;
+  --table-header-bg: #0e0500;
+  --table-row-hover: #f9731617;
+}
+
+.dark[data-scheme="baseball"] {
+  --background: #1a0d00;
+  --foreground: #fde8cc;
+  --foreground-muted: #d97706;
+  --content-bg: #120800;
+  --card-bg: #1a0d00eb;
+  --table-header-bg: #0c0600;
+  --table-row-hover: #d9770617;
+}
+
+.dark[data-scheme="hockey"] {
+  --background: #0a1535;
+  --foreground: #dbeafe;
+  --foreground-muted: #60a5fa;
+  --content-bg: #071028;
+  --card-bg: #0a1535eb;
+  --table-header-bg: #050b1a;
+  --table-row-hover: #3b82f617;
+}
+
+.dark[data-scheme="golf"] {
+  --background: #0a1f0a;
+  --foreground: #ccebb0;
+  --foreground-muted: #84cc16;
+  --content-bg: #071508;
+  --card-bg: #0a1e0aeb;
+  --table-header-bg: #050f06;
+  --table-row-hover: #84cc1617;
+}
+
+.dark[data-scheme="tennis"] {
+  --background: #1c0a00;
+  --foreground: #fde8cc;
+  --foreground-muted: #f97316;
+  --content-bg: #140800;
+  --card-bg: #1c0a00eb;
+  --table-header-bg: #0e0500;
+  --table-row-hover: #fcd34d17;
+}
+
+.dark[data-scheme="nascar"] {
+  --background: #050505;
+  --content-bg: #030303;
+  --table-header-bg: #020202fa;
+  --table-row-hover: #fbbf2417;
+}
+
+.dark[data-scheme="christmas"] {
+  --background: #1a0808;
+  --foreground: #fde8cc;
+  --foreground-muted: #f87171;
+  --content-bg: #120606;
+  --card-bg: #1a0808eb;
+  --table-header-bg: #0a0404;
+  --table-row-hover: #fcd34d17;
+}
+
+.dark[data-scheme="new-years"] {
+  --background: #050500;
+  --content-bg: #030300;
+  --table-header-bg: #020200fa;
+  --table-row-hover: #fbbf2417;
+}
+
+.dark[data-scheme="valentines"] {
+  --background: #1a0010;
+  --foreground: #fce7f3;
+  --foreground-muted: #fb7185;
+  --content-bg: #120008;
+  --card-bg: #1a0010eb;
+  --table-header-bg: #0a0006;
+  --table-row-hover: #f43f5e17;
+}
+
+.dark[data-scheme="st-patricks"] {
+  --background: #0a1f0a;
+  --foreground: #ccf0cc;
+  --foreground-muted: #4ade80;
+  --content-bg: #071508;
+  --card-bg: #0a1e0aeb;
+  --table-header-bg: #050f06;
+  --table-row-hover: #4ade8017;
+}
+
+.dark[data-scheme="olympics"] {
+  --background: #1a1000;
+  --foreground: #fde8cc;
+  --foreground-muted: #fbbf24;
+  --content-bg: #120c00;
+  --card-bg: #1a1000eb;
+  --table-header-bg: #0a0800;
+  --table-row-hover: #0284c717;
+}
+
+.dark[data-scheme="vaporwave"] {
+  --background: #0d0020;
+  --content-bg: #080012;
+  --table-header-bg: #07000ffa;
+  --table-row-hover: #f0abfc17;
+}
+
+.dark[data-scheme="lofi"] {
+  --background: #1a0c00;
+  --foreground: #fde8cc;
+  --foreground-muted: #d97706;
+  --content-bg: #120800;
+  --card-bg: #1a0c00eb;
+  --table-header-bg: #0a0600;
+  --table-row-hover: #fcd34d17;
+}
+
+.dark[data-scheme="coffee"] {
+  --background: #140802;
+  --foreground: #fde8cc;
+  --foreground-muted: #d97706;
+  --content-bg: #0e0602;
+  --card-bg: #140a03eb;
+  --table-header-bg: #080400;
+  --table-row-hover: #d9770617;
+}
+
+.dark[data-scheme="blueprint"] {
+  --background: #050c22;
+  --content-bg: #040918;
+  --table-header-bg: #02040cfa;
+  --table-row-hover: #93c5fd17;
+}
+
+.dark[data-scheme="sepia"] {
+  --background: #1a1008;
+  --foreground: #f5dfc0;
+  --foreground-muted: #c8924a;
+  --content-bg: #120c06;
+  --card-bg: #1a1008eb;
+  --table-header-bg: #0a0804;
+  --table-row-hover: #fbbf2417;
+}
+
+.dark[data-scheme="watercolor"] {
+  --background: #10103e;
+  --foreground: #e0d8ff;
+  --foreground-muted: #a09cee;
+  --content-bg: #0c0c30;
+  --card-bg: #10103ee6;
+  --table-header-bg: #080828;
+  --table-row-hover: #818cf817;
+}
+
+.dark[data-scheme="matrix"] {
+  --background: #000;
+  --content-bg: #010101;
+  --table-header-bg: #000300fa;
+  --table-row-hover: #00ff4112;
+}
+
+.dark[data-scheme="circuit"] {
+  --background: #000500;
+  --content-bg: #000300;
+  --table-header-bg: #000200fa;
+  --table-row-hover: #22c55e12;
+}
+
+.dark[data-scheme="neural"] {
+  --background: #040108;
+  --content-bg: #020006;
+  --table-header-bg: #010004fa;
+  --table-row-hover: #a78bfa17;
+}
+
+.dark[data-scheme="terminal-amber"] {
+  --background: #050200;
+  --content-bg: #030100;
+  --table-header-bg: #020100fa;
+  --table-row-hover: #f59e0b17;
+}
+
+.dark[data-scheme="data-flow"] {
+  --background: #000508;
+  --content-bg: #000305;
+  --table-header-bg: #000103fa;
+  --table-row-hover: #38bdf817;
+}
+
+.dark[data-scheme="dungeon"] {
+  --background: #0d0a04;
+  --content-bg: #080704;
+  --table-header-bg: #050402fa;
+  --table-row-hover: #f9731617;
+}
+
+.dark[data-scheme="galaxy-rose"] {
+  --background: #0d0012;
+  --content-bg: #08000c;
+  --table-header-bg: #040006fa;
+  --table-row-hover: #f9a8d417;
+}
+
+.dark[data-scheme="stained-glass"] {
+  --background: #0f0824;
+  --foreground: #e8d8ff;
+  --foreground-muted: #a78bfa;
+  --content-bg: #0a0518;
+  --card-bg: #0f0824e6;
+  --table-header-bg: #06030e;
+  --table-row-hover: #a855f717;
+}
+
+[data-scheme="blueprint"] .ant-layout-content {
+  background-image: linear-gradient(#93c5fd12 1px, #0000 1px), linear-gradient(90deg, #93c5fd12 1px, #0000 1px) !important;
+  background-size: 32px 32px !important;
+}
+
+[data-scheme="sepia"] img, [data-scheme="sepia"] .ant-table {
+  filter: sepia(.12);
 }
 
 * {
@@ -1380,6 +2233,526 @@ body {
 .pixels-layer {
   background-image: radial-gradient(circle, #00ff4126 1px, #0000 1px);
   background-size: 28px 28px;
+}
+
+@keyframes sakura-heavy-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px)translateX(0)rotate(0);
+  }
+
+  8% {
+    opacity: .9;
+  }
+
+  88% {
+    opacity: .6;
+  }
+
+  100% {
+    transform: translateY(100vh) translateX(var(--drift, 70px)) rotate(600deg);
+    opacity: 0;
+  }
+}
+
+.sakura-petal {
+  border-radius: 150% 0;
+  animation: ease-in-out infinite sakura-heavy-fall;
+  position: absolute;
+  top: -20px;
+}
+
+@keyframes aurora-wave {
+  0% {
+    opacity: .7;
+    transform: translateX(-15%)scaleY(1);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translateX(5%)scaleY(1.3);
+  }
+
+  50% {
+    opacity: .8;
+    transform: translateX(20%)scaleY(.9);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translateX(5%)scaleY(1.2);
+  }
+
+  100% {
+    opacity: .7;
+    transform: translateX(-15%)scaleY(1);
+  }
+}
+
+.aurora-band {
+  filter: blur(28px);
+  border-radius: 50%;
+  width: 140%;
+  height: 120px;
+  animation: ease-in-out infinite aurora-wave;
+  position: absolute;
+  left: -20%;
+}
+
+@keyframes bubble-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0)translateX(0)scale(.5);
+  }
+
+  10% {
+    opacity: .6;
+  }
+
+  90% {
+    opacity: .4;
+  }
+
+  100% {
+    transform: translateY(-110vh) translateX(var(--drift, 20px)) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.bubble {
+  background: #c8f0ff4d;
+  border: 1px solid #96dcff80;
+  border-radius: 50%;
+  animation: ease-in-out infinite bubble-rise;
+  position: absolute;
+  bottom: 0;
+}
+
+@keyframes orb-pulse-drift {
+  0% {
+    opacity: .3;
+    transform: translate(0)scale(1);
+  }
+
+  25% {
+    opacity: .55;
+    transform: translate(12px, -8px)scale(1.1);
+  }
+
+  50% {
+    opacity: .25;
+    transform: translate(20px, 6px)scale(.9);
+  }
+
+  75% {
+    opacity: .5;
+    transform: translate(5px, 15px)scale(1.15);
+  }
+
+  100% {
+    opacity: .3;
+    transform: translate(0)scale(1);
+  }
+}
+
+.orb {
+  filter: blur(6px);
+  border-radius: 50%;
+  animation: ease-in-out infinite orb-pulse-drift;
+  position: absolute;
+}
+
+@keyframes ember-rise {
+  0% {
+    opacity: .9;
+    transform: translateY(0)translateX(0)scale(1);
+  }
+
+  50% {
+    transform: translateY(-40vh) translateX(var(--drift, 20px)) scale(.7);
+    opacity: .7;
+  }
+
+  100% {
+    transform: translateY(-90vh) translateX(var(--drift, 40px)) scale(.3);
+    opacity: 0;
+  }
+}
+
+.ember {
+  border-radius: 50%;
+  animation: ease-out infinite ember-rise;
+  position: absolute;
+  bottom: 0;
+}
+
+@keyframes rain-streak {
+  0% {
+    opacity: 0;
+    transform: translate(0, -20px)rotate(20deg);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: .6;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(30px, 110vh)rotate(20deg);
+  }
+}
+
+.rain-streak {
+  background: linear-gradient(#0000 0%, #b4d2ffb3 50%, #0000 100%);
+  width: 1.5px;
+  animation: linear infinite rain-streak;
+  position: absolute;
+  top: -20px;
+}
+
+.lightning-flash {
+  z-index: 50;
+  pointer-events: none;
+  background: #ffffff59;
+  position: fixed;
+  inset: 0;
+}
+
+@keyframes fog-drift {
+  0% {
+    transform: translateX(-10%);
+  }
+
+  50% {
+    transform: translateX(5%);
+  }
+
+  100% {
+    transform: translateX(-10%);
+  }
+}
+
+.fog-layer {
+  filter: blur(20px);
+  background: radial-gradient(70% 50%, #dce1e6d9, #0000 70%);
+  width: 120%;
+  height: 200px;
+  animation: ease-in-out infinite fog-drift;
+  position: absolute;
+  left: -10%;
+}
+
+.field-lines-overlay {
+  background-image: repeating-linear-gradient(90deg, #ffffff12 0 1px, #0000 1px 120px), repeating-linear-gradient(0deg, #ffffff12 0 1px, #0000 1px 80px);
+}
+
+@keyframes heart-float {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh)translateX(0)scale(.7)rotate(-5deg);
+  }
+
+  10% {
+    opacity: .8;
+  }
+
+  85% {
+    opacity: .5;
+  }
+
+  100% {
+    transform: translateY(-80px) translateX(var(--drift, 30px)) scale(1) rotate(5deg);
+    opacity: 0;
+  }
+}
+
+.heart-particle {
+  animation: ease-in-out infinite heart-float;
+  position: absolute;
+  bottom: -40px;
+}
+
+@keyframes shamrock-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px)rotate(0);
+  }
+
+  10% {
+    opacity: .7;
+  }
+
+  90% {
+    opacity: .4;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(105vh)rotate(720deg);
+  }
+}
+
+.shamrock-particle {
+  animation: linear infinite shamrock-fall;
+  position: absolute;
+  top: -30px;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-20px) rotate(var(--rotate-start, 0deg));
+    opacity: 0;
+  }
+
+  10% {
+    opacity: .9;
+  }
+
+  90% {
+    opacity: .5;
+  }
+
+  100% {
+    transform: translateY(105vh) rotate(calc(var(--rotate-start, 0deg)  + 900deg));
+    opacity: 0;
+  }
+}
+
+.confetti-piece {
+  border-radius: 2px;
+  animation: linear infinite confetti-fall;
+  position: absolute;
+  top: -20px;
+}
+
+@keyframes olympic-ring-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+.olympic-ring {
+  background: none;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 50%;
+  animation: ease-in-out infinite olympic-ring-float;
+  position: absolute;
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0)scaleX(1)translateX(0);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .6;
+    transform: translateY(-35vh)scaleX(1.6)translateX(12px);
+  }
+
+  85% {
+    opacity: .2;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-70vh)scaleX(2)translateX(-8px);
+  }
+}
+
+.steam-wisp {
+  filter: blur(8px);
+  background: radial-gradient(40% 80%, #e6c8aa99, #0000 70%);
+  width: 30px;
+  height: 120px;
+  animation: ease-out infinite steam-rise;
+  position: absolute;
+  bottom: 5%;
+}
+
+@keyframes data-packet-flow {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: .8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(110vw);
+  }
+}
+
+.data-packet {
+  border-radius: 50%;
+  animation: linear infinite data-packet-flow;
+  position: absolute;
+  left: -30px;
+}
+
+@keyframes torch-flicker {
+  0%, 100% {
+    opacity: .9;
+    transform: scale(1)rotate(-2deg);
+  }
+
+  20% {
+    opacity: 1;
+    transform: scale(.9, 1.1)rotate(1deg);
+  }
+
+  40% {
+    opacity: .85;
+    transform: scale(1.05, .95)rotate(-3deg);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(.95, 1.1)rotate(2deg);
+  }
+
+  80% {
+    opacity: .9;
+    transform: scale(1.02, .98)rotate(-1deg);
+  }
+}
+
+.torch-flame {
+  filter: drop-shadow(0 0 8px #f97316cc);
+  transform-origin: bottom;
+  width: 40px;
+  height: 72px;
+  animation: .4s ease-in-out infinite torch-flicker;
+  position: absolute;
+}
+
+@keyframes vaporwave-grid-scroll {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 80px;
+  }
+}
+
+.vaporwave-grid-layer {
+  perspective: 400px;
+  overflow: hidden;
+}
+
+.vaporwave-grid {
+  transform-origin: bottom;
+  background-image: linear-gradient(#f0abfc59 1px, #0000 1px), linear-gradient(90deg, #f0abfc59 1px, #0000 1px);
+  background-size: 80px 80px;
+  height: 55%;
+  animation: 2s linear infinite vaporwave-grid-scroll;
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  right: -10%;
+  transform: rotateX(55deg)translateY(0);
+}
+
+.circuit-line {
+  background: #22c55e40;
+  height: 1px;
+  position: absolute;
+}
+
+@keyframes circuit-trace {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: .8;
+  }
+
+  100% {
+    transform: translateX(var(--line-width, 120px));
+    opacity: 0;
+  }
+}
+
+.circuit-dot {
+  background: #22c55e;
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  animation: linear infinite circuit-trace;
+  position: absolute;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+@keyframes checkered-scroll {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+.checkered-overlay {
+  background-image: repeating-conic-gradient(#fbbf240f 0% 25%, #0000 0% 50%);
+  background-size: 40px 40px;
+  animation: 1.5s linear infinite checkered-scroll;
+}
+
+@keyframes meteor-fall {
+  0% {
+    opacity: 0;
+    transform: translate(0)rotate(35deg);
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: .7;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(60vw, 60vh)rotate(35deg);
+  }
+}
+
+.meteor-streak {
+  border-top: 2px solid;
+  border-image: linear-gradient(90deg, #0000 0%, currentColor 100%) 1;
+  border-radius: 1px;
+  height: 2px;
+  animation: linear infinite meteor-fall;
+  position: absolute;
 }
 
 @media (min-width: 768px) {

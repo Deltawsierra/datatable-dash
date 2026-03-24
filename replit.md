@@ -41,10 +41,18 @@ Preferred communication style: Simple, everyday language.
 
 ### Layout Architecture
 - **Dashboard Shell Pattern**: Fixed sidebar (280px collapsible) + sticky header (64px) + scrollable content area
-- **Theme System**: 14 themes with CSS variables, localStorage persistence, and immersive visual effects
-  - Classic palette themes: Ocean Blue, Forest, Sunset, Midnight, Rose Gold
-  - Immersive effect themes: Winter (snow), Cyberpunk (neon + scanlines), Space (twinkling stars), Halloween (bats), Autumn (falling leaves), Summer (animated waves), Spring (cherry blossoms), Retro Arcade (pixel grid + scanlines + Press Start 2P font), Minimalist (flat/clean)
-- **ThemeEffectsLayer**: Fixed overlay component (`components/ThemeEffectsLayer.tsx`) that renders CSS-animated particles/effects based on the active scheme. Uses `pointer-events: none` so it never blocks interaction.
+- **Theme System**: 49 themes across 8 categories with CSS variables, localStorage persistence, and immersive visual effects
+  - Classic (6): Ocean Blue, Forest, Sunset, Midnight, Rose Gold, Minimalist
+  - Seasonal (4): Winter (snow), Spring (petals), Summer (waves), Autumn (leaves)
+  - Nature (8): Sakura (heavy petals), Aurora Borealis (aurora bands), Underwater (bubbles), Deep Sea (bioluminescent orbs), Lava (embers), Storm (lightning+rain), Fog (drifting layers), Volcano (embers)
+  - Sports (8): Soccer Pitch, Football Field, Basketball Court, Baseball Diamond, Hockey Rink, Golf Course, Tennis Court, NASCAR (checkered)
+  - Holiday (5): Christmas (confetti+gold), New Year's (confetti+neon), Valentine's Day (hearts), St. Patrick's Day (shamrocks), Olympics (rings)
+  - Aesthetic (6): Vaporwave (grid+neon), Lo-Fi (rain), Coffee Shop (steam), Blueprint (grid), Sepia/Vintage, Watercolor
+  - Special (4): Cyberpunk (neon+scanlines), Space (stars), Halloween (bats), Retro Arcade (pixels+scanlines+Press Start 2P)
+  - Tech/Gaming (8): Matrix (canvas rain), Circuit Board (pulse), Neural Network (data packets), Terminal (amber phosphor), Data Flow (streaming), Dungeon RPG (torch flicker), Galaxy Rose (meteor streaks), Stained Glass
+- **ThemeEffectsLayer**: Fixed overlay component (`components/ThemeEffectsLayer.tsx`) that renders CSS-animated particles/effects. 21 different effect types (snow, stars, leaves, petals, bats, waves, pixels, sakura-petals, aurora, bubbles, orbs, embers, lightning-rain, rain, fog, field-lines, hearts, shamrocks, confetti, olympic-rings, steam, data-packets, torch, vaporwave-grid, matrix-rain, circuit-pulse, checkered, meteor-streaks). Uses `pointer-events: none` so it never blocks interaction. Matrix rain uses canvas + requestAnimationFrame.
+- **ThemeCategory**: 8 categories — classic, seasonal, nature, sports, holiday, aesthetic, special, tech
+- **BackgroundEffect**: 28 effect values covering all themes
 - **Gradient Styling**: Header and sidebar use CSS gradients for visual hierarchy; Minimalist and Cyberpunk use flat/solid colors
 
 ### State Management

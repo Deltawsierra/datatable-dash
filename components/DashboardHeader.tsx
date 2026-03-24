@@ -17,18 +17,32 @@ interface DashboardHeaderProps {
 type CategoryFilter = 'all' | ThemeCategory;
 
 const CATEGORY_LABELS: Record<CategoryFilter, string> = {
-  all:      'All',
-  classic:  'Classic',
-  seasonal: 'Seasonal',
-  special:  'Special',
+  all:       'All',
+  classic:   'Classic',
+  seasonal:  'Seasonal',
+  nature:    'Nature',
+  sports:    'Sports',
+  holiday:   'Holiday',
+  aesthetic: 'Aesthetic',
+  special:   'Special',
+  tech:      'Tech',
 };
 
 const CATEGORY_EMOJIS: Record<CategoryFilter, string> = {
-  all:      '🎨',
-  classic:  '🖼️',
-  seasonal: '🌿',
-  special:  '⚡',
+  all:       '🎨',
+  classic:   '🖼️',
+  seasonal:  '🌿',
+  nature:    '🌍',
+  sports:    '🏆',
+  holiday:   '🎉',
+  aesthetic: '✨',
+  special:   '⚡',
+  tech:      '💻',
 };
+
+const CATEGORY_ORDER: CategoryFilter[] = [
+  'all', 'classic', 'seasonal', 'nature', 'sports', 'holiday', 'aesthetic', 'special', 'tech',
+];
 
 export default function DashboardHeader({ collapsed, onToggle }: DashboardHeaderProps) {
   const { colorMode, colorScheme, toggleColorMode, setColorScheme, currentScheme } = useTheme();
@@ -38,9 +52,9 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
   const hasGlow = !!currentScheme.glowColor;
   const hasFont = !!currentScheme.fontOverride;
 
-  const btnStyle = { background: 'rgba(255, 255, 255, 0.15)', color: 'var(--header-text)' };
+  const btnStyle = { background: 'rgba(255,255,255,0.15)', color: 'var(--header-text)' };
   const btnHover = (e: React.MouseEvent<HTMLButtonElement>, hover: boolean) => {
-    e.currentTarget.style.background = hover ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.15)';
+    e.currentTarget.style.background = hover ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.15)';
   };
 
   const filteredSchemes = activeCategory === 'all'
@@ -73,7 +87,7 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
     <>
       <Header
         className="flex items-center justify-between px-6 sticky top-0 z-50 animate-gradient"
-        style={{ background: 'var(--header-bg)', borderBottom: 'none', height: 64, padding: '0 24px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}
+        style={{ background: 'var(--header-bg)', borderBottom: 'none', height: 64, padding: '0 24px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
         data-testid="header"
       >
         <div className="flex items-center gap-4">
@@ -111,7 +125,7 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
           >
             <Avatar
               icon={<UserOutlined />}
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', border: '2px solid rgba(255, 255, 255, 0.3)', cursor: 'pointer' }}
+              style={{ backgroundColor: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.3)', cursor: 'pointer' }}
               data-testid="avatar-user"
             />
           </Dropdown>
@@ -124,25 +138,26 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
         open={themeModalOpen}
         onCancel={() => setThemeModalOpen(false)}
         footer={null}
-        width={580}
+        width={620}
         data-testid="modal-theme-picker"
         styles={{ body: { padding: 0 } }}
       >
-        <div style={{ display: 'flex', minHeight: 340 }}>
+        <div style={{ display: 'flex', minHeight: 400 }}>
           {/* Left category sidebar */}
           <div
             style={{
-              width: 120,
+              width: 110,
               borderRight: '1px solid var(--border-color, #e2e8f0)',
-              paddingTop: 12,
-              paddingBottom: 12,
+              paddingTop: 8,
+              paddingBottom: 8,
               flexShrink: 0,
               display: 'flex',
               flexDirection: 'column',
-              gap: 2,
+              gap: 1,
+              overflowY: 'auto',
             }}
           >
-            {(['all', 'classic', 'seasonal', 'special'] as CategoryFilter[]).map((cat) => {
+            {CATEGORY_ORDER.map((cat) => {
               const isActive = activeCategory === cat;
               const count = cat === 'all' ? COLOR_SCHEMES.length : COLOR_SCHEMES.filter(s => s.category === cat).length;
               return (
@@ -154,9 +169,9 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: 3,
-                    padding: '10px 8px',
-                    margin: '0 8px',
+                    gap: 2,
+                    padding: '8px 6px',
+                    margin: '0 6px',
                     borderRadius: 8,
                     border: 'none',
                     cursor: 'pointer',
@@ -167,11 +182,11 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
                     fontWeight: isActive ? 600 : 400,
                   }}
                 >
-                  <span style={{ fontSize: 18, lineHeight: 1 }}>{CATEGORY_EMOJIS[cat]}</span>
-                  <span style={{ fontSize: 11 }}>{CATEGORY_LABELS[cat]}</span>
+                  <span style={{ fontSize: 16, lineHeight: 1 }}>{CATEGORY_EMOJIS[cat]}</span>
+                  <span style={{ fontSize: 10 }}>{CATEGORY_LABELS[cat]}</span>
                   <span
                     style={{
-                      fontSize: 10,
+                      fontSize: 9,
                       background: isActive ? 'var(--primary, #3b82f6)' : 'var(--border-color, #e2e8f0)',
                       color: isActive ? '#fff' : 'var(--foreground-muted, #64748b)',
                       borderRadius: 10,
@@ -188,7 +203,10 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
           </div>
 
           {/* Right scheme list */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 4 }} data-testid="theme-scheme-list">
+          <div
+            style={{ flex: 1, overflowY: 'auto', padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 3 }}
+            data-testid="theme-scheme-list"
+          >
             {filteredSchemes.map((scheme) => {
               const isSelected = colorScheme === scheme.key;
               const isFlat = scheme.flatHeader || scheme.cardStyle === 'flat';
@@ -205,7 +223,7 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
                     display: 'flex',
                     alignItems: 'center',
                     gap: 12,
-                    padding: '9px 12px',
+                    padding: '8px 10px',
                     borderRadius: 8,
                     border: isSelected ? `2px solid ${scheme.primaryAccent}` : '2px solid transparent',
                     background: isSelected ? `${scheme.primaryAccent}18` : 'transparent',
@@ -215,17 +233,16 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
                     transition: 'all 0.15s',
                   }}
                 >
-                  {/* Gradient swatch */}
                   <div
                     style={{
-                      width: 44,
-                      height: 26,
+                      width: 40,
+                      height: 24,
                       borderRadius: isFlat ? 3 : 5,
                       background: swatchBg,
                       flexShrink: 0,
                       boxShadow: scheme.glowColor
-                        ? `0 0 7px ${scheme.glowColor}, 0 2px 5px rgba(0,0,0,0.3)`
-                        : '0 2px 5px rgba(0,0,0,0.18)',
+                        ? `0 0 6px ${scheme.glowColor}, 0 2px 4px rgba(0,0,0,0.3)`
+                        : '0 2px 4px rgba(0,0,0,0.18)',
                       border: scheme.cardStyle === 'neon' ? `1px solid ${scheme.primaryAccent}` : undefined,
                     }}
                     data-testid={`swatch-${scheme.key}`}
