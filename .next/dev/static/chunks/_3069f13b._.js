@@ -3084,12 +3084,12 @@ _s(useParticles, "nwk+m61qLgjDVUp4IGV/072DDN4=");
                 }
             }, p.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 41,
+                lineNumber: 42,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 39,
+        lineNumber: 40,
         columnNumber: 5
     }, this);
 }
@@ -3134,12 +3134,12 @@ function StarsEffectStable() {
                 }
             }, s.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 74,
+                lineNumber: 75,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 72,
+        lineNumber: 73,
         columnNumber: 5
     }, this);
 }
@@ -3164,12 +3164,12 @@ function LeavesEffect() {
                 }
             }, p.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 97,
+                lineNumber: 98,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 95,
+        lineNumber: 96,
         columnNumber: 5
     }, this);
 }
@@ -3198,12 +3198,12 @@ function PetalsEffect() {
                 }
             }, p.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 120,
+                lineNumber: 121,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 118,
+        lineNumber: 119,
         columnNumber: 5
     }, this);
 }
@@ -3257,12 +3257,12 @@ function BatsEffect() {
                 }
             }, b.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 161,
+                lineNumber: 162,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 159,
+        lineNumber: 160,
         columnNumber: 5
     }, this);
 }
@@ -3277,27 +3277,27 @@ function WavesEffect() {
                 className: "wave wave-1"
             }, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 183,
+                lineNumber: 184,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "wave wave-2"
             }, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 184,
+                lineNumber: 185,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "wave wave-3"
             }, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 185,
+                lineNumber: 186,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 182,
+        lineNumber: 183,
         columnNumber: 5
     }, this);
 }
@@ -3308,7 +3308,7 @@ function PixelsEffect() {
         "aria-hidden": "true"
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 192,
+        lineNumber: 193,
         columnNumber: 5
     }, this);
 }
@@ -3319,7 +3319,7 @@ function ScanlinesEffect() {
         "aria-hidden": "true"
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 198,
+        lineNumber: 199,
         columnNumber: 5
     }, this);
 }
@@ -3359,12 +3359,12 @@ _c7 = ScanlinesEffect;
                 }
             }, p.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 218,
+                lineNumber: 219,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 216,
+        lineNumber: 217,
         columnNumber: 5
     }, this);
 }
@@ -3424,12 +3424,12 @@ _c8 = SakuraPetalsEffect;
                 }
             }, b.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 250,
+                lineNumber: 251,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 248,
+        lineNumber: 249,
         columnNumber: 5
     }, this);
 }
@@ -3468,12 +3468,12 @@ _c9 = AuroraEffect;
                 }
             }, b.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 280,
+                lineNumber: 281,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 278,
+        lineNumber: 279,
         columnNumber: 5
     }, this);
 }
@@ -3520,12 +3520,12 @@ _c10 = BubblesEffect;
                 }
             }, o.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 314,
+                lineNumber: 315,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 312,
+        lineNumber: 313,
         columnNumber: 5
     }, this);
 }
@@ -3567,12 +3567,12 @@ _c11 = OrbsEffect;
                 }
             }, e.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 350,
+                lineNumber: 351,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 348,
+        lineNumber: 349,
         columnNumber: 5
     }, this);
 }
@@ -3624,7 +3624,7 @@ _c12 = EmbersEffect;
                 className: "lightning-flash"
             }, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 398,
+                lineNumber: 399,
                 columnNumber: 17
             }, this),
             streaks.map((s)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3638,13 +3638,13 @@ _c12 = EmbersEffect;
                     }
                 }, s.id, false, {
                     fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                    lineNumber: 400,
+                    lineNumber: 401,
                     columnNumber: 9
                 }, this))
         ]
     }, void 0, true, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 397,
+        lineNumber: 398,
         columnNumber: 5
     }, this);
 }
@@ -3680,12 +3680,12 @@ _c13 = LightningRainEffect;
                 }
             }, s.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 430,
+                lineNumber: 431,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 428,
+        lineNumber: 429,
         columnNumber: 5
     }, this);
 }
@@ -3731,12 +3731,12 @@ _c14 = RainEffect;
                 }
             }, l.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 457,
+                lineNumber: 458,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 455,
+        lineNumber: 456,
         columnNumber: 5
     }, this);
 }
@@ -3748,7 +3748,7 @@ _c15 = FogEffect;
         "aria-hidden": "true"
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 475,
+        lineNumber: 476,
         columnNumber: 5
     }, this);
 }
@@ -3792,12 +3792,12 @@ function HeartsEffect() {
                 }
             }, h.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 497,
+                lineNumber: 498,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 495,
+        lineNumber: 496,
         columnNumber: 5
     }, this);
 }
@@ -3839,12 +3839,12 @@ function ShamrocksEffect() {
                 }
             }, s.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 533,
+                lineNumber: 534,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 531,
+        lineNumber: 532,
         columnNumber: 5
     }, this);
 }
@@ -3896,12 +3896,12 @@ function ConfettiEffect() {
                 }
             }, p.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 571,
+                lineNumber: 572,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 569,
+        lineNumber: 570,
         columnNumber: 5
     }, this);
 }
@@ -3945,12 +3945,12 @@ function OlympicRingsEffect() {
                 }
             }, r.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 607,
+                lineNumber: 608,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 605,
+        lineNumber: 606,
         columnNumber: 5
     }, this);
 }
@@ -3984,12 +3984,12 @@ _c20 = OlympicRingsEffect;
                 }
             }, w.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 638,
+                lineNumber: 639,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 636,
+        lineNumber: 637,
         columnNumber: 5
     }, this);
 }
@@ -4029,12 +4029,12 @@ _c21 = SteamEffect;
                 }
             }, p.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 668,
+                lineNumber: 669,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 666,
+        lineNumber: 667,
         columnNumber: 5
     }, this);
 }
@@ -4086,12 +4086,12 @@ function TorchEffect() {
                 }
             }, t.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 701,
+                lineNumber: 702,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 699,
+        lineNumber: 700,
         columnNumber: 5
     }, this);
 }
@@ -4105,12 +4105,12 @@ _c23 = TorchEffect;
             className: "vaporwave-grid"
         }, void 0, false, {
             fileName: "[project]/components/ThemeEffectsLayer.tsx",
-            lineNumber: 720,
+            lineNumber: 721,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 719,
+        lineNumber: 720,
         columnNumber: 5
     }, this);
 }
@@ -4184,7 +4184,7 @@ _c24 = VaporwaveGridEffect;
         }
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 782,
+        lineNumber: 783,
         columnNumber: 5
     }, this);
 }
@@ -4237,7 +4237,7 @@ _c25 = MatrixRainEffect;
                     }
                 }, l.id, false, {
                     fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                    lineNumber: 817,
+                    lineNumber: 818,
                     columnNumber: 9
                 }, this)),
             dots.map((d)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4251,13 +4251,13 @@ _c25 = MatrixRainEffect;
                     }
                 }, d.id, false, {
                     fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                    lineNumber: 829,
+                    lineNumber: 830,
                     columnNumber: 9
                 }, this))
         ]
     }, void 0, true, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 815,
+        lineNumber: 816,
         columnNumber: 5
     }, this);
 }
@@ -4269,7 +4269,7 @@ _c26 = CircuitPulseEffect;
         "aria-hidden": "true"
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 848,
+        lineNumber: 849,
         columnNumber: 5
     }, this);
 }
@@ -4308,12 +4308,12 @@ _c27 = CheckeredEffect;
                 }
             }, m.id, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 868,
+                lineNumber: 869,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/ThemeEffectsLayer.tsx",
-        lineNumber: 866,
+        lineNumber: 867,
         columnNumber: 5
     }, this);
 }
@@ -4334,147 +4334,147 @@ function ThemeEffectsLayer() {
         children: [
             currentScheme.scanlines && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ScanlinesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 898,
+                lineNumber: 899,
                 columnNumber: 35
             }, this),
             effect === 'snow' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SnowEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 900,
+                lineNumber: 901,
                 columnNumber: 38
             }, this),
             effect === 'stars' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StarsEffectStable, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 901,
+                lineNumber: 902,
                 columnNumber: 38
             }, this),
             effect === 'leaves' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(LeavesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 902,
+                lineNumber: 903,
                 columnNumber: 38
             }, this),
             effect === 'petals' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PetalsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 903,
+                lineNumber: 904,
                 columnNumber: 38
             }, this),
             effect === 'bats' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BatsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 904,
+                lineNumber: 905,
                 columnNumber: 38
             }, this),
             effect === 'waves' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(WavesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 905,
+                lineNumber: 906,
                 columnNumber: 38
             }, this),
             effect === 'pixels' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PixelsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 906,
+                lineNumber: 907,
                 columnNumber: 38
             }, this),
             effect === 'sakura-petals' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SakuraPetalsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 908,
+                lineNumber: 909,
                 columnNumber: 38
             }, this),
             effect === 'aurora' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AuroraEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 909,
+                lineNumber: 910,
                 columnNumber: 38
             }, this),
             effect === 'bubbles' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BubblesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 910,
+                lineNumber: 911,
                 columnNumber: 38
             }, this),
             effect === 'orbs' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OrbsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 911,
+                lineNumber: 912,
                 columnNumber: 38
             }, this),
             effect === 'embers' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EmbersEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 912,
+                lineNumber: 913,
                 columnNumber: 38
             }, this),
             effect === 'lightning-rain' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(LightningRainEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 913,
+                lineNumber: 914,
                 columnNumber: 38
             }, this),
             effect === 'rain' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(RainEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 914,
+                lineNumber: 915,
                 columnNumber: 38
             }, this),
             effect === 'fog' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FogEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 915,
+                lineNumber: 916,
                 columnNumber: 38
             }, this),
             effect === 'field-lines' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FieldLinesEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 916,
+                lineNumber: 917,
                 columnNumber: 38
             }, this),
             effect === 'hearts' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(HeartsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 917,
+                lineNumber: 918,
                 columnNumber: 38
             }, this),
             effect === 'shamrocks' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ShamrocksEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 918,
+                lineNumber: 919,
                 columnNumber: 38
             }, this),
             effect === 'confetti' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ConfettiEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 919,
+                lineNumber: 920,
                 columnNumber: 38
             }, this),
             effect === 'olympic-rings' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OlympicRingsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 920,
+                lineNumber: 921,
                 columnNumber: 38
             }, this),
             effect === 'steam' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SteamEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 921,
+                lineNumber: 922,
                 columnNumber: 38
             }, this),
             effect === 'data-packets' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DataPacketsEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 922,
+                lineNumber: 923,
                 columnNumber: 38
             }, this),
             effect === 'torch' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(TorchEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 923,
+                lineNumber: 924,
                 columnNumber: 38
             }, this),
             effect === 'vaporwave-grid' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(VaporwaveGridEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 924,
+                lineNumber: 925,
                 columnNumber: 38
             }, this),
             effect === 'matrix-rain' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MatrixRainEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 925,
+                lineNumber: 926,
                 columnNumber: 38
             }, this),
             effect === 'circuit-pulse' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CircuitPulseEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 926,
+                lineNumber: 927,
                 columnNumber: 38
             }, this),
             effect === 'checkered' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CheckeredEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 927,
+                lineNumber: 928,
                 columnNumber: 38
             }, this),
             effect === 'meteor-streaks' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MeteorStreaksEffect, {}, void 0, false, {
                 fileName: "[project]/components/ThemeEffectsLayer.tsx",
-                lineNumber: 928,
+                lineNumber: 929,
                 columnNumber: 38
             }, this)
         ]

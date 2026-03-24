@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useMemo } from 'react';
+import type { CSSProperties } from 'react';
 import { useTheme } from './ThemeProvider';
 
 function random(min: number, max: number) {
@@ -105,7 +106,7 @@ function LeavesEffect() {
             animationDuration: `${p.duration}s`,
             opacity: p.opacity,
             '--drift': `${p.drift * 40}px`,
-          } as React.CSSProperties}
+          } as CSSProperties}
         />
       ))}
     </div>
@@ -128,7 +129,7 @@ function PetalsEffect() {
             animationDuration: `${p.duration * 1.3}s`,
             opacity: p.opacity,
             '--drift': `${p.drift * 50}px`,
-          } as React.CSSProperties}
+          } as CSSProperties}
         />
       ))}
     </div>
@@ -227,7 +228,7 @@ function SakuraPetalsEffect() {
             opacity: p.opacity,
             '--drift': `${p.drift * 55}px`,
             background: p.hue,
-          } as React.CSSProperties}
+          } as CSSProperties}
         />
       ))}
     </div>
@@ -288,7 +289,7 @@ function BubblesEffect() {
             animationDuration: `${b.duration}s`,
             opacity: b.opacity,
             '--drift': `${b.drift * 30}px`,
-          } as React.CSSProperties}
+          } as CSSProperties}
         />
       ))}
     </div>
@@ -360,7 +361,7 @@ function EmbersEffect() {
             background: e.color,
             boxShadow: `0 0 ${e.size * 2}px ${e.color}`,
             '--drift': `${e.drift * 40}px`,
-          } as React.CSSProperties}
+          } as CSSProperties}
         />
       ))}
     </div>
@@ -506,7 +507,7 @@ function HeartsEffect() {
             animationDuration: `${h.duration}s`,
             opacity: h.opacity,
             '--drift': `${h.drift * 40}px`,
-          } as React.CSSProperties}
+          } as CSSProperties}
           dangerouslySetInnerHTML={{ __html: HEART_SVG }}
         />
       ))}
@@ -580,7 +581,7 @@ function ConfettiEffect() {
             animationDuration: `${p.duration}s`,
             opacity: p.opacity,
             '--rotate-start': `${p.rotate}deg`,
-          } as React.CSSProperties}
+          } as CSSProperties}
         />
       ))}
     </div>
@@ -835,7 +836,7 @@ function CircuitPulseEffect() {
             '--line-width': `${d.lineWidth}px`,
             animationDelay: `${d.delay}s`,
             animationDuration: `${d.duration}s`,
-          } as React.CSSProperties}
+          } as CSSProperties}
         />
       ))}
     </div>
