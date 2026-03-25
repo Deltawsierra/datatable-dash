@@ -43,7 +43,7 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd lighthouse-frontend && npx tsx server/index.ts"
+args = "lighthouse-frontend/node_modules/.bin/tsx lighthouse-frontend/server/index.ts"
 waitForPort = 5000
 
 [userenv]

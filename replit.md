@@ -114,9 +114,9 @@ lighthouse-rdm/
 
 ### Build & Development
 - **Dev Server**: `lighthouse-frontend/server/index.ts` spawns both Next.js (port 5000) and FastAPI (port 8000) as child processes
-  - Next.js spawns with cwd = `lighthouse-frontend/` (inherits from workflow `cd lighthouse-frontend`)
-  - FastAPI spawns with cwd = repo root (so `api.main:app` resolves correctly)
-- **Workflow Command**: `cd lighthouse-frontend && npx tsx server/index.ts`
+  - Next.js spawns with explicit cwd = `lighthouse-frontend/` (set in code via path.resolve(__dirname, '..'))
+  - FastAPI spawns with explicit cwd = repo root (path.resolve(__dirname, '../..') — so `api.main:app` resolves correctly)
+- **Workflow Command**: `lighthouse-frontend/node_modules/.bin/tsx lighthouse-frontend/server/index.ts` (runs from repo root; tsx binary referenced explicitly since it lives in lighthouse-frontend/node_modules)
 - **Databricks Apps Deployment**: `app.yaml` runs `npm --prefix ./lighthouse-frontend run start`
 - **TypeScript**: Strict mode enabled with path aliases (`@/*`)
 

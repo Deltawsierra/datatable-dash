@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const frontendDir = path.resolve(__dirname, '..');
 const repoRoot = path.resolve(__dirname, '../..');
 
 if (!process.env.NODE_ENV) {
@@ -19,6 +20,7 @@ console.log(`Starting FastAPI on port ${apiPort}...`);
 const next = spawn('npx', ['next', 'dev', '-p', port], {
   stdio: 'inherit',
   shell: true,
+  cwd: frontendDir,
   env: { ...process.env },
 });
 
