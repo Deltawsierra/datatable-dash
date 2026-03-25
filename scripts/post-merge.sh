@@ -1,3 +1,3 @@
 #!/bin/bash
-set -ethats
-npm install
+set -e
+npm --prefix lighthouse-frontend install

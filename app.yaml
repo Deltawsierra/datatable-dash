@@ -1,0 +1,8 @@
+command:
+  - npm
+  - --prefix
+  - ./lighthouse-frontend
+  - run
+  - start
+
+env:

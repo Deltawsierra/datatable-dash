@@ -11,3 +11,4 @@
 .next/dev/cache/turbopack/d1bd5b58/00000582.sst filter=lfs diff=lfs merge=lfs -text
 .next/dev/cache/turbopack/d1bd5b58/00000662.sst filter=lfs diff=lfs merge=lfs -text
 .next/dev/cache/turbopack/d1bd5b58/00000792.sst filter=lfs diff=lfs merge=lfs -text
+lighthouse-frontend/.next/dev/cache/turbopack/d1bd5b58/00000894.sst filter=lfs diff=lfs merge=lfs -text
