@@ -107,9 +107,16 @@ lighthouse-rdm/
 
 ### Data Layer
 - **API Proxy**: Next.js API route (`lighthouse-frontend/app/api/proxy/[...path]/route.ts`) proxies frontend requests to the FastAPI backend, avoiding CORS issues
-- **API Service**: `lighthouse-frontend/lib/api.ts` provides typed fetch functions that call through the proxy (`/api/proxy/v1/...`)
-- **Table Registry**: `lighthouse-frontend/lib/tableRegistry.ts` contains mock data used as fallback when API is unavailable
-- **Graceful Fallback**: Table pages try the API first, then fall back to mock data
+- **API Service**: `lighthouse-frontend/lib/api.ts` provides typed fetch functions that call through the proxy (`/api/proxy/v1/...`):
+  - `fetchTableList()` — `GET /v1/tables/list` — used by sidebar and home page
+  - `fetchTableData(name, limit, offset)` — `GET /v1/tables/{name}`
+  - `fetchTableMetadata(name)` — `GET /v1/tables/{name}/info`
+  - `fetchUserInfo()` — `GET /v1/user/info` — used by home page greeting
+  - `isApiAvailable()` — checks via `fetchTableList`
+- **Sidebar**: Dynamically fetches the full table list from the API on mount; shows a loading spinner then populates the nav with all real table names
+- **Home Page**: Fetches real table count (NumberTicker) and current Databricks user name; shows backend status card
+- **Table Page**: Accepts any table name from the backend — no hardcoded slug validation; shows 404 if the API returns an error
+- **Table Registry** (`lighthouse-frontend/lib/tableRegistry.ts`): Retained as legacy mock data for local dev reference only — no longer used at runtime
 - **Generic DataTable Component**: Type-safe table wrapper supporting any data shape
 
 ### Build & Development

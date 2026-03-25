@@ -309,10 +309,6 @@ img, video {
   margin-bottom: .5rem;
 }
 
-.mb-3 {
-  margin-bottom: .75rem;
-}
-
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -524,6 +520,11 @@ img, video {
 .py-3 {
   padding-top: .75rem;
   padding-bottom: .75rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .text-center {

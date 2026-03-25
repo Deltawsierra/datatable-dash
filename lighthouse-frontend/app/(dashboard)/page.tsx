@@ -1,21 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Card, Typography } from 'antd';
-import { Map, Globe, Building2, Home as HomeIcon, Clock, Calendar, Database, Activity } from 'lucide-react';
+import { Card, Typography, Skeleton } from 'antd';
+import { Home as HomeIcon, Clock, Calendar, Database, Activity, User, Table2 } from 'lucide-react';
 import { NumberTicker } from '../../components/magicui/NumberTicker';
 import { BorderBeam } from '../../components/magicui/BorderBeam';
-import { tableStats } from '../../lib/tableRegistry';
-import { isApiAvailable } from '../../lib/api';
+import { fetchTableList, fetchUserInfo, isApiAvailable } from '../../lib/api';
 import { useTheme } from '../../components/ThemeProvider';
 
 const { Title, Text } = Typography;
-
-const stats = [
-  { title: 'States', value: tableStats.states, icon: Map, description: 'US state records', colorFrom: '#1677ff', colorTo: '#36cfc9' },
-  { title: 'Countries', value: tableStats.countries, icon: Globe, description: 'Country records', colorFrom: '#722ed1', colorTo: '#eb2f96' },
-  { title: 'Departments', value: tableStats.departments, icon: Building2, description: 'Department records', colorFrom: '#fa8c16', colorTo: '#fadb14' },
-];
 
 function getGreeting(): string {
   const hour = new Date().getHours();
@@ -37,8 +30,9 @@ export default function HomePage() {
   const [greeting, setGreeting] = useState('Welcome');
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
+  const [userName, setUserName] = useState<string | null>(null);
+  const [tableCount, setTableCount] = useState<number | null>(null);
   const [apiStatus, setApiStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
-  const userName = 'User';
   const { currentScheme } = useTheme();
   const showBeam = !currentScheme.glowColor;
 
@@ -57,16 +51,71 @@ export default function HomePage() {
     isApiAvailable().then((available) => {
       setApiStatus(available ? 'connected' : 'disconnected');
     });
+
+    fetchTableList()
+      .then((res) => setTableCount(res.count))
+      .catch(() => setTableCount(null));
+
+    fetchUserInfo()
+      .then((res) => setUserName(res.display_name || res.user_name || null))
+      .catch(() => setUserName(null));
   }, []);
+
+  const displayName = userName ?? 'there';
+
+  const apiColor = apiStatus === 'connected' ? '#52c41a' : apiStatus === 'disconnected' ? '#ff4d4f' : '#faad14';
+
+  const statCards = [
+    {
+      title: 'Tables Available',
+      icon: Table2,
+      description: 'Reference data tables in schema',
+      colorFrom: '#1677ff',
+      colorTo: '#36cfc9',
+      content: tableCount !== null
+        ? <NumberTicker value={tableCount} delay={0.2} className="text-4xl font-bold" />
+        : <Skeleton.Input active size="large" style={{ width: 80 }} />,
+    },
+    {
+      title: 'Backend Status',
+      icon: Activity,
+      description: apiStatus === 'checking'
+        ? 'Checking connection...'
+        : apiStatus === 'connected'
+        ? 'Databricks connected'
+        : 'Backend offline',
+      colorFrom: apiColor,
+      colorTo: apiColor,
+      content: (
+        <div className="flex items-center gap-2 mt-2">
+          <div style={{ width: 10, height: 10, borderRadius: '50%', background: apiColor, flexShrink: 0 }} />
+          <Text style={{ fontSize: 15, fontWeight: 600, color: apiColor }}>
+            {apiStatus === 'checking' ? 'Checking' : apiStatus === 'connected' ? 'Connected' : 'Offline'}
+          </Text>
+        </div>
+      ),
+    },
+    {
+      title: 'Signed In As',
+      icon: User,
+      description: 'Current Databricks user',
+      colorFrom: '#722ed1',
+      colorTo: '#eb2f96',
+      content: userName !== null
+        ? <Text style={{ fontSize: 15, fontWeight: 600, marginTop: 8, display: 'block' }}>{userName}</Text>
+        : <Skeleton.Input active size="small" style={{ width: 120, marginTop: 8 }} />,
+    },
+  ];
 
   return (
     <div className="p-6">
+      {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <HomeIcon style={{ width: 28, height: 28, color: '#1677ff' }} />
           <Title level={2} style={{ margin: 0 }} data-testid="title-home">
             <span className="sparkle-text">
-              {greeting}, {userName}
+              {greeting}, {displayName}
             </span>
           </Title>
         </div>
@@ -82,8 +131,9 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Stat cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {stats.map((stat, index) => {
+        {statCards.map((stat, index) => {
           const IconComponent = stat.icon;
           return (
             <div
@@ -94,22 +144,32 @@ export default function HomePage() {
               <Card
                 className="relative overflow-visible"
                 styles={{ body: { padding: 24 } }}
-                data-testid={`card-stat-${stat.title.toLowerCase()}`}
+                data-testid={`card-stat-${stat.title.toLowerCase().replace(/\s+/g, '-')}`}
               >
-                {showBeam && <BorderBeam colorFrom={stat.colorFrom} colorTo={stat.colorTo} duration={4 + index} delay={index * 0.5} />}
+                {showBeam && (
+                  <BorderBeam
+                    colorFrom={stat.colorFrom}
+                    colorTo={stat.colorTo}
+                    duration={4 + index}
+                    delay={index * 0.5}
+                  />
+                )}
                 <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <Text type="secondary" className="text-sm font-medium uppercase tracking-wide">{stat.title}</Text>
-                    <div className="mt-2">
-                      <span className="text-4xl font-bold">
-                        <NumberTicker value={stat.value} delay={0.2 + index * 0.1} className="text-4xl font-bold" />
-                      </span>
-                    </div>
-                    <Text type="secondary" className="text-sm mt-2 block">{stat.description}</Text>
+                  <div style={{ flex: 1 }}>
+                    <Text type="secondary" className="text-sm font-medium uppercase tracking-wide">
+                      {stat.title}
+                    </Text>
+                    {stat.content}
+                    <Text type="secondary" className="text-sm mt-2 block">
+                      {stat.description}
+                    </Text>
                   </div>
                   <div
                     className="flex items-center justify-center w-12 h-12 rounded-lg"
-                    style={{ background: `linear-gradient(135deg, ${stat.colorFrom}20, ${stat.colorTo}20)` }}
+                    style={{
+                      background: `linear-gradient(135deg, ${stat.colorFrom}20, ${stat.colorTo}20)`,
+                      flexShrink: 0,
+                    }}
                   >
                     <IconComponent style={{ width: 24, height: 24, color: stat.colorFrom }} />
                   </div>
@@ -120,11 +180,9 @@ export default function HomePage() {
         })}
       </div>
 
+      {/* Info cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card
-          styles={{ body: { padding: 24 } }}
-          data-testid="card-api-status"
-        >
+        <Card styles={{ body: { padding: 24 } }} data-testid="card-api-status">
           <div className="flex items-center gap-3 mb-4">
             <div
               className="flex items-center justify-center w-10 h-10 rounded-lg"
@@ -140,25 +198,26 @@ export default function HomePage() {
                     width: 8,
                     height: 8,
                     borderRadius: '50%',
-                    background: apiStatus === 'connected' ? '#52c41a' : apiStatus === 'disconnected' ? '#ff4d4f' : '#faad14',
+                    background: apiColor,
                   }}
                   data-testid="indicator-api-status"
                 />
                 <Text type="secondary" style={{ fontSize: 13 }} data-testid="text-api-status">
-                  {apiStatus === 'checking' ? 'Checking connection...' : apiStatus === 'connected' ? 'Backend connected' : 'Backend offline — using mock data'}
+                  {apiStatus === 'checking'
+                    ? 'Checking connection...'
+                    : apiStatus === 'connected'
+                    ? 'Backend connected'
+                    : 'Backend offline'}
                 </Text>
               </div>
             </div>
           </div>
           <Text type="secondary" style={{ fontSize: 13 }}>
-            The Python FastAPI backend provides live data from Databricks. When disconnected, the app falls back to local sample data.
+            The Python FastAPI backend queries Databricks for live reference data. All table data is fetched in real time.
           </Text>
         </Card>
 
-        <Card
-          styles={{ body: { padding: 24 } }}
-          data-testid="card-quick-info"
-        >
+        <Card styles={{ body: { padding: 24 } }} data-testid="card-quick-info">
           <div className="flex items-center gap-3 mb-4">
             <div
               className="flex items-center justify-center w-10 h-10 rounded-lg"
@@ -174,11 +233,23 @@ export default function HomePage() {
           <div className="space-y-2">
             <div className="flex justify-between">
               <Text type="secondary" style={{ fontSize: 13 }}>Total tables</Text>
-              <Text strong style={{ fontSize: 13 }} data-testid="text-total-tables">{stats.length}</Text>
+              <Text strong style={{ fontSize: 13 }} data-testid="text-total-tables">
+                {tableCount !== null ? tableCount : '—'}
+              </Text>
             </div>
             <div className="flex justify-between">
-              <Text type="secondary" style={{ fontSize: 13 }}>Total records</Text>
-              <Text strong style={{ fontSize: 13 }} data-testid="text-total-records">{stats.reduce((sum, s) => sum + s.value, 0)}</Text>
+              <Text type="secondary" style={{ fontSize: 13 }}>Data source</Text>
+              <Text strong style={{ fontSize: 13 }}>Databricks</Text>
+            </div>
+            <div className="flex justify-between">
+              <Text type="secondary" style={{ fontSize: 13 }}>Connection</Text>
+              <Text
+                strong
+                style={{ fontSize: 13, color: apiColor }}
+                data-testid="text-connection-status"
+              >
+                {apiStatus === 'checking' ? 'Checking...' : apiStatus === 'connected' ? 'Live' : 'Offline'}
+              </Text>
             </div>
           </div>
         </Card>

@@ -137,14 +137,14 @@ function BorderBeam({ className, size = 50, duration = 6, delay = 0, colorFrom =
 "use strict";
 
 __turbopack_context__.s([
-    "fetchHealth",
-    ()=>fetchHealth,
     "fetchTableData",
     ()=>fetchTableData,
     "fetchTableList",
     ()=>fetchTableList,
     "fetchTableMetadata",
     ()=>fetchTableMetadata,
+    "fetchUserInfo",
+    ()=>fetchUserInfo,
     "isApiAvailable",
     ()=>isApiAvailable
 ]);
@@ -160,9 +160,6 @@ async function apiFetch(path) {
     }
     return res.json();
 }
-async function fetchHealth() {
-    return apiFetch('/v1/health');
-}
 async function fetchTableList() {
     return apiFetch('/v1/tables/list');
 }
@@ -172,9 +169,12 @@ async function fetchTableData(tableName, limit = 1000, offset = 0) {
 async function fetchTableMetadata(tableName) {
     return apiFetch(`/v1/tables/${encodeURIComponent(tableName)}/info`);
 }
+async function fetchUserInfo() {
+    return apiFetch('/v1/user/info');
+}
 async function isApiAvailable() {
     try {
-        await fetchHealth();
+        await fetchTableList();
         return true;
     } catch  {
         return false;
