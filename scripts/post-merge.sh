@@ -1,3 +1,3 @@
 #!/bin/bash
-set -e
+set -ethats
 npm install
