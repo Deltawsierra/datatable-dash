@@ -8,4 +8,4 @@ router = APIRouter()
 router.include_router(tables_router)
 router.include_router(user_router)
 
-__all__ = ["router", "tables_router", "user_router"]
+__all__ = ["router"]

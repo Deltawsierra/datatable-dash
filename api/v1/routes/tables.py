@@ -9,11 +9,6 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get("/health")
-async def health():
-    return {"Status": "Active"}
-
-
 @router.get("/tables/list")
 def get_all_tables(request: Request):
     """Returns all tables in the schema."""
