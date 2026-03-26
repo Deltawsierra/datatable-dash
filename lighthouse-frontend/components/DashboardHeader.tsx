@@ -1,13 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Layout, Typography, Avatar, Dropdown, Modal } from 'antd';
+import { Layout, Avatar, Dropdown, Modal } from 'antd';
 import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SunOutlined, MoonOutlined, BgColorsOutlined, SettingOutlined } from '@ant-design/icons';
 import { useTheme, COLOR_SCHEMES, type ColorScheme, type ThemeCategory } from './ThemeProvider';
 import type { MenuProps } from 'antd';
 
 const { Header } = Layout;
-const { Text } = Typography;
 
 interface DashboardHeaderProps {
   collapsed: boolean;
@@ -108,21 +107,21 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
           >
             {collapsed ? <MenuUnfoldOutlined style={{ fontSize: 18 }} /> : <MenuFoldOutlined style={{ fontSize: 18 }} />}
           </button>
-          <Text
-            strong
+          <span
             className={titleClass}
             style={{
+              fontWeight: 600,
               fontSize: hasFont ? 14 : 16,
               color: (hasGlow && currentScheme.key !== 'aurora' && currentScheme.key !== 'terminal-amber')
                 ? 'var(--glow-color)'
-                : titleClass === '' ? 'var(--header-text)' : undefined,
+                : 'var(--header-text)',
               fontFamily: hasFont ? 'var(--theme-font)' : undefined,
               letterSpacing: hasFont ? '0.04em' : undefined,
               lineHeight: hasFont ? '1.6' : undefined,
             }}
           >
             Reference Data Management
-          </Text>
+          </span>
         </div>
 
         <div className="flex items-center gap-2">

@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Layout, Menu, Input, Typography, Popover, Radio, Spin } from 'antd';
+import { Layout, Menu, Input, Popover, Radio, Spin } from 'antd';
 import { TableOutlined, DatabaseOutlined, HomeOutlined, SearchOutlined, SortAscendingOutlined, LoadingOutlined } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
 import { fetchTableList } from '../lib/api';
 
 const { Sider } = Layout;
-const { Title } = Typography;
 
 type SortOption = 'az' | 'za';
 
@@ -115,10 +114,11 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
           </div>
           {!collapsed && (
             <div>
-              <Title
-                level={5}
+              <span
                 style={{
+                  display: 'block',
                   margin: 0,
+                  fontWeight: 600,
                   fontSize: currentScheme.fontOverride ? 12 : 16,
                   color: 'var(--sidebar-text)',
                   fontFamily: currentScheme.fontOverride ? 'var(--theme-font)' : undefined,
@@ -127,7 +127,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                 }}
               >
                 RDM Lighthouse
-              </Title>
+              </span>
               <span style={{ fontSize: 12, color: 'var(--sidebar-text-muted)' }}>Data Governance</span>
             </div>
           )}
