@@ -67,7 +67,8 @@ var T=${lookup};
 var m=localStorage.getItem('colorMode')||'light';
 var sk=localStorage.getItem('colorScheme')||'ocean-blue';
 if(m!=='light'&&m!=='dark')m='light';
-var t=T[sk]||T['ocean-blue'];
+var rk=T[sk]?sk:'ocean-blue';
+var t=T[rk];
 var dk=m==='dark';
 var r=document.documentElement;
 var hS=dk?t.dgS:t.gS,hM=dk?t.dgM:t.gM,hE=dk?t.dgE:t.gE;
@@ -85,7 +86,7 @@ r.setAttribute('data-card-style',t.cs);
 r.setAttribute('data-scanlines',t.sc?'true':'false');
 r.setAttribute('data-effect',t.be);
 r.setAttribute('data-force-dark',t.fd?'true':'false');
-r.setAttribute('data-scheme',sk);
+r.setAttribute('data-scheme',rk);
 r.classList.add(m);
 }catch(e){}})();`;
 }

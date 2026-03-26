@@ -637,13 +637,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (!mounted) return;
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(colorMode);
     document.documentElement.setAttribute('data-scheme', colorScheme);
     localStorage.setItem('colorMode', colorMode);
     const scheme = COLOR_SCHEMES.find(s => s.key === colorScheme) ?? COLOR_SCHEMES[0];
     applySchemeVars(scheme, colorMode);
-  }, [colorMode, colorScheme]);
+  }, [colorMode, colorScheme, mounted]);
 
   const toggleColorMode = () => setColorMode(prev => prev === 'light' ? 'dark' : 'light');
 
