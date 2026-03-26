@@ -58,8 +58,7 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
     currentScheme.key === 'aurora'          ? 'aurora-text' :
     currentScheme.key === 'terminal-amber'  ? 'typewriter-cursor' :
     hasGlow                                 ? 'neon-glow' :
-    (hasFont || isFlat)                     ? '' :
-    'shiny-text';
+    '';
 
   const btnStyle = { background: 'rgba(255,255,255,0.15)', color: 'var(--header-text)' };
   const btnHover = (e: React.MouseEvent<HTMLButtonElement>, hover: boolean) => {
@@ -93,7 +92,7 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
   return (
     <>
       <Header
-        className="flex items-center justify-between px-6 sticky top-0 z-50 animate-gradient"
+        className="flex items-center justify-between px-6 sticky top-0 z-50"
         style={{ background: 'var(--header-bg)', borderBottom: 'none', height: 64, padding: '0 24px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
         data-testid="header"
       >
