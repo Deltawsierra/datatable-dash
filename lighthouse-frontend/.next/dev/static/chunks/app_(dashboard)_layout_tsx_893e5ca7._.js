@@ -1,7 +1,7 @@
 (globalThis.TURBOPACK_CHUNK_LISTS || (globalThis.TURBOPACK_CHUNK_LISTS = [])).push({
     script: typeof document === "object" ? document.currentScript : undefined,
     chunks: [
-  "static/chunks/_35976ea3._.js",
+  "static/chunks/_d61488fc._.js",
   "static/chunks/node_modules_antd_es_input_d9703232._.js",
   "static/chunks/node_modules_antd_es_modal_e17af4eb._.js",
   "static/chunks/node_modules_antd_es_bc445c44._.js",
