@@ -7,7 +7,9 @@ const __dirname = path.dirname(__filename);
 const frontendDir = path.resolve(__dirname, '..');
 const repoRoot = path.resolve(__dirname, '../..');
 
-process.env['NODE_ENV'] ??= 'development';
+if (!process.env['NODE_ENV']) {
+  Object.assign(process.env, { NODE_ENV: 'development' });
+}
 
 const port = process.env.PORT || '5000';
 const apiPort = '8000';
