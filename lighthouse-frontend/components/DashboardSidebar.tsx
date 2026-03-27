@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Layout, Menu, Input, Popover, Radio, Spin } from 'antd';
 import { TableOutlined, DatabaseOutlined, HomeOutlined, SearchOutlined, SortAscendingOutlined, LoadingOutlined } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
-import { fetchTableList } from '../lib/api';
+import { useTables } from './TablesProvider';
 
 const { Sider } = Layout;
 
@@ -26,18 +26,10 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
   const pathname = usePathname();
   const router = useRouter();
   const { currentScheme } = useTheme();
+  const { tableNames, tablesLoading } = useTables();
   const [searchText, setSearchText] = useState('');
   const [sortOption, setSortOption] = useState<SortOption>('az');
   const [sortOpen, setSortOpen] = useState(false);
-  const [tableNames, setTableNames] = useState<string[]>([]);
-  const [tablesLoading, setTablesLoading] = useState(true);
-
-  useEffect(() => {
-    fetchTableList()
-      .then((res) => setTableNames(res.tables))
-      .catch(() => setTableNames([]))
-      .finally(() => setTablesLoading(false));
-  }, []);
 
   const getSelectedKey = () => {
     if (pathname === '/') return 'home';

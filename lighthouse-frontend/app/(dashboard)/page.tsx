@@ -5,8 +5,9 @@ import { Card, Typography, Skeleton } from 'antd';
 import { Home as HomeIcon, Clock, Calendar, Database, Activity, User, Table2 } from 'lucide-react';
 import { NumberTicker } from '../../components/magicui/NumberTicker';
 import { BorderBeam } from '../../components/magicui/BorderBeam';
-import { fetchTableList, fetchUserInfo, isApiAvailable } from '../../lib/api';
+import { fetchUserInfo } from '../../lib/api';
 import { useTheme } from '../../components/ThemeProvider';
+import { useTables } from '../../components/TablesProvider';
 
 const { Title, Text } = Typography;
 
@@ -31,9 +32,8 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [userName, setUserName] = useState<string | null>(null);
-  const [tableCount, setTableCount] = useState<number | null>(null);
-  const [apiStatus, setApiStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
   const { currentScheme } = useTheme();
+  const { tableCount, apiStatus } = useTables();
   const showBeam = !currentScheme.glowColor;
 
   useEffect(() => {
@@ -48,14 +48,6 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    isApiAvailable().then((available) => {
-      setApiStatus(available ? 'connected' : 'disconnected');
-    });
-
-    fetchTableList()
-      .then((res) => setTableCount(res.count))
-      .catch(() => setTableCount(null));
-
     fetchUserInfo()
       .then((res) => setUserName(res.display_name || res.user_name || null))
       .catch(() => setUserName(null));
