@@ -17,7 +17,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <ThemeProvider>
       <TablesProvider>
         <ThemeEffectsLayer />
-        <Layout style={{ minHeight: '100vh', position: 'relative', zIndex: 2 }}>
+        <Layout style={{ minHeight: '100vh', position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'row' }}>
           <DashboardSidebar collapsed={collapsed} onCollapse={setCollapsed} />
           
           <Layout style={{ background: 'transparent' }}>
