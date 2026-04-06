@@ -3,7 +3,7 @@
 // Animated number counter with spring physics
 import { useEffect, useRef, useState } from "react";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
-import { cn } from "../../lib/utils";
+import { cn } from "~/lib/utils";
 
 export function NumberTicker({
   value,
