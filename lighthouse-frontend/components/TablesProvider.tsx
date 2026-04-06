@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchTableList } from '../lib/api';
+import { fetchTableList } from '~/lib/api';
 
 type ApiStatus = 'checking' | 'connected' | 'disconnected';
 

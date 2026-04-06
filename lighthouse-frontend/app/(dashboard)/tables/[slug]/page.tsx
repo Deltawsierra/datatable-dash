@@ -2,8 +2,8 @@
 
 import { useParams, notFound } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import DataTable from '../../../../components/DataTable';
-import { fetchTableData, fetchTableMetadata } from '../../../../lib/api';
+import DataTable from '~/components/DataTable';
+import { fetchTableData, fetchTableMetadata } from '~/lib/api';
 import type { ColumnsType } from 'antd/es/table';
 
 export default function TablePage() {

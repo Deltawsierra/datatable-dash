@@ -4,8 +4,8 @@ import { useState, useMemo } from 'react';
 import { Layout, Menu, Input, Popover, Radio, Spin } from 'antd';
 import { TableOutlined, DatabaseOutlined, HomeOutlined, SearchOutlined, SortAscendingOutlined, LoadingOutlined } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
-import { useTheme } from './ThemeProvider';
-import { useTables } from './TablesProvider';
+import { useTheme } from '~/components/ThemeProvider';
+import { useTables } from '~/components/TablesProvider';
 
 const { Sider } = Layout;
 

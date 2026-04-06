@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { Layout } from 'antd';
-import DashboardSidebar from '../../components/DashboardSidebar';
-import DashboardHeader from '../../components/DashboardHeader';
-import { ThemeProvider } from '../../components/ThemeProvider';
-import ThemeEffectsLayer from '../../components/ThemeEffectsLayer';
-import { TablesProvider } from '../../components/TablesProvider';
+import DashboardSidebar from '~/components/DashboardSidebar';
+import DashboardHeader from '~/components/DashboardHeader';
+import { ThemeProvider } from '~/components/ThemeProvider';
+import ThemeEffectsLayer from '~/components/ThemeEffectsLayer';
+import { TablesProvider } from '~/components/TablesProvider';
 
 const { Content } = Layout;
 

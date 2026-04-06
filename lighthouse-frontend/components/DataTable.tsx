@@ -4,8 +4,8 @@ import { useState, useMemo, useCallback, useRef } from 'react';
 import { Table, Card, Typography, Empty, Spin, Tag, Input, Space } from 'antd';
 import { TableOutlined, DownloadOutlined, SearchOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import { BorderBeam } from './magicui/BorderBeam';
-import { useTheme } from './ThemeProvider';
+import { BorderBeam } from '~/components/magicui/BorderBeam';
+import { useTheme } from '~/components/ThemeProvider';
 
 const { Title, Text } = Typography;
 

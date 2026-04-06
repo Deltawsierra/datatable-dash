@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Layout, Avatar, Dropdown, Modal } from 'antd';
 import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SunOutlined, MoonOutlined, BgColorsOutlined, SettingOutlined } from '@ant-design/icons';
-import { useTheme, COLOR_SCHEMES, type ColorScheme, type ThemeCategory } from './ThemeProvider';
+import { useTheme, COLOR_SCHEMES, type ColorScheme, type ThemeCategory } from '~/components/ThemeProvider';
 import type { MenuProps } from 'antd';
 
 const { Header } = Layout;

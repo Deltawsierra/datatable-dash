@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react';
 import { Card, Typography, Skeleton } from 'antd';
 import { Home as HomeIcon, Clock, Calendar, Database, Activity, User, Table2 } from 'lucide-react';
-import { NumberTicker } from '../../components/magicui/NumberTicker';
-import { BorderBeam } from '../../components/magicui/BorderBeam';
-import { fetchUserInfo } from '../../lib/api';
-import { useTheme } from '../../components/ThemeProvider';
-import { useTables } from '../../components/TablesProvider';
+import { NumberTicker } from '~/components/magicui/NumberTicker';
+import { BorderBeam } from '~/components/magicui/BorderBeam';
+import { fetchUserInfo } from '~/lib/api';
+import { useTheme } from '~/components/ThemeProvider';
+import { useTables } from '~/components/TablesProvider';
 
 const { Title, Text } = Typography;
 
