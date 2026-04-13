@@ -37,7 +37,9 @@ CREATE TABLE IF NOT EXISTS roles (
     created_by  VARCHAR(255)  NOT NULL,
     metadata    JSONB,
 
-    CONSTRAINT pk_roles PRIMARY KEY (role_name)
+    CONSTRAINT pk_roles PRIMARY KEY (role_name),
+    CONSTRAINT chk_roles_permissions_is_object
+        CHECK (jsonb_typeof(permissions) = 'object')
 );
 
 
