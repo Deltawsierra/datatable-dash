@@ -12,9 +12,14 @@ async function proxyRequest(request: NextRequest) {
       'Content-Type': 'application/json',
     };
 
-    const accessToken = request.headers.get('x-forwarded-access-token');
-    if (accessToken) {
-      headers['x-forwarded-access-token'] = accessToken;
+    const authHeader = request.headers.get('authorization');
+    if (authHeader) {
+      headers['authorization'] = authHeader;
+    }
+
+    const xForwardedToken = request.headers.get('x-forwarded-access-token');
+    if (xForwardedToken) {
+      headers['x-forwarded-access-token'] = xForwardedToken;
     }
 
     const fetchOptions: RequestInit = {

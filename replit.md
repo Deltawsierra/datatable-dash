@@ -119,6 +119,19 @@ lighthouse-rdm/
 - **Table Registry** (`lighthouse-frontend/lib/tableRegistry.ts`): Retained as legacy mock data for local dev reference only — no longer used at runtime
 - **Generic DataTable Component**: Type-safe table wrapper supporting any data shape
 
+### Authentication (OAuth)
+- **Provider**: Microsoft Azure AD (Entra ID) via MSAL.js (`@azure/msal-browser` v5 + `@azure/msal-react` v2)
+- **Flow**: Redirect-based OAuth. Unauthenticated users hitting any dashboard route are redirected to the Microsoft login page. After login they land on the dashboard.
+- **MSAL singleton**: `lighthouse-frontend/lib/auth.ts` — `getMsalInstance()` lazy factory; `getAccessToken()` silently acquires an access token for API calls
+- **Auth context**: `lighthouse-frontend/lib/authContext.ts` — `useAuth()` hook exposes `displayName`, `username`, `roles[]`, `rolesLoading`
+- **AuthProvider**: `lighthouse-frontend/components/AuthProvider.tsx` — wraps `app/layout.tsx` body with `MsalProvider` after async `initialize()`
+- **AuthGuard**: `lighthouse-frontend/components/AuthGuard.tsx` — wraps dashboard layout; triggers `loginRedirect` if not authenticated; fetches roles from `/v1/user/roles`; provides `AuthContext`
+- **Token injection**: Every `apiFetch()` in `lib/api.ts` acquires a Bearer token silently and passes it as `Authorization` header; proxy route forwards it to FastAPI
+- **Header display**: `DashboardHeader.tsx` shows logged-in display name, role badge (`Tag`), and "Sign out" in user dropdown (`logoutRedirect`)
+- **Environment variables required**: `NEXT_PUBLIC_AZURE_CLIENT_ID` and `NEXT_PUBLIC_AZURE_TENANT_ID` (from IT/security Azure AD App Registration)
+- **Backend instructions**: `docs/backend_oauth_instructions.md` — copy-paste guide for CORS, JWT validation middleware (`python-jose`), and new `/v1/user/roles` PostgreSQL endpoint
+- **Package note**: MSAL packages hard-copied into `lighthouse-frontend/node_modules/@azure/` (Turbopack does not follow cross-directory symlinks from root `node_modules`)
+
 ### Build & Development
 - **Dev Server**: `lighthouse-frontend/server/index.ts` spawns both Next.js (port 5000) and FastAPI (port 8000) as child processes
   - Next.js spawns with explicit cwd = `lighthouse-frontend/` (set in code via path.resolve(__dirname, '..'))

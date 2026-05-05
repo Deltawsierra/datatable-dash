@@ -11,6 +11,8 @@
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
+    "@azure/msal-browser": "^5.9.0",
+    "@azure/msal-react": "^2.1.0",
     "@ant-design/cssinjs": "^2.0.2",
     "@ant-design/icons": "^6.1.0",
     "antd": "^6.1.4",

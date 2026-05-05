@@ -1,3 +1,5 @@
+import { getAccessToken } from '~/lib/auth';
+
 const API_BASE_URL = '/api/proxy';
 
 export interface TableListResponse {
@@ -30,12 +32,21 @@ export interface UserInfoResponse {
   active: boolean;
 }
 
+export interface UserRolesResponse {
+  username: string;
+  roles: string[];
+}
+
 async function apiFetch<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const token = await getAccessToken();
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(`${API_BASE_URL}${path}`, { headers });
   if (!res.ok) {
     throw new Error(`API error ${res.status}: ${res.statusText}`);
   }
@@ -66,6 +77,10 @@ export async function fetchTableMetadata(
 
 export async function fetchUserInfo(): Promise<UserInfoResponse> {
   return apiFetch<UserInfoResponse>('/v1/user/info');
+}
+
+export async function fetchUserRoles(): Promise<UserRolesResponse> {
+  return apiFetch<UserRolesResponse>('/v1/user/roles');
 }
 
 export async function isApiAvailable(): Promise<boolean> {

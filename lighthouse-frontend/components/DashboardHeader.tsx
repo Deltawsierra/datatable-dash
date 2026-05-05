@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Layout, Avatar, Dropdown, Modal } from 'antd';
-import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SunOutlined, MoonOutlined, BgColorsOutlined, SettingOutlined } from '@ant-design/icons';
+import { Layout, Avatar, Dropdown, Modal, Tag } from 'antd';
+import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SunOutlined, MoonOutlined, BgColorsOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useTheme, COLOR_SCHEMES, type ColorScheme, type ThemeCategory } from '~/components/ThemeProvider';
+import { useAuth } from '~/lib/authContext';
+import { useMsal } from '@azure/msal-react';
 import type { MenuProps } from 'antd';
 
 const { Header } = Layout;
@@ -45,13 +47,14 @@ const CATEGORY_ORDER: CategoryFilter[] = [
 
 export default function DashboardHeader({ collapsed, onToggle }: DashboardHeaderProps) {
   const { colorMode, colorScheme, toggleColorMode, setColorScheme, currentScheme } = useTheme();
+  const { displayName, username, roles, rolesLoading } = useAuth();
+  const { instance } = useMsal();
   const [themeModalOpen, setThemeModalOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
   const [modeKey, setModeKey] = useState(0);
 
   const hasGlow = !!currentScheme.glowColor;
   const hasFont = !!currentScheme.fontOverride;
-  const isFlat  = !!currentScheme.flatHeader;
 
   const titleClass =
     currentScheme.key === 'aurora'          ? 'aurora-text' :
@@ -69,11 +72,39 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
     setModeKey((k) => k + 1);
   };
 
+  const handleLogout = () => {
+    instance.logoutRedirect({ postLogoutRedirectUri: window.location.origin });
+  };
+
   const filteredSchemes = activeCategory === 'all'
     ? COLOR_SCHEMES
     : COLOR_SCHEMES.filter(s => s.category === activeCategory);
 
+  const primaryRole = roles[0] ?? null;
+
   const userMenuItems: MenuProps['items'] = [
+    {
+      key: 'user-info',
+      label: (
+        <div style={{ padding: '4px 0', minWidth: 160 }}>
+          <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>
+            {displayName ?? username ?? 'User'}
+          </div>
+          {username && (
+            <div style={{ fontSize: 11, color: 'var(--foreground-muted, #64748b)', marginTop: 1 }}>
+              {username}
+            </div>
+          )}
+          {!rolesLoading && primaryRole && (
+            <Tag color="blue" style={{ marginTop: 6, fontSize: 10 }}>
+              {primaryRole}
+            </Tag>
+          )}
+        </div>
+      ),
+      disabled: true,
+    },
+    { type: 'divider' },
     {
       key: 'theme',
       icon: <BgColorsOutlined />,
@@ -85,6 +116,14 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
       icon: <SettingOutlined />,
       label: 'Settings',
       disabled: true,
+    },
+    { type: 'divider' },
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: 'Sign out',
+      onClick: handleLogout,
+      danger: true,
     },
   ];
 
@@ -124,8 +163,29 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* Animated light/dark mode toggle */}
+        <div className="flex items-center gap-3">
+          {/* Role badge — only shown when roles are loaded and user has at least one */}
+          {!rolesLoading && primaryRole && (
+            <Tag
+              color="blue"
+              style={{ margin: 0, fontSize: 11, opacity: 0.9 }}
+              data-testid="tag-user-role"
+            >
+              {primaryRole}
+            </Tag>
+          )}
+
+          {/* Display name */}
+          {displayName && (
+            <span
+              style={{ fontSize: 13, color: 'var(--header-text)', opacity: 0.85 }}
+              data-testid="text-display-name"
+            >
+              {displayName}
+            </span>
+          )}
+
+          {/* Light/dark mode toggle */}
           <button
             onClick={handleToggleMode}
             className="flex items-center justify-center w-9 h-9 rounded-md transition-all cursor-pointer border-none"

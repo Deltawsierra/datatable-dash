@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '~/app/globals.css';
 import { getThemeScript } from '~/lib/themeScript';
+import AuthProvider from '~/components/AuthProvider';
 
 export const metadata: Metadata = {
   title: 'RDM Lighthouse - Reference Data Management',
@@ -18,7 +19,9 @@ export default function RootLayout({
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: getThemeScript() }} />
       </head>
       <body>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

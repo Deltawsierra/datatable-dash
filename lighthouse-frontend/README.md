@@ -18,6 +18,7 @@ Developed by the **Genworth Data Governance** team.
 
 - Node.js 18+ installed
 - npm or yarn package manager
+- Azure AD App Registration (Client ID + Tenant ID from your IT/security team)
 
 ### Quick Start
 
@@ -97,6 +98,23 @@ server/                        # Server entry
 npm run build
 npm start
 ```
+
+## Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NEXT_PUBLIC_AZURE_CLIENT_ID` | Yes (production) | Azure AD App Registration Client ID — obtain from IT/security team |
+| `NEXT_PUBLIC_AZURE_TENANT_ID` | Yes (production) | Azure AD Tenant ID — obtain from IT/security team |
+| `DATABRICKS_ACCESS_TOKEN` | Yes (local dev) | Databricks personal access token |
+| `VERSION` | Yes (local dev) | Set to `DEV` for local development |
+| `SERVER_HOSTNAME` | Yes | Databricks SQL warehouse hostname |
+| `HTTP_PATH` | Yes | Databricks SQL warehouse HTTP path |
+| `CATALOG` | Yes | Databricks catalog name (e.g. `lighthouse_rdm`) |
+| `SCHEMA` | Yes | Databricks schema name (e.g. `reference_dev`) |
+
+> **Note:** `NEXT_PUBLIC_` variables are embedded at build time and exposed to the browser.
+> The Azure AD variables are safe to expose publicly — they only identify your app registration,
+> not any secret. Without these values the app loads but authentication will not redirect to Microsoft login.
 
 ## Future API Integration
 
