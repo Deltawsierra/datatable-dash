@@ -6,6 +6,10 @@ import { InteractionStatus } from '@azure/msal-browser';
 import { loginRequest, getAccessToken } from '~/lib/auth';
 import { AuthContext } from '~/lib/authContext';
 
+const DEV_BYPASS =
+  !process.env.NEXT_PUBLIC_AZURE_CLIENT_ID ||
+  process.env.NEXT_PUBLIC_AZURE_CLIENT_ID === 'placeholder-client-id';
+
 function inIframe(): boolean {
   try {
     return typeof window !== 'undefined' && window.self !== window.top;
@@ -26,6 +30,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const username = account?.username ?? null;
 
   useEffect(() => {
+    if (DEV_BYPASS) return;
     if (!isAuthenticated && inProgress === InteractionStatus.None) {
       if (inIframe()) {
         setIframeDetected(true);
@@ -36,7 +41,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   }, [isAuthenticated, inProgress, instance]);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (DEV_BYPASS || !isAuthenticated) return;
 
     (async () => {
       try {
@@ -54,6 +59,42 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       }
     })();
   }, [isAuthenticated]);
+
+  if (DEV_BYPASS) {
+    return (
+      <AuthContext.Provider
+        value={{
+          displayName: 'Dev User',
+          username: 'dev@genworth.net',
+          roles: ['admin'],
+          rolesLoading: false,
+        }}
+      >
+        <div style={{ position: 'relative' }}>
+          <div
+            style={{
+              position: 'fixed',
+              bottom: 16,
+              right: 16,
+              zIndex: 9998,
+              background: '#f59e0b',
+              color: '#1c1917',
+              fontSize: 11,
+              fontWeight: 700,
+              padding: '4px 10px',
+              borderRadius: 20,
+              letterSpacing: '0.04em',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
+              userSelect: 'none',
+            }}
+          >
+            DEV MODE — Auth bypassed
+          </div>
+          {children}
+        </div>
+      </AuthContext.Provider>
+    );
+  }
 
   if (!isAuthenticated || inProgress !== InteractionStatus.None) {
     if (iframeDetected) {
