@@ -4,7 +4,10 @@ import { useParams, notFound } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import DataTable from '~/components/DataTable';
 import { fetchTableData, fetchTableMetadata } from '~/lib/api';
+import { getTableData, getColumns, type TableName } from '~/lib/tableRegistry';
 import type { ColumnsType } from 'antd/es/table';
+
+const DEV_TABLES = new Set<string>(['states', 'countries', 'departments']);
 
 export default function TablePage() {
   const params = useParams();
@@ -15,6 +18,7 @@ export default function TablePage() {
   const [loading, setLoading] = useState(true);
   const [totalRows, setTotalRows] = useState(0);
   const [notFoundError, setNotFoundError] = useState(false);
+  const [usingMock, setUsingMock] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -22,6 +26,7 @@ export default function TablePage() {
     async function loadData() {
       setLoading(true);
       setNotFoundError(false);
+      setUsingMock(false);
       try {
         const [tableResponse, metadataResponse] = await Promise.all([
           fetchTableData(slug),
@@ -46,11 +51,16 @@ export default function TablePage() {
         setColumns(apiColumns);
         setData(apiData);
         setTotalRows(metadataResponse.total_rows);
-      } catch (err: unknown) {
+      } catch {
         if (cancelled) return;
-        const status = (err as { status?: number })?.status;
-        if (status === 404) {
-          setNotFoundError(true);
+
+        if (DEV_TABLES.has(slug)) {
+          const mockData = getTableData(slug as TableName) as Array<Record<string, unknown>>;
+          const mockColumns = getColumns(slug as TableName) as ColumnsType<Record<string, unknown>>;
+          setData(mockData);
+          setColumns(mockColumns);
+          setTotalRows(mockData.length);
+          setUsingMock(true);
         } else {
           setNotFoundError(true);
         }
@@ -74,7 +84,7 @@ export default function TablePage() {
       columns={columns as ColumnsType<{ id: string }>}
       loading={loading}
       totalRows={totalRows}
-      usingApi={true}
+      usingApi={!usingMock}
     />
   );
 }
