@@ -1,0 +1,21 @@
+[1G[0K⠙[1G[0KStarting Next.js on port 5000...
+Starting FastAPI on port 8000...
+[1G[0K⠙[1G[0K[32mINFO[0m:     Will watch for changes in these directories: ['/home/runner/workspace']
+[32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     Started reloader process [[36m[1m220[0m] using [36m[1mStatReload[0m
+[1m[38;2;173;127;168m▲ Next.js 16.1.1[39m[22m (Turbopack)
+- Local:         http://localhost:5000
+- Network:       http://172.31.111.194:5000
+
+[32m[1m✓[22m[39m Starting...
+[WARN] pyarrow is not installed by default since databricks-sql-connector 4.0.0,any arrow specific api (e.g. fetchmany_arrow) and cloud fetch will be disabled.If you need these features, please run pip install pyarrow or pip install databricks-sql-connector[pyarrow] to install
+[32mINFO[0m:     Started server process [[36m247[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32m[1m✓[22m[39m Ready in 6.4s
+[37m[1m○[22m[39m Compiling / ...
+ GET / [32m200[39m in 4.9s[2m (compile: 4.4s, render: 510ms)[22m
+[33m[1m⚠[22m[39m Cross origin request detected from af78457b-e79b-47a9-8b2b-ca55de4f93f5-00-2xevv4znzxb6e.janeway.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[32mINFO[0m:     127.0.0.1:38524 - "[1mGET /v1/health HTTP/1.1[0m" [32m200 OK[0m
+ GET /api/proxy/v1/health [32m200[39m in 702ms[2m (compile: 670ms, render: 32ms)[22m

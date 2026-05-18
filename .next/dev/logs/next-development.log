@@ -1,0 +1,56 @@
+[00:01:55.156] Server  ERROR   ⨯ Error: Cannot find module 'next/dist/client/components/builtin/global-not-found'
+Require stack:
+- /home/runner/workspace/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /home/runner/workspace/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-server.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/start-server.js
+[00:01:55.289] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /home/runner/workspace/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /home/runner/workspace/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-server.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/start-server.js
+[00:01:55.379] Server  ERROR   ⨯ Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /home/runner/workspace/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /home/runner/workspace/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-server.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/start-server.js
+[00:01:55.486] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /home/runner/workspace/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /home/runner/workspace/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-server.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/start-server.js
+[00:01:55.611] Server  ERROR   ⨯ Error: Cannot find module 'next/dist/client/components/builtin/global-not-found'
+Require stack:
+- /home/runner/workspace/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /home/runner/workspace/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-server.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/start-server.js
+[00:01:55.664] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /home/runner/workspace/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /home/runner/workspace/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-server.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/start-server.js
+[00:01:55.704] Server  ERROR   ⨯ Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /home/runner/workspace/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /home/runner/workspace/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-server.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/start-server.js
+[00:01:55.772] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /home/runner/workspace/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /home/runner/workspace/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/router-server.js
+- /home/runner/workspace/node_modules/next/dist/server/lib/start-server.js

@@ -1,0 +1,20 @@
+Fix context menu action buttons not opening the edit drawer
+
+The "Add New Row" and "Edit row/cell" buttons in the floating action menu
+were dismissing the menu but not opening the drawer.
+
+Root cause: the document-level `mousedown` handler that dismissed the menu
+on outside clicks was racing with the button's `onClick`. When the user
+pressed down on an action button, the mousedown event fired first and called
+`setContextMenu(null)`. By the time the React `onClick` fired `openDrawer()`,
+the `contextMenu` guard check (`if (!contextMenu) return`) exited early,
+so the drawer never opened.
+
+Fix: replaced the `stopPropagation` approach with the correct click-outside
+pattern — a `ref` on the menu container that lets the dismiss handler skip
+events originating inside the menu:
+
+  if (contextMenuRef.current?.contains(e.target as Node)) return;
+
+This guarantees clicks on action buttons are never treated as outside clicks,
+so `contextMenu` is always truthy when `openDrawer` reads it.

@@ -1,0 +1,18 @@
+[1G[0K⠙[1G[0KStarting Next.js on port 5000...
+Starting FastAPI on port 8000...
+[1G[0K⠙[1G[0K[32mINFO[0m:     Will watch for changes in these directories: ['/home/runner/workspace']
+[31mERROR[0m:    [Errno 98] Address already in use
+FastAPI exited with code 1
+[31m[1m⨯[22m[39m Failed to start server
+Error: listen EADDRINUSE: address already in use :::5000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::5000)
+    at new Promise (<anonymous>) {
+  code: [32m'EADDRINUSE'[39m,
+  errno: [33m-98[39m,
+  syscall: [32m'listen'[39m,
+  address: [32m'::'[39m,
+  port: [33m5000[39m
+}
+[?25h
+[1G[0K⠙[1G[0KNext.js exited with code 1
+[1G[0K⠙[1G[0K

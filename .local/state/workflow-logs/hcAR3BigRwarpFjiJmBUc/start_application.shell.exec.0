@@ -1,0 +1,158 @@
+Starting Next.js on port 5000...
+Starting FastAPI on port 8000...
+[32mINFO[0m:     Will watch for changes in these directories: ['/home/runner/workspace']
+[32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     Started reloader process [[36m[1m1957[0m] using [36m[1mStatReload[0m
+[1G[0K⠙[1G[0K[1m[38;2;173;127;168m▲ Next.js 16.1.1[39m[22m (Turbopack)
+- Local:         http://localhost:5000
+- Network:       http://172.31.104.34:5000
+
+[32m[1m✓[22m[39m Starting...
+[WARN] pyarrow is not installed by default since databricks-sql-connector 4.0.0,any arrow specific api (e.g. fetchmany_arrow) and cloud fetch will be disabled.If you need these features, please run pip install pyarrow or pip install databricks-sql-connector[pyarrow] to install
+[32mINFO[0m:     Started server process [[36m1975[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32m[1m✓[22m[39m Ready in 557ms
+[31m[1m⨯[22m[39m ./components/AuthGuard.tsx:5:1
+[1m[31mModule not found[39m[22m: Can't resolve [32m'@azure/msal-browser'[39m
+[0m [90m 3 |[39m [36mimport[39m { useEffect[33m,[39m useState } [36mfrom[39m [32m'react'[39m[33m;[39m
+ [90m 4 |[39m [36mimport[39m { useIsAuthenticated[33m,[39m useMsal } [36mfrom[39m [32m'@azure/msal-react'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 5 |[39m [36mimport[39m { [33mInteractionStatus[39m } [36mfrom[39m [32m'@azure/msal-browser'[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 6 |[39m [36mimport[39m { loginRequest[33m,[39m getAccessToken } [36mfrom[39m [32m'~/lib/auth'[39m[33m;[39m
+ [90m 7 |[39m [36mimport[39m { [33mAuthContext[39m } [36mfrom[39m [32m'~/lib/authContext'[39m[33m;[39m
+ [90m 8 |[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/AuthGuard.tsx [Client Component Browser]
+    ./app/(dashboard)/layout.tsx [Client Component Browser]
+    ./app/(dashboard)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/AuthGuard.tsx [Client Component SSR]
+    ./app/(dashboard)/layout.tsx [Client Component SSR]
+    ./app/(dashboard)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./lib/auth.ts:1:1
+[1m[31mModule not found[39m[22m: Can't resolve [32m'@azure/msal-browser'[39m
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m { [33mPublicClientApplication[39m[33m,[39m type [33mConfiguration[39m } [36mfrom[39m [32m'@azure/msal-browser'[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m
+ [90m 3 |[39m [36mfunction[39m createMsalConfig()[33m:[39m [33mConfiguration[39m {
+ [90m 4 |[39m   [36mreturn[39m {[0m
+
+
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./lib/auth.ts [Client Component Browser]
+    ./components/AuthGuard.tsx [Client Component Browser]
+    ./app/(dashboard)/layout.tsx [Client Component Browser]
+    ./app/(dashboard)/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./lib/auth.ts [Client Component Browser]
+    ./components/AuthProvider.tsx [Client Component Browser]
+    ./components/AuthProvider.tsx [Server Component]
+    ./app/layout.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./lib/auth.ts [Client Component SSR]
+    ./components/AuthGuard.tsx [Client Component SSR]
+    ./app/(dashboard)/layout.tsx [Client Component SSR]
+    ./app/(dashboard)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./lib/auth.ts [Client Component SSR]
+    ./components/AuthProvider.tsx [Client Component SSR]
+    ./components/AuthProvider.tsx [Server Component]
+    ./app/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./components/AuthGuard.tsx:4:1
+[1m[31mModule not found[39m[22m: Can't resolve [32m'@azure/msal-react'[39m
+[0m [90m 2 |[39m
+ [90m 3 |[39m [36mimport[39m { useEffect[33m,[39m useState } [36mfrom[39m [32m'react'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m { useIsAuthenticated[33m,[39m useMsal } [36mfrom[39m [32m'@azure/msal-react'[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 5 |[39m [36mimport[39m { [33mInteractionStatus[39m } [36mfrom[39m [32m'@azure/msal-browser'[39m[33m;[39m
+ [90m 6 |[39m [36mimport[39m { loginRequest[33m,[39m getAccessToken } [36mfrom[39m [32m'~/lib/auth'[39m[33m;[39m
+ [90m 7 |[39m [36mimport[39m { [33mAuthContext[39m } [36mfrom[39m [32m'~/lib/authContext'[39m[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/AuthGuard.tsx [Client Component Browser]
+    ./app/(dashboard)/layout.tsx [Client Component Browser]
+    ./app/(dashboard)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/AuthGuard.tsx [Client Component SSR]
+    ./app/(dashboard)/layout.tsx [Client Component SSR]
+    ./app/(dashboard)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./components/AuthProvider.tsx:4:1
+[1m[31mModule not found[39m[22m: Can't resolve [32m'@azure/msal-react'[39m
+[0m [90m 2 |[39m
+ [90m 3 |[39m [36mimport[39m { useEffect[33m,[39m useState } [36mfrom[39m [32m'react'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m { [33mMsalProvider[39m } [36mfrom[39m [32m'@azure/msal-react'[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 5 |[39m [36mimport[39m type { [33mPublicClientApplication[39m } [36mfrom[39m [32m'@azure/msal-browser'[39m[33m;[39m
+ [90m 6 |[39m [36mimport[39m { getMsalInstance } [36mfrom[39m [32m'~/lib/auth'[39m[33m;[39m
+ [90m 7 |[39m[0m
+
+
+
+Import trace:
+  Server Component:
+    ./components/AuthProvider.tsx
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./components/DashboardHeader.tsx:8:1
+[1m[31mModule not found[39m[22m: Can't resolve [32m'@azure/msal-react'[39m
+[0m [90m  6 |[39m [36mimport[39m { useTheme[33m,[39m [33mCOLOR_SCHEMES[39m[33m,[39m type [33mColorScheme[39m[33m,[39m type [33mThemeCategory[39m } [36mfrom[39m [32m'~/components/ThemeProvider'[39m[33m;[39m
+ [90m  7 |[39m [36mimport[39m { useAuth } [36mfrom[39m [32m'~/lib/authContext'[39m[33m;[39m
+[31m[1m>[22m[39m[90m  8 |[39m [36mimport[39m { useMsal } [36mfrom[39m [32m'@azure/msal-react'[39m[33m;[39m
+ [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m  9 |[39m [36mimport[39m type { [33mMenuProps[39m } [36mfrom[39m [32m'antd'[39m[33m;[39m
+ [90m 10 |[39m
+ [90m 11 |[39m [36mconst[39m { [33mHeader[39m } [33m=[39m [33mLayout[39m[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/DashboardHeader.tsx [Client Component Browser]
+    ./app/(dashboard)/layout.tsx [Client Component Browser]
+    ./app/(dashboard)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/DashboardHeader.tsx [Client Component SSR]
+    ./app/(dashboard)/layout.tsx [Client Component SSR]
+    ./app/(dashboard)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET / [31m500[39m in 2.3s[2m (compile: 2.2s, render: 123ms)[22m
+[32m[1m✓[22m[39m Compiled in 1575ms
+Next.js exited with code null
