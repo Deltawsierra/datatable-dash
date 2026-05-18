@@ -82,6 +82,7 @@ export default function DataTable<T extends { id: string }>({
     columnKey: string | null;
   } | null>(null);
   const [hoveredActionBtn, setHoveredActionBtn] = useState<string | null>(null);
+  const contextMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setLocalData(data);
@@ -89,7 +90,10 @@ export default function DataTable<T extends { id: string }>({
 
   useEffect(() => {
     if (!contextMenu) return;
-    const handler = () => setContextMenu(null);
+    const handler = (e: MouseEvent) => {
+      if (contextMenuRef.current?.contains(e.target as Node)) return;
+      setContextMenu(null);
+    };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, [contextMenu]);
@@ -418,7 +422,7 @@ export default function DataTable<T extends { id: string }>({
       {/* Context action menu */}
       {contextMenu && (
         <div
-          onMouseDown={e => e.stopPropagation()}
+          ref={contextMenuRef}
           style={{
             position: 'fixed',
             left: contextMenu.x + 6,
