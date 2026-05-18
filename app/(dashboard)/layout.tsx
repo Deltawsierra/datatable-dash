@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import { Layout } from 'antd';
-import DashboardSidebar from '../../components/DashboardSidebar';
-import DashboardHeader from '../../components/DashboardHeader';
-import { ThemeProvider } from '../../components/ThemeProvider';
-import ThemeEffectsLayer from '../../components/ThemeEffectsLayer';
+import DashboardSidebar from '~/components/DashboardSidebar';
+import DashboardHeader from '~/components/DashboardHeader';
+import { ThemeProvider } from '~/components/ThemeProvider';
+import ThemeEffectsLayer from '~/components/ThemeEffectsLayer';
+import { TablesProvider } from '~/components/TablesProvider';
+import AuthGuard from '~/components/AuthGuard';
 
 const { Content } = Layout;
 
@@ -14,21 +16,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <ThemeProvider>
-      <ThemeEffectsLayer />
-      <Layout style={{ minHeight: '100vh', position: 'relative', zIndex: 2 }}>
-        <DashboardSidebar collapsed={collapsed} onCollapse={setCollapsed} />
-        
-        <Layout style={{ background: 'transparent' }}>
-          <DashboardHeader collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
-          
-          <Content 
-            style={{ background: 'var(--content-bg)', minHeight: 'calc(100vh - 64px)', transition: 'background-color 0.3s ease', position: 'relative', zIndex: 2 }}
-            data-testid="main-content"
-          >
-            {children}
-          </Content>
-        </Layout>
-      </Layout>
+      <AuthGuard>
+        <TablesProvider>
+          <ThemeEffectsLayer />
+          <Layout style={{ minHeight: '100vh', position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'row' }}>
+            <DashboardSidebar collapsed={collapsed} onCollapse={setCollapsed} />
+
+            <Layout style={{ background: 'transparent' }}>
+              <DashboardHeader collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
+
+              <Content
+                style={{ background: 'var(--content-bg)', minHeight: 'calc(100vh - 64px)', transition: 'background-color 0.3s ease', position: 'relative', zIndex: 2 }}
+                data-testid="main-content"
+              >
+                {children}
+              </Content>
+            </Layout>
+          </Layout>
+        </TablesProvider>
+      </AuthGuard>
     </ThemeProvider>
   );
 }

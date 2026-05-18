@@ -10,7 +10,6 @@ function createMsalConfig(): Configuration {
     },
     cache: {
       cacheLocation: 'sessionStorage',
-      storeAuthStateInCookie: false,
     },
   };
 }

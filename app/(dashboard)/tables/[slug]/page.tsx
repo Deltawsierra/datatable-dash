@@ -2,31 +2,31 @@
 
 import { useParams, notFound } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import DataTable from '../../../../components/DataTable';
-import { getTableData, getColumns, tableConfigs, type TableName } from '../../../../lib/tableRegistry';
-import { fetchTableData, fetchTableMetadata } from '../../../../lib/api';
+import DataTable from '~/components/DataTable';
+import { fetchTableData, fetchTableMetadata } from '~/lib/api';
+import { getTableData, getColumns, type TableName } from '~/lib/tableRegistry';
 import type { ColumnsType } from 'antd/es/table';
+
+const DEV_TABLES = new Set<string>(['states', 'countries', 'departments']);
 
 export default function TablePage() {
   const params = useParams();
   const slug = params.slug as string;
 
-  const validTables = tableConfigs.map(t => t.key);
-  if (!validTables.includes(slug as TableName)) {
-    notFound();
-  }
-
   const [data, setData] = useState<Array<Record<string, unknown>>>([]);
   const [columns, setColumns] = useState<ColumnsType<Record<string, unknown>>>([]);
   const [loading, setLoading] = useState(true);
   const [totalRows, setTotalRows] = useState(0);
-  const [usingApi, setUsingApi] = useState(false);
+  const [notFoundError, setNotFoundError] = useState(false);
+  const [usingMock, setUsingMock] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
     async function loadData() {
       setLoading(true);
+      setNotFoundError(false);
+      setUsingMock(false);
       try {
         const [tableResponse, metadataResponse] = await Promise.all([
           fetchTableData(slug),
@@ -45,21 +45,25 @@ export default function TablePage() {
 
         const apiData = tableResponse.data.map((row, index) => ({
           ...row,
-          id: (row as Record<string, unknown>).id || String(index + 1),
+          id: (row as Record<string, unknown>).id ?? String(index + 1),
         }));
 
         setColumns(apiColumns);
         setData(apiData);
         setTotalRows(metadataResponse.total_rows);
-        setUsingApi(true);
       } catch {
         if (cancelled) return;
-        const fallbackData = getTableData(slug as TableName);
-        const fallbackColumns = getColumns(slug as TableName);
-        setData(fallbackData as Array<Record<string, unknown>>);
-        setColumns(fallbackColumns as ColumnsType<Record<string, unknown>>);
-        setTotalRows(fallbackData.length);
-        setUsingApi(false);
+
+        if (DEV_TABLES.has(slug)) {
+          const mockData = getTableData(slug as TableName) as Array<Record<string, unknown>>;
+          const mockColumns = getColumns(slug as TableName) as ColumnsType<Record<string, unknown>>;
+          setData(mockData);
+          setColumns(mockColumns);
+          setTotalRows(mockData.length);
+          setUsingMock(true);
+        } else {
+          setNotFoundError(true);
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -69,6 +73,10 @@ export default function TablePage() {
     return () => { cancelled = true; };
   }, [slug]);
 
+  if (notFoundError && !loading) {
+    notFound();
+  }
+
   return (
     <DataTable
       title={slug}
@@ -76,7 +84,7 @@ export default function TablePage() {
       columns={columns as ColumnsType<{ id: string }>}
       loading={loading}
       totalRows={totalRows}
-      usingApi={usingApi}
+      usingApi={!usingMock}
     />
   );
 }

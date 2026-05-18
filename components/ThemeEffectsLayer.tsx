@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useMemo } from 'react';
 import type { CSSProperties } from 'react';
-import { useTheme } from './ThemeProvider';
+import { useTheme } from '~/components/ThemeProvider';
 
 function random(min: number, max: number) {
   return Math.random() * (max - min) + min;

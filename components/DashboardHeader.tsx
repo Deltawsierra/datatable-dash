@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { Layout, Typography, Avatar, Dropdown, Modal } from 'antd';
-import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SunOutlined, MoonOutlined, BgColorsOutlined, SettingOutlined } from '@ant-design/icons';
-import { useTheme, COLOR_SCHEMES, type ColorScheme, type ThemeCategory } from './ThemeProvider';
+import { Layout, Avatar, Dropdown, Modal, Tag } from 'antd';
+import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SunOutlined, MoonOutlined, BgColorsOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
+import { useTheme, COLOR_SCHEMES, type ColorScheme, type ThemeCategory } from '~/components/ThemeProvider';
+import { useAuth } from '~/lib/authContext';
+import { useMsal } from '@azure/msal-react';
 import type { MenuProps } from 'antd';
 
 const { Header } = Layout;
-const { Text } = Typography;
 
 interface DashboardHeaderProps {
   collapsed: boolean;
@@ -46,20 +47,20 @@ const CATEGORY_ORDER: CategoryFilter[] = [
 
 export default function DashboardHeader({ collapsed, onToggle }: DashboardHeaderProps) {
   const { colorMode, colorScheme, toggleColorMode, setColorScheme, currentScheme } = useTheme();
+  const { displayName, username, roles, rolesLoading } = useAuth();
+  const { instance } = useMsal();
   const [themeModalOpen, setThemeModalOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
   const [modeKey, setModeKey] = useState(0);
 
   const hasGlow = !!currentScheme.glowColor;
   const hasFont = !!currentScheme.fontOverride;
-  const isFlat  = !!currentScheme.flatHeader;
 
   const titleClass =
     currentScheme.key === 'aurora'          ? 'aurora-text' :
     currentScheme.key === 'terminal-amber'  ? 'typewriter-cursor' :
     hasGlow                                 ? 'neon-glow' :
-    (hasFont || isFlat)                     ? '' :
-    'shiny-text';
+    '';
 
   const btnStyle = { background: 'rgba(255,255,255,0.15)', color: 'var(--header-text)' };
   const btnHover = (e: React.MouseEvent<HTMLButtonElement>, hover: boolean) => {
@@ -71,11 +72,39 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
     setModeKey((k) => k + 1);
   };
 
+  const handleLogout = () => {
+    instance.logoutRedirect({ postLogoutRedirectUri: window.location.origin });
+  };
+
   const filteredSchemes = activeCategory === 'all'
     ? COLOR_SCHEMES
     : COLOR_SCHEMES.filter(s => s.category === activeCategory);
 
+  const primaryRole = roles[0] ?? null;
+
   const userMenuItems: MenuProps['items'] = [
+    {
+      key: 'user-info',
+      label: (
+        <div style={{ padding: '4px 0', minWidth: 160 }}>
+          <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>
+            {displayName ?? username ?? 'User'}
+          </div>
+          {username && (
+            <div style={{ fontSize: 11, color: 'var(--foreground-muted, #64748b)', marginTop: 1 }}>
+              {username}
+            </div>
+          )}
+          {!rolesLoading && primaryRole && (
+            <Tag color="blue" style={{ marginTop: 6, fontSize: 10 }}>
+              {primaryRole}
+            </Tag>
+          )}
+        </div>
+      ),
+      disabled: true,
+    },
+    { type: 'divider' },
     {
       key: 'theme',
       icon: <BgColorsOutlined />,
@@ -88,12 +117,20 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
       label: 'Settings',
       disabled: true,
     },
+    { type: 'divider' },
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: 'Sign out',
+      onClick: handleLogout,
+      danger: true,
+    },
   ];
 
   return (
     <>
       <Header
-        className="flex items-center justify-between px-6 sticky top-0 z-50 animate-gradient"
+        className="flex items-center justify-between px-6 sticky top-0 z-50"
         style={{ background: 'var(--header-bg)', borderBottom: 'none', height: 64, padding: '0 24px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
         data-testid="header"
       >
@@ -109,25 +146,46 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
           >
             {collapsed ? <MenuUnfoldOutlined style={{ fontSize: 18 }} /> : <MenuFoldOutlined style={{ fontSize: 18 }} />}
           </button>
-          <Text
-            strong
+          <span
             className={titleClass}
             style={{
+              fontWeight: 600,
               fontSize: hasFont ? 14 : 16,
               color: (hasGlow && currentScheme.key !== 'aurora' && currentScheme.key !== 'terminal-amber')
                 ? 'var(--glow-color)'
-                : titleClass === '' ? 'var(--header-text)' : undefined,
+                : 'var(--header-text)',
               fontFamily: hasFont ? 'var(--theme-font)' : undefined,
               letterSpacing: hasFont ? '0.04em' : undefined,
               lineHeight: hasFont ? '1.6' : undefined,
             }}
           >
             Reference Data Management
-          </Text>
+          </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* Animated light/dark mode toggle */}
+        <div className="flex items-center gap-3">
+          {/* Role badge — only shown when roles are loaded and user has at least one */}
+          {!rolesLoading && primaryRole && (
+            <Tag
+              color="blue"
+              style={{ margin: 0, fontSize: 11, opacity: 0.9 }}
+              data-testid="tag-user-role"
+            >
+              {primaryRole}
+            </Tag>
+          )}
+
+          {/* Display name */}
+          {displayName && (
+            <span
+              style={{ fontSize: 13, color: 'var(--header-text)', opacity: 0.85 }}
+              data-testid="text-display-name"
+            >
+              {displayName}
+            </span>
+          )}
+
+          {/* Light/dark mode toggle */}
           <button
             onClick={handleToggleMode}
             className="flex items-center justify-center w-9 h-9 rounded-md transition-all cursor-pointer border-none"

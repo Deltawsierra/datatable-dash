@@ -1,7 +1,7 @@
 "use client";
 
 // Animated gradient border effect
-import { cn } from "../../lib/utils";
+import { cn } from "~/lib/utils";
 
 interface BorderBeamProps {
   className?: string;

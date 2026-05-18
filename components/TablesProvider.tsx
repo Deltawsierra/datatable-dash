@@ -1,7 +1,10 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchTableList } from '../lib/api';
+import { fetchTableList } from '~/lib/api';
+import { tableConfigs } from '~/lib/tableRegistry';
+
+const DEV_TABLE_NAMES = tableConfigs.map((t) => t.key);
 
 type ApiStatus = 'checking' | 'connected' | 'disconnected';
 
@@ -33,8 +36,8 @@ export function TablesProvider({ children }: { children: React.ReactNode }) {
         setApiStatus('connected');
       })
       .catch(() => {
-        setTableNames([]);
-        setTableCount(null);
+        setTableNames(DEV_TABLE_NAMES);
+        setTableCount(DEV_TABLE_NAMES.length);
         setApiStatus('disconnected');
       })
       .finally(() => setTablesLoading(false));

@@ -1,7 +1,14 @@
 import { spawn } from 'child_process';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-if (!process.env.NODE_ENV) {
-  (process.env as Record<string, string>).NODE_ENV = 'development';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const frontendDir = path.resolve(__dirname, '..');
+const repoRoot = path.resolve(__dirname, '../..');
+
+if (!process.env['NODE_ENV']) {
+  Object.assign(process.env, { NODE_ENV: 'development' });
 }
 
 const port = process.env.PORT || '5000';
@@ -13,6 +20,7 @@ console.log(`Starting FastAPI on port ${apiPort}...`);
 const next = spawn('npx', ['next', 'dev', '-p', port], {
   stdio: 'inherit',
   shell: true,
+  cwd: frontendDir,
   env: { ...process.env },
 });
 
@@ -22,6 +30,7 @@ const fastapi = spawn(
   {
     stdio: 'inherit',
     shell: true,
+    cwd: repoRoot,
     env: { ...process.env, VERSION: process.env.VERSION || 'DEV' },
   }
 );
