@@ -85,10 +85,9 @@ export default function EditDrawer({
         </Space>
       }
       placement="right"
-      width={420}
       open={open}
       onClose={onClose}
-      styles={{ body: { paddingBottom: 0 }, footer: { padding: '16px 24px' } }}
+      styles={{ wrapper: { width: 420 }, body: { paddingBottom: 0 }, footer: { padding: '16px 24px' } }}
       footer={
         <Button
           type="primary"
