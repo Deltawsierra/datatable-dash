@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { Table, Card, Typography, Empty, Spin, Tag, Input, Space } from 'antd';
+import { Table, Card, Typography, Empty, Spin, Tag, Input, Space, Modal } from 'antd';
 import {
   TableOutlined,
   DownloadOutlined,
@@ -10,6 +10,8 @@ import {
   MenuOutlined,
   PlusOutlined,
   EditOutlined,
+  DeleteOutlined,
+  ExclamationCircleOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import { BorderBeam } from '~/components/magicui/BorderBeam';
@@ -73,6 +75,7 @@ export default function DataTable<T extends { id: string }>({
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [localData, setLocalData] = useState<T[]>(data);
+  const [localColumns, setLocalColumns] = useState<ColumnsType<T>>(columns);
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerAction, setDrawerAction] = useState<DrawerAction>('edit');
@@ -82,11 +85,17 @@ export default function DataTable<T extends { id: string }>({
     columnKey: string | null;
   } | null>(null);
   const [hoveredActionBtn, setHoveredActionBtn] = useState<string | null>(null);
+  const [dirty, setDirty] = useState(false);
   const contextMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setLocalData(data);
+    setDirty(false);
   }, [data]);
+
+  useEffect(() => {
+    setLocalColumns(columns);
+  }, [columns]);
 
   useEffect(() => {
     if (!contextMenu) return;
@@ -113,16 +122,86 @@ export default function DataTable<T extends { id: string }>({
     [contextMenu],
   );
 
+  const openAddRow = useCallback(() => {
+    setDrawerAction('add');
+    setDrawerSelection({ type: 'row', rowId: null, columnKey: null });
+    setDrawerOpen(true);
+    setContextMenu(null);
+  }, []);
+
+  const handleDeleteRow = useCallback(() => {
+    if (!contextMenu?.rowId) return;
+    const rowId = contextMenu.rowId;
+    const firstCol = localColumns[0] as Record<string, unknown> | undefined;
+    const firstKey = (firstCol?.dataIndex as string) || (firstCol?.key as string) || '';
+    const row = localData.find(r => r.id === rowId) as Record<string, unknown> | undefined;
+    const rowLabel = firstKey && row ? String(row[firstKey] ?? rowId) : rowId;
+    setContextMenu(null);
+    Modal.confirm({
+      title: 'Delete this row?',
+      icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+      content: (
+        <span>
+          You are about to delete <strong>{rowLabel}</strong>. This change is local until a backend
+          write API is connected, but it cannot be undone here.
+        </span>
+      ),
+      okText: 'Delete',
+      okType: 'danger',
+      cancelText: 'Cancel',
+      onOk: () => {
+        setLocalData(prev => prev.filter(row => row.id !== rowId));
+        setDirty(true);
+      },
+    });
+  }, [contextMenu, localData, localColumns]);
+
+  const handleDeleteColumn = useCallback(() => {
+    if (!contextMenu?.columnKey) return;
+    const colKey = contextMenu.columnKey;
+    const col = localColumns.find(c => {
+      const cc = c as Record<string, unknown>;
+      return ((cc.key as string) || (cc.dataIndex as string) || '') === colKey;
+    }) as Record<string, unknown> | undefined;
+    const colLabel = col ? String(col.title ?? colKey) : colKey;
+    setContextMenu(null);
+    Modal.confirm({
+      title: 'Delete this column?',
+      icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+      content: (
+        <span>
+          You are about to delete the <strong>{colLabel}</strong> column and all of its values
+          across every row. This change is local until a backend write API is connected, but it
+          cannot be undone here.
+        </span>
+      ),
+      okText: 'Delete',
+      okType: 'danger',
+      cancelText: 'Cancel',
+      onOk: () => {
+        setLocalColumns(prev =>
+          prev.filter(c => {
+            const cc = c as Record<string, unknown>;
+            return ((cc.key as string) || (cc.dataIndex as string) || '') !== colKey;
+          }),
+        );
+        setDirty(true);
+      },
+    });
+  }, [contextMenu, localColumns]);
+
   const handleSave = useCallback(
     (values: Record<string, unknown>, isNew: boolean) => {
       if (isNew) {
         const newRow = { id: `local-${Date.now()}`, ...values } as T;
         setLocalData(prev => [newRow, ...prev]);
+        setDirty(true);
       } else if (drawerSelection?.rowId) {
         const rowId = drawerSelection.rowId;
         setLocalData(prev =>
           prev.map(row => (row.id === rowId ? ({ ...row, ...values } as T) : row)),
         );
+        setDirty(true);
       }
     },
     [drawerSelection],
@@ -130,7 +209,7 @@ export default function DataTable<T extends { id: string }>({
 
   const columnDefs = useMemo<ColumnDef[]>(
     () =>
-      columns
+      localColumns
         .map(col => {
           const c = col as Record<string, unknown>;
           return {
@@ -139,7 +218,7 @@ export default function DataTable<T extends { id: string }>({
           };
         })
         .filter(c => c.key),
-    [columns],
+    [localColumns],
   );
 
   const selectedRowData = useMemo<Record<string, unknown> | null>(() => {
@@ -185,7 +264,7 @@ export default function DataTable<T extends { id: string }>({
       ),
     };
 
-    const dataCols = columns.map(col => {
+    const dataCols = localColumns.map(col => {
       const c = col as Record<string, unknown>;
       const colKey = (c.key as string) || (c.dataIndex as string) || '';
       const originalTitle = col.title;
@@ -229,7 +308,7 @@ export default function DataTable<T extends { id: string }>({
     });
 
     return [rowSelectorCol, ...dataCols] as ColumnsType<T>;
-  }, [columns]);
+  }, [localColumns]);
 
   const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
@@ -245,13 +324,13 @@ export default function DataTable<T extends { id: string }>({
 
   const handleDownloadCSV = useCallback(() => {
     if (localData.length === 0) return;
-    const columnKeys = columns
+    const columnKeys = localColumns
       .map(col => {
         const c = col as Record<string, unknown>;
         return (c.dataIndex as string) || (c.key as string) || '';
       })
       .filter(Boolean);
-    const columnTitles = columns.map(col => String((col as Record<string, unknown>).title ?? ''));
+    const columnTitles = localColumns.map(col => String((col as Record<string, unknown>).title ?? ''));
 
     const header = columnTitles.map(escapeCSV).join(',');
     const rows = localData.map(row =>
@@ -266,7 +345,7 @@ export default function DataTable<T extends { id: string }>({
     link.download = `${title}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-  }, [localData, columns, title]);
+  }, [localData, localColumns, title]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const el = cardRef.current;
@@ -289,7 +368,7 @@ export default function DataTable<T extends { id: string }>({
   const filteredCount = filteredData.length;
   const isFiltered = searchText.trim().length > 0;
   const localCount = localData.length;
-  const hasLocalChanges = localCount !== data.length;
+  const hasLocalChanges = dirty || localCount !== data.length;
   const countLabel = isFiltered
     ? `${filteredCount} of ${localCount} records`
     : `${localCount} records`;
@@ -329,6 +408,16 @@ export default function DataTable<T extends { id: string }>({
             )}
           </div>
           <Space>
+            <button
+              className="shimmer-btn"
+              onClick={openAddRow}
+              disabled={loading}
+              data-testid={`button-add-row-${title}`}
+              style={{ background: '#1677ff', color: '#fff', borderColor: '#1677ff' }}
+            >
+              <PlusOutlined style={{ fontSize: 13 }} />
+              Add Row
+            </button>
             <button
               className="shimmer-btn"
               onClick={handleDownloadCSV}
@@ -453,20 +542,6 @@ export default function DataTable<T extends { id: string }>({
             {contextMenuSelectionLabel} selected
           </div>
           <button
-            data-testid="button-action-add"
-            onClick={() => openDrawer('add')}
-            onMouseEnter={() => setHoveredActionBtn('add')}
-            onMouseLeave={() => setHoveredActionBtn(null)}
-            style={{
-              ...actionBtnStyle,
-              background: hoveredActionBtn === 'add' ? 'rgba(22,119,255,0.08)' : 'transparent',
-              color: '#1677ff',
-            }}
-          >
-            <PlusOutlined />
-            Add New Row
-          </button>
-          <button
             data-testid="button-action-edit"
             onClick={() => openDrawer('edit')}
             onMouseEnter={() => setHoveredActionBtn('edit')}
@@ -482,6 +557,22 @@ export default function DataTable<T extends { id: string }>({
           >
             <EditOutlined />
             Edit {contextMenuSelectionLabel === 'column' ? '(select a row)' : contextMenuSelectionLabel}
+          </button>
+          <button
+            data-testid="button-action-delete"
+            onClick={contextMenu.type === 'column' ? handleDeleteColumn : handleDeleteRow}
+            onMouseEnter={() => setHoveredActionBtn('delete')}
+            onMouseLeave={() => setHoveredActionBtn(null)}
+            style={{
+              ...actionBtnStyle,
+              background: hoveredActionBtn === 'delete'
+                ? 'rgba(255,77,79,0.08)'
+                : 'transparent',
+              color: '#ff4d4f',
+            }}
+          >
+            <DeleteOutlined />
+            Delete {contextMenu.type === 'column' ? 'column' : 'row'}
           </button>
         </div>
       )}
