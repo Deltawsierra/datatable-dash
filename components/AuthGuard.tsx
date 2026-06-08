@@ -6,9 +6,8 @@ import { InteractionStatus } from '@azure/msal-browser';
 import { loginRequest, getAccessToken } from '~/lib/auth';
 import { AuthContext } from '~/lib/authContext';
 
-const DEV_BYPASS =
-  !process.env.NEXT_PUBLIC_AZURE_CLIENT_ID ||
-  process.env.NEXT_PUBLIC_AZURE_CLIENT_ID === 'placeholder-client-id';
+const DEV_BYPASS = typeof window !== 'undefined' &&
+  !document.querySelector('meta[name="azure-configured"]');
 
 function inIframe(): boolean {
   try {

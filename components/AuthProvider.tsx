@@ -7,23 +7,33 @@ import { getMsalInstance } from '~/lib/auth';
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
   const [instance, setInstance] = useState<PublicClientApplication | null>(null);
+  const [configMissing, setConfigMissing] = useState(false);
 
   useEffect(() => {
-    const msalInstance = getMsalInstance();
-    msalInstance.initialize().then(() => setInstance(msalInstance));
+    fetch('/api/config')
+      .then((res) => res.json())
+      .then(({ clientId, tenantId }) => {
+        if (!clientId || !tenantId) {
+          setConfigMissing(true);
+          return;
+        }
+        const msalInstance = getMsalInstance(clientId, tenantId);
+        msalInstance
+          .initialize()
+          .then(() => msalInstance.handleRedirectPromise())
+          .then(() => setInstance(msalInstance));
+      })
+      .catch(() => setConfigMissing(true));
   }, []);
+
+  if (configMissing) {
+    // No Azure credentials configured — AuthGuard will handle dev bypass
+    return <>{children}</>;
+  }
 
   if (!instance) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-          background: '#f8fafc',
-        }}
-      >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#f8fafc' }}>
         <span style={{ fontSize: 14, color: '#64748b' }}>Loading...</span>
       </div>
     );
