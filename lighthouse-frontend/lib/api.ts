@@ -53,6 +53,40 @@ async function apiFetch<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+async function apiMutate<T>(
+  path: string,
+  method: 'POST' | 'PUT' | 'DELETE',
+  body?: unknown
+): Promise<T> {
+  const token = await getAccessToken();
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    method,
+    headers,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+
+  if (!res.ok) {
+    let detail = res.statusText;
+    try {
+      const errBody = (await res.json()) as { detail?: string };
+      if (errBody?.detail) detail = errBody.detail;
+    } catch {
+      // response had no JSON body; keep statusText
+    }
+    throw new Error(`API error ${res.status}: ${detail}`);
+  }
+
+  if (res.status === 204) return undefined as T;
+  return res.json() as Promise<T>;
+}
+
 export async function fetchTableList(): Promise<TableListResponse> {
   return apiFetch<TableListResponse>('/v1/tables/list');
 }
@@ -81,6 +115,54 @@ export async function fetchUserInfo(): Promise<UserInfoResponse> {
 
 export async function fetchUserRoles(): Promise<UserRolesResponse> {
   return apiFetch<UserRolesResponse>('/v1/user/roles');
+}
+
+export interface MutationResponse {
+  status: string;
+  [key: string]: unknown;
+}
+
+export async function createTableRow(
+  tableName: string,
+  values: Record<string, unknown>
+): Promise<MutationResponse> {
+  return apiMutate<MutationResponse>(
+    `/v1/tables/${encodeURIComponent(tableName)}`,
+    'POST',
+    { values }
+  );
+}
+
+export async function updateTableRow(
+  tableName: string,
+  rowKey: string,
+  values: Record<string, unknown>
+): Promise<MutationResponse> {
+  return apiMutate<MutationResponse>(
+    `/v1/tables/${encodeURIComponent(tableName)}/${encodeURIComponent(rowKey)}`,
+    'PUT',
+    { values }
+  );
+}
+
+export async function deleteTableRow(
+  tableName: string,
+  rowKey: string
+): Promise<MutationResponse> {
+  return apiMutate<MutationResponse>(
+    `/v1/tables/${encodeURIComponent(tableName)}/${encodeURIComponent(rowKey)}`,
+    'DELETE'
+  );
+}
+
+export async function deleteTableColumn(
+  tableName: string,
+  columnName: string
+): Promise<MutationResponse> {
+  return apiMutate<MutationResponse>(
+    `/v1/tables/${encodeURIComponent(tableName)}/columns/${encodeURIComponent(columnName)}`,
+    'DELETE'
+  );
 }
 
 export async function isApiAvailable(): Promise<boolean> {

@@ -1,10 +1,10 @@
 import { PublicClientApplication, type Configuration } from '@azure/msal-browser';
 
-function createMsalConfig(): Configuration {
+function createMsalConfig(clientId: string, tenantId: string): Configuration {
   return {
     auth: {
-      clientId: process.env.NEXT_PUBLIC_AZURE_CLIENT_ID ?? 'placeholder-client-id',
-      authority: `https://login.microsoftonline.com/${process.env.NEXT_PUBLIC_AZURE_TENANT_ID ?? 'common'}`,
+      clientId,
+      authority: `https://login.microsoftonline.com/${tenantId}`,
       redirectUri: window.location.origin,
       postLogoutRedirectUri: window.location.origin,
     },
@@ -20,20 +20,19 @@ export const loginRequest = {
 
 let _instance: PublicClientApplication | null = null;
 
-export function getMsalInstance(): PublicClientApplication {
+export function getMsalInstance(clientId: string, tenantId: string): PublicClientApplication {
   if (!_instance) {
-    _instance = new PublicClientApplication(createMsalConfig());
+    _instance = new PublicClientApplication(createMsalConfig(clientId, tenantId));
   }
   return _instance;
 }
 
 export async function getAccessToken(): Promise<string | null> {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === 'undefined' || !_instance) return null;
   try {
-    const instance = getMsalInstance();
-    const accounts = instance.getAllAccounts();
+    const accounts = _instance.getAllAccounts();
     if (!accounts.length) return null;
-    const result = await instance.acquireTokenSilent({
+    const result = await _instance.acquireTokenSilent({
       ...loginRequest,
       account: accounts[0],
     });
