@@ -1,0 +1,1 @@
+- [Auth dev-bypass flow](auth-dev-bypass.md) — dev mode is driven at runtime by /api/config returning empty clientId/tenantId; bypass is intentionally fail-open. AuthProvider is the single source of truth.

@@ -19,3 +19,17 @@ export const AuthContext = createContext<AuthContextValue>({
 export function useAuth(): AuthContextValue {
   return useContext(AuthContext);
 }
+
+export interface AuthConfigContextValue {
+  // Whether Azure AD auth is configured at runtime (resolved by AuthProvider
+  // via /api/config). When false, AuthGuard renders the dev bypass.
+  authConfigured: boolean;
+}
+
+export const AuthConfigContext = createContext<AuthConfigContextValue>({
+  authConfigured: false,
+});
+
+export function useAuthConfig(): AuthConfigContextValue {
+  return useContext(AuthConfigContext);
+}
