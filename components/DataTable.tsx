@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { Table, Card, Typography, Empty, Spin, Tag, Input, Space, Modal } from 'antd';
+import { Table, Card, Typography, Empty, Spin, Tag, Input, Space, Modal, message } from 'antd';
 import {
   TableOutlined,
   DownloadOutlined,
@@ -17,6 +17,7 @@ import type { ColumnsType, ColumnType } from 'antd/es/table';
 import { BorderBeam } from '~/components/magicui/BorderBeam';
 import { useTheme } from '~/components/ThemeProvider';
 import EditDrawer, { type ColumnDef, type DrawerAction, type SelectionType } from '~/components/EditDrawer';
+import { createTableRow, updateTableRow, deleteTableRow, deleteTableColumn } from '~/lib/api';
 
 const { Title, Text } = Typography;
 
@@ -27,6 +28,9 @@ interface DataTableProps<T extends { id: string }> {
   loading?: boolean;
   totalRows?: number;
   usingApi?: boolean;
+  tableName?: string;
+  hasRowKey?: boolean;
+  onRefresh?: () => void | Promise<void>;
 }
 
 interface ContextMenuState {
@@ -69,6 +73,9 @@ export default function DataTable<T extends { id: string }>({
   loading = false,
   totalRows,
   usingApi,
+  tableName,
+  hasRowKey = false,
+  onRefresh,
 }: DataTableProps<T>) {
   const [searchText, setSearchText] = useState('');
   const { currentScheme } = useTheme();
@@ -136,25 +143,48 @@ export default function DataTable<T extends { id: string }>({
     const firstKey = (firstCol?.dataIndex as string) || (firstCol?.key as string) || '';
     const row = localData.find(r => r.id === rowId) as Record<string, unknown> | undefined;
     const rowLabel = firstKey && row ? String(row[firstKey] ?? rowId) : rowId;
+    const persisted = Boolean(usingApi && tableName);
+    if (persisted && !hasRowKey) {
+      setContextMenu(null);
+      message.error('Cannot delete: this table has no primary key (_id_column).');
+      return;
+    }
     setContextMenu(null);
     Modal.confirm({
       title: 'Delete this row?',
       icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
       content: (
         <span>
-          You are about to delete <strong>{rowLabel}</strong>. This change is local until a backend
-          write API is connected, but it cannot be undone here.
+          You are about to delete <strong>{rowLabel}</strong>.{' '}
+          {persisted
+            ? 'This permanently removes the row from the database and cannot be undone.'
+            : 'This change is local until a backend write API is connected, but it cannot be undone here.'}
         </span>
       ),
       okText: 'Delete',
       okType: 'danger',
       cancelText: 'Cancel',
-      onOk: () => {
-        setLocalData(prev => prev.filter(row => row.id !== rowId));
+      onOk: async () => {
+        if (persisted) {
+          try {
+            await deleteTableRow(tableName as string, rowId);
+            message.success('Row deleted');
+            if (onRefresh) await onRefresh();
+            else {
+              setLocalData(prev => prev.filter(r => r.id !== rowId));
+              setDirty(true);
+            }
+          } catch (err) {
+            message.error(err instanceof Error ? err.message : 'Failed to delete row');
+            throw err;
+          }
+          return;
+        }
+        setLocalData(prev => prev.filter(r => r.id !== rowId));
         setDirty(true);
       },
     });
-  }, [contextMenu, localData, localColumns]);
+  }, [contextMenu, localData, localColumns, usingApi, tableName, hasRowKey, onRefresh]);
 
   const handleDeleteColumn = useCallback(() => {
     if (!contextMenu?.columnKey) return;
@@ -164,6 +194,16 @@ export default function DataTable<T extends { id: string }>({
       return ((cc.key as string) || (cc.dataIndex as string) || '') === colKey;
     }) as Record<string, unknown> | undefined;
     const colLabel = col ? String(col.title ?? colKey) : colKey;
+    const persisted = Boolean(usingApi && tableName);
+    const removeLocally = () => {
+      setLocalColumns(prev =>
+        prev.filter(c => {
+          const cc = c as Record<string, unknown>;
+          return ((cc.key as string) || (cc.dataIndex as string) || '') !== colKey;
+        }),
+      );
+      setDirty(true);
+    };
     setContextMenu(null);
     Modal.confirm({
       title: 'Delete this column?',
@@ -171,40 +211,75 @@ export default function DataTable<T extends { id: string }>({
       content: (
         <span>
           You are about to delete the <strong>{colLabel}</strong> column and all of its values
-          across every row. This change is local until a backend write API is connected, but it
-          cannot be undone here.
+          across every row.{' '}
+          {persisted
+            ? 'This permanently alters the table in the database and cannot be undone.'
+            : 'This change is local until a backend write API is connected, but it cannot be undone here.'}
         </span>
       ),
       okText: 'Delete',
       okType: 'danger',
       cancelText: 'Cancel',
-      onOk: () => {
-        setLocalColumns(prev =>
-          prev.filter(c => {
-            const cc = c as Record<string, unknown>;
-            return ((cc.key as string) || (cc.dataIndex as string) || '') !== colKey;
-          }),
-        );
-        setDirty(true);
+      onOk: async () => {
+        if (persisted) {
+          try {
+            await deleteTableColumn(tableName as string, colKey);
+            message.success('Column deleted');
+            if (onRefresh) await onRefresh();
+            else removeLocally();
+          } catch (err) {
+            message.error(err instanceof Error ? err.message : 'Failed to delete column');
+            throw err;
+          }
+          return;
+        }
+        removeLocally();
       },
     });
-  }, [contextMenu, localColumns]);
+  }, [contextMenu, localColumns, usingApi, tableName, onRefresh]);
 
   const handleSave = useCallback(
-    (values: Record<string, unknown>, isNew: boolean) => {
-      if (isNew) {
+    async (values: Record<string, unknown>, isNew: boolean) => {
+      const rowId = drawerSelection?.rowId ?? null;
+      const applyLocalAdd = () => {
         const newRow = { id: `local-${Date.now()}`, ...values } as T;
         setLocalData(prev => [newRow, ...prev]);
         setDirty(true);
-      } else if (drawerSelection?.rowId) {
-        const rowId = drawerSelection.rowId;
+      };
+      const applyLocalEdit = (id: string) => {
         setLocalData(prev =>
-          prev.map(row => (row.id === rowId ? ({ ...row, ...values } as T) : row)),
+          prev.map(row => (row.id === id ? ({ ...row, ...values } as T) : row)),
         );
         setDirty(true);
+      };
+
+      if (usingApi && tableName) {
+        if (!isNew && !hasRowKey) {
+          message.error('Cannot save: this table has no primary key (_id_column).');
+          throw new Error('Missing primary key');
+        }
+        try {
+          if (isNew) {
+            await createTableRow(tableName, values);
+            message.success('Row added');
+          } else if (rowId) {
+            await updateTableRow(tableName, rowId, values);
+            message.success('Changes saved');
+          }
+          if (onRefresh) await onRefresh();
+          else if (isNew) applyLocalAdd();
+          else if (rowId) applyLocalEdit(rowId);
+        } catch (err) {
+          message.error(err instanceof Error ? err.message : 'Failed to save changes');
+          throw err;
+        }
+        return;
       }
+
+      if (isNew) applyLocalAdd();
+      else if (rowId) applyLocalEdit(rowId);
     },
-    [drawerSelection],
+    [drawerSelection, usingApi, tableName, hasRowKey, onRefresh],
   );
 
   const columnDefs = useMemo<ColumnDef[]>(
@@ -587,6 +662,7 @@ export default function DataTable<T extends { id: string }>({
         selectedColumnKey={drawerSelection?.columnKey ?? null}
         columns={columnDefs}
         onSave={handleSave}
+        persisted={Boolean(usingApi && tableName)}
       />
     </div>
   );

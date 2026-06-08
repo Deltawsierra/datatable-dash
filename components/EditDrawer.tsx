@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Drawer, Form, Input, Button, Typography, Divider, Space, Tag } from 'antd';
 import { EditOutlined, PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
@@ -22,7 +22,8 @@ interface EditDrawerProps {
   selectedRow: Record<string, unknown> | null;
   selectedColumnKey: string | null;
   columns: ColumnDef[];
-  onSave: (values: Record<string, unknown>, isNew: boolean) => void;
+  onSave: (values: Record<string, unknown>, isNew: boolean) => void | Promise<void>;
+  persisted?: boolean;
 }
 
 export default function EditDrawer({
@@ -34,6 +35,7 @@ export default function EditDrawer({
   selectedColumnKey,
   columns,
   onSave,
+  persisted = false,
 }: EditDrawerProps) {
   const [form] = Form.useForm();
 
@@ -52,10 +54,20 @@ export default function EditDrawer({
     }
   }, [open, action, selectedRow, selectionType, selectedColumnKey, columns, form]);
 
-  const handleSave = () => {
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
     const values = form.getFieldsValue();
-    onSave(values, action === 'add');
-    onClose();
+    setSaving(true);
+    try {
+      await onSave(values, action === 'add');
+      onClose();
+    } catch {
+      // keep the drawer open so the user does not lose their input;
+      // DataTable already surfaces the error via a toast.
+    } finally {
+      setSaving(false);
+    }
   };
 
   const formColumns =
@@ -93,6 +105,7 @@ export default function EditDrawer({
           type="primary"
           block
           size="large"
+          loading={saving}
           onClick={handleSave}
           data-testid="button-save-changes"
         >
@@ -115,7 +128,9 @@ export default function EditDrawer({
         }}
       >
         <InfoCircleOutlined />
-        Changes are saved locally until a backend write API is connected.
+        {persisted
+          ? 'Changes are saved directly to the database.'
+          : 'Changes are saved locally until a backend write API is connected.'}
       </div>
 
       {action === 'edit' && selectedRow && (
