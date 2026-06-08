@@ -9,7 +9,10 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const [instance, setInstance] = useState<PublicClientApplication | null>(null);
 
   useEffect(() => {
-    const msalInstance = getMsalInstance();
+    const msalInstance = getMsalInstance(
+      process.env.NEXT_PUBLIC_AZURE_CLIENT_ID!,
+      process.env.NEXT_PUBLIC_AZURE_TENANT_ID!,
+    );
     msalInstance.initialize().then(() => setInstance(msalInstance));
   }, []);
 
