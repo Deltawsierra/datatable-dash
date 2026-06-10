@@ -27,14 +27,34 @@ export interface TableMetadataResponse {
 }
 
 export interface UserInfoResponse {
-  user_name: string;
-  display_name: string;
-  active: boolean;
+  id: string;
+  username: string | null;
+  display_name: string | null;
+  email: string | null;
+  groups: string[];
+  permissions: unknown;
+  loaded_at?: string;
 }
 
-export interface UserRolesResponse {
-  username: string;
-  roles: string[];
+/**
+ * Best-effort mapping of the backend's permission payload to a list of role
+ * labels for display/gating. The backend hydrates request.state.user with a
+ * `permissions` object (shape defined server-side) and `groups` (Azure group
+ * claims). We only surface clearly role-like values and avoid showing raw
+ * group GUIDs. Refine this once the permissions shape is finalized.
+ */
+export function deriveRoles(info: UserInfoResponse): string[] {
+  const perms = info.permissions;
+  if (Array.isArray(perms) && perms.every((p) => typeof p === 'string')) {
+    return perms as string[];
+  }
+  if (perms && typeof perms === 'object') {
+    const maybeRoles = (perms as Record<string, unknown>).roles;
+    if (Array.isArray(maybeRoles)) {
+      return maybeRoles.filter((r): r is string => typeof r === 'string');
+    }
+  }
+  return [];
 }
 
 async function apiFetch<T>(path: string): Promise<T> {
@@ -111,10 +131,6 @@ export async function fetchTableMetadata(
 
 export async function fetchUserInfo(): Promise<UserInfoResponse> {
   return apiFetch<UserInfoResponse>('/v1/user/info');
-}
-
-export async function fetchUserRoles(): Promise<UserRolesResponse> {
-  return apiFetch<UserRolesResponse>('/v1/user/roles');
 }
 
 export interface MutationResponse {

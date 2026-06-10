@@ -21,6 +21,12 @@ import { createTableRow, updateTableRow, deleteTableRow, deleteTableColumn } fro
 
 const { Title, Text } = Typography;
 
+// The backend (api/v1/routes/tables.py) currently exposes only GET routes —
+// there are no create/update/delete endpoints. Until write routes exist, edits
+// stay local (DataTable already has a local-only fallback path with messaging).
+// Flip this to true once the backend gains write support.
+const WRITE_API_ENABLED = false;
+
 interface DataTableProps<T extends { id: string }> {
   title: string;
   data: T[];
@@ -143,7 +149,7 @@ export default function DataTable<T extends { id: string }>({
     const firstKey = (firstCol?.dataIndex as string) || (firstCol?.key as string) || '';
     const row = localData.find(r => r.id === rowId) as Record<string, unknown> | undefined;
     const rowLabel = firstKey && row ? String(row[firstKey] ?? rowId) : rowId;
-    const persisted = Boolean(usingApi && tableName);
+    const persisted = Boolean(usingApi && tableName && WRITE_API_ENABLED);
     if (persisted && !hasRowKey) {
       setContextMenu(null);
       message.error('Cannot delete: this table has no primary key (_id_column).');
@@ -194,7 +200,7 @@ export default function DataTable<T extends { id: string }>({
       return ((cc.key as string) || (cc.dataIndex as string) || '') === colKey;
     }) as Record<string, unknown> | undefined;
     const colLabel = col ? String(col.title ?? colKey) : colKey;
-    const persisted = Boolean(usingApi && tableName);
+    const persisted = Boolean(usingApi && tableName && WRITE_API_ENABLED);
     const removeLocally = () => {
       setLocalColumns(prev =>
         prev.filter(c => {
@@ -253,7 +259,7 @@ export default function DataTable<T extends { id: string }>({
         setDirty(true);
       };
 
-      if (usingApi && tableName) {
+      if (usingApi && tableName && WRITE_API_ENABLED) {
         if (!isNew && !hasRowKey) {
           message.error('Cannot save: this table has no primary key (_id_column).');
           throw new Error('Missing primary key');
@@ -662,7 +668,7 @@ export default function DataTable<T extends { id: string }>({
         selectedColumnKey={drawerSelection?.columnKey ?? null}
         columns={columnDefs}
         onSave={handleSave}
-        persisted={Boolean(usingApi && tableName)}
+        persisted={Boolean(usingApi && tableName && WRITE_API_ENABLED)}
       />
     </div>
   );

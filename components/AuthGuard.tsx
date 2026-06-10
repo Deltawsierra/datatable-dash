@@ -3,11 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { InteractionStatus } from '@azure/msal-browser';
-import { loginRequest, getAccessToken } from '~/lib/auth';
-import { AuthContext } from '~/lib/authContext';
-
-const DEV_BYPASS = typeof window !== 'undefined' &&
-  !document.querySelector('meta[name="azure-configured"]');
+import { getLoginRequest } from '~/lib/auth';
+import { fetchUserInfo, deriveRoles } from '~/lib/api';
+import { AuthContext, useAuthConfig } from '~/lib/authContext';
 
 function inIframe(): boolean {
   try {
@@ -18,6 +16,11 @@ function inIframe(): boolean {
 }
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
+  // Single source of truth: AuthProvider resolves /api/config and tells us
+  // whether Azure auth is configured. When it isn't, we render the dev bypass.
+  const { authConfigured } = useAuthConfig();
+  const devBypass = !authConfigured;
+
   const isAuthenticated = useIsAuthenticated();
   const { instance, accounts, inProgress } = useMsal();
   const [roles, setRoles] = useState<string[]>([]);
@@ -29,37 +32,34 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const username = account?.username ?? null;
 
   useEffect(() => {
-    if (DEV_BYPASS) return;
+    if (devBypass) return;
     if (!isAuthenticated && inProgress === InteractionStatus.None) {
       if (inIframe()) {
         setIframeDetected(true);
       } else {
-        instance.loginRedirect(loginRequest);
+        instance.loginRedirect(getLoginRequest());
       }
     }
-  }, [isAuthenticated, inProgress, instance]);
+  }, [devBypass, isAuthenticated, inProgress, instance]);
 
   useEffect(() => {
-    if (DEV_BYPASS || !isAuthenticated) return;
+    if (devBypass || !isAuthenticated) return;
 
     (async () => {
       try {
-        const token = await getAccessToken();
-        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-        if (token) headers['Authorization'] = `Bearer ${token}`;
-
-        const res = await fetch('/api/proxy/v1/user/roles', { headers });
-        const data = res.ok ? await res.json() : { roles: [] };
-        setRoles(data.roles ?? []);
+        // Roles/permissions come from /v1/user/info — the backend hydrates them
+        // into request.state.user. There is no separate /v1/user/roles route.
+        const info = await fetchUserInfo();
+        setRoles(deriveRoles(info));
       } catch {
         setRoles([]);
       } finally {
         setRolesLoading(false);
       }
     })();
-  }, [isAuthenticated]);
+  }, [devBypass, isAuthenticated]);
 
-  if (DEV_BYPASS) {
+  if (devBypass) {
     return (
       <AuthContext.Provider
         value={{
