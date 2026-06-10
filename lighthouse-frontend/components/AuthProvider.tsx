@@ -14,12 +14,12 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     fetch('/api/config')
       .then((res) => res.json())
-      .then(({ clientId, tenantId }) => {
+      .then(({ clientId, tenantId, apiScope }) => {
         if (!clientId || !tenantId) {
           setConfigMissing(true);
           return;
         }
-        const msalInstance = getMsalInstance(clientId, tenantId);
+        const msalInstance = getMsalInstance(clientId, tenantId, apiScope);
         msalInstance
           .initialize()
           .then(() => msalInstance.handleRedirectPromise())

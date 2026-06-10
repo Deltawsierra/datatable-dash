@@ -49,7 +49,7 @@ export default function HomePage() {
 
   useEffect(() => {
     fetchUserInfo()
-      .then((res) => setUserName(res.display_name || res.user_name || null))
+      .then((res) => setUserName(res.display_name || res.username || null))
       .catch(() => setUserName(null));
   }, []);
 

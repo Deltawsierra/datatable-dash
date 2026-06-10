@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { InteractionStatus } from '@azure/msal-browser';
-import { loginRequest, getAccessToken } from '~/lib/auth';
+import { getLoginRequest } from '~/lib/auth';
+import { fetchUserInfo, deriveRoles } from '~/lib/api';
 import { AuthContext, useAuthConfig } from '~/lib/authContext';
 
 function inIframe(): boolean {
@@ -36,7 +37,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       if (inIframe()) {
         setIframeDetected(true);
       } else {
-        instance.loginRedirect(loginRequest);
+        instance.loginRedirect(getLoginRequest());
       }
     }
   }, [devBypass, isAuthenticated, inProgress, instance]);
@@ -46,13 +47,10 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
     (async () => {
       try {
-        const token = await getAccessToken();
-        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-        if (token) headers['Authorization'] = `Bearer ${token}`;
-
-        const res = await fetch('/api/proxy/v1/user/roles', { headers });
-        const data = res.ok ? await res.json() : { roles: [] };
-        setRoles(data.roles ?? []);
+        // Roles/permissions come from /v1/user/info — the backend hydrates them
+        // into request.state.user. There is no separate /v1/user/roles route.
+        const info = await fetchUserInfo();
+        setRoles(deriveRoles(info));
       } catch {
         setRoles([]);
       } finally {

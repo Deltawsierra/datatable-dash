@@ -1,1 +1,2 @@
-- [Auth dev-bypass flow](auth-dev-bypass.md) — dev mode is driven at runtime by /api/config returning empty clientId/tenantId; bypass is intentionally fail-open. AuthProvider is the single source of truth.
+- [Auth dev-bypass flow](auth-dev-bypass.md) — dev mode is driven at runtime by /api/config returning empty clientId/tenantId; bypass is intentionally fail-open.
+- [Azure API token audience](azure-api-token-audience.md) — backend wants the app's own API-scoped token (not Graph/OIDC) + groups claim; OIDC-only scopes cause 401.
