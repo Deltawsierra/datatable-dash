@@ -1,1520 +1,414 @@
-from __future__ import annotations
+```markdown
+## Reviewer Quick Start
 
-from dataclasses import dataclass
-import os
-from typing import Optional
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install requests pandas openpyxl acryl-datahub
 
+$env:DATA_ATLAS_GRAPHQL_URL="https://dummy-data-atlas-host/api/graphql"
+$env:DATA_ATLAS_TOKEN="dummy-token"
 
-def _get_bool_env(name: str, default: bool) -> bool:
-    value = os.getenv(name)
+python -m py_compile scripts/bulk_uploads/config.py scripts/bulk_uploads/client.py scripts/bulk_uploads/utils.py scripts/bulk_uploads/glossary.py scripts/bulk_uploads/descriptions.py
 
-    if value is None:
-        return default
+python scripts/bulk_uploads/glossary.py C:\path\to\template.xlsx --terms-sheet "Glossary Template" --assignments-sheet "Data Template" --dry-run --limit 1
+python scripts/bulk_uploads/descriptions.py C:\path\to\template.xlsx --sheet "Description Template" --dry-run --limit 1
 
-    return value.strip().lower() in {"1", "true", "yes", "y", "on"}
 
+--------------------
 
-@dataclass(frozen=True)
-class DataAtlasConfig:
-    graphql_url: str
-    token: str
-    auth_header: str = "Authorization"
-    auth_scheme: str = "Bearer"
-    actor: Optional[str] = None
-    verify_ssl: bool = True
-    timeout_seconds: int = 30
-    dry_run: bool = False
 
+# Data Atlas Bulk Upload Migration
 
-def load_config() -> DataAtlasConfig:
-    """
-    Load Data Atlas runtime configuration from environment variables.
+This branch migrates the first-pass bulk upload ingestion scripts from the old MDH/DataHub sink assumptions to a configurable Data Atlas GraphQL client.
 
-    Required:
-        DATA_ATLAS_GRAPHQL_URL
-        DATA_ATLAS_TOKEN
+The current scope is intentionally limited to:
 
-    Optional:
-        DATA_ATLAS_AUTH_HEADER
-            Defaults to "Authorization"
+- Glossary term creation / resolution
 
-        DATA_ATLAS_AUTH_SCHEME
-            Defaults to "Bearer".
-            Set to an empty string if the token should be sent without a scheme.
+- Glossary term assignment to datasets and dataset fields
 
-        DATA_ATLAS_ACTOR
-            Optional DataHub-style actor header value.
-            Example: urn:li:corpuser:datahub
+- Column description updates
 
-        DATA_ATLAS_VERIFY_SSL
-            Defaults to true.
+- Shared Data Atlas GraphQL client
 
-        DATA_ATLAS_TIMEOUT_SECONDS
-            Defaults to 30.
+- Token-based authentication
 
-        DATA_ATLAS_DRY_RUN
-            Defaults to false.
-    """
+- Configurable endpoint
 
-    graphql_url = os.getenv("DATA_ATLAS_GRAPHQL_URL")
-    token = os.getenv("DATA_ATLAS_TOKEN")
+- Dry-run support
 
-    if not graphql_url:
-        raise ValueError(
-            "DATA_ATLAS_GRAPHQL_URL is required. "
-            "Example: export DATA_ATLAS_GRAPHQL_URL='https://data-atlas.example.com/api/graphql'"
-        )
+- Row-level result reports
 
-    if not token:
-        raise ValueError(
-            "DATA_ATLAS_TOKEN is required. "
-            "Example: export DATA_ATLAS_TOKEN='your-token-here'"
-        )
+This branch does **not** yet implement the full production ingestion framework for tags, domains, owners, or lineage.
 
-    timeout_raw = os.getenv("DATA_ATLAS_TIMEOUT_SECONDS", "30")
+---
 
-    try:
-        timeout_seconds = int(timeout_raw)
-    except ValueError as exc:
-        raise ValueError("DATA_ATLAS_TIMEOUT_SECONDS must be an integer") from exc
+## Files Added / Updated
 
-    return DataAtlasConfig(
-        graphql_url=graphql_url,
-        token=token,
-        auth_header=os.getenv("DATA_ATLAS_AUTH_HEADER", "Authorization"),
-        auth_scheme=os.getenv("DATA_ATLAS_AUTH_SCHEME", "Bearer"),
-        actor=os.getenv("DATA_ATLAS_ACTOR"),
-        verify_ssl=_get_bool_env("DATA_ATLAS_VERIFY_SSL", True),
-        timeout_seconds=timeout_seconds,
-        dry_run=_get_bool_env("DATA_ATLAS_DRY_RUN", False),
-    )
+Active files:
 
+```text
 
+scripts/bulk_uploads/__init__.py
+scripts/bulk_uploads/config.py
+scripts/bulk_uploads/client.py
+scripts/bulk_uploads/utils.py
+scripts/bulk_uploads/glossary.py
+scripts/bulk_uploads/descriptions.py
 
 
-from __future__ import annotations
+Current placeholder / not-yet-implemented files:
+scripts/bulk_uploads/domains.py
+scripts/bulk_uploads/owners.py
+scripts/bulk_uploads/tags.py
 
-from typing import Any, Dict, List, Optional
 
-import requests
+Lineage is not implemented in this first pass.
 
-try:
-    from .config import DataAtlasConfig
-except ImportError:
-    from config import DataAtlasConfig
 
 
-class DataAtlasError(RuntimeError):
-    """Base error for Data Atlas client failures."""
 
+Design Summary
 
-class DataAtlasHTTPError(DataAtlasError):
-    """Raised when Data Atlas returns a non-success HTTP response."""
+The main refactor is the introduction of a shared DataAtlasGraphQLClient.
 
+Previously, each script hardcoded the MDH/DataHub GraphQL endpoint and headers directly inside the script.
 
-class DataAtlasGraphQLError(DataAtlasError):
-    """Raised when Data Atlas returns GraphQL errors."""
+Now the scripts use:
+client.execute(query, variables)
 
-    def __init__(
-        self,
-        errors: List[Dict[str, Any]],
-        data: Optional[Dict[str, Any]] = None,
-    ):
-        self.errors = errors
-        self.data = data
+The shared client handles:
 
-        formatted_errors = []
+* GraphQL endpoint
+* Token authentication
+* Optional actor header
+* SSL verification
+* Request timeout
+* HTTP error handling
+* GraphQL error handling
+* Dry-run behavior
 
-        for error in errors:
-            message = error.get("message", "Unknown GraphQL error")
-            path = error.get("path")
-            extensions = error.get("extensions") or {}
-            code = extensions.get("code")
-            error_type = extensions.get("type")
+This keeps the migration small while avoiding repeated endpoint/auth logic across every ingestion script.
 
-            parts = [f"message={message}"]
+⸻
 
-            if path:
-                parts.append(f"path={path}")
+Assumptions
 
-            if code:
-                parts.append(f"code={code}")
-
-            if error_type:
-                parts.append(f"type={error_type}")
-
-            formatted_errors.append(", ".join(parts))
-
-        super().__init__(
-            "Data Atlas returned GraphQL errors: " + " | ".join(formatted_errors)
-        )
-
-
-class DataAtlasResponseError(DataAtlasError):
-    """Raised when Data Atlas returns an unexpected response shape."""
-
-
-class DataAtlasGraphQLClient:
-    """
-    Small GraphQL client used by the bulk upload scripts.
-
-    This centralizes:
-        - sink endpoint
-        - token authentication
-        - optional actor header
-        - SSL verification
-        - timeouts
-        - dry-run behavior
-        - HTTP and GraphQL error handling
-    """
+This implementation assumes Data Atlas exposes a DataHub-compatible GraphQL API and supports the following mutations / queries:
 
-    def __init__(self, config: DataAtlasConfig):
-        self.config = config
-        self.session = requests.Session()
+* createGlossaryTerm
+* searchAcrossEntities
+* addTerms
+* batchRemoveTerms
+* updateDescription
 
-    @property
-    def dry_run(self) -> bool:
-        return self.config.dry_run
+This also assumes token authentication is sent as:
+Authorization: Bearer <token>
 
-    def _auth_value(self) -> str:
-        token = self.config.token
-        scheme = self.config.auth_scheme.strip()
 
-        if scheme:
-            return f"{scheme} {token}"
+If Data Atlas uses a different auth header, it can be configured through environment variables without changing code.
 
-        return token
+⸻
 
-    def _headers(self) -> Dict[str, str]:
-        headers = {
-            "Accept": "application/graphql-response+json, application/json",
-            "Content-Type": "application/json",
-            self.config.auth_header: self._auth_value(),
-        }
+Required Python Packages
 
-        if self.config.actor:
-            headers["X-DataHub-Actor"] = self.config.actor
+Install dependencies from the repo root:
+python -m pip install requests pandas openpyxl acryl-datahub
 
-        return headers
 
-    def execute(
-        self,
-        query: str,
-        variables: Optional[Dict[str, Any]] = None,
-        operation_name: Optional[str] = None,
-    ) -> Dict[str, Any]:
-        """
-        Execute a GraphQL operation and return the `data` object.
 
-        Raises:
-            DataAtlasHTTPError
-            DataAtlasGraphQLError
-            DataAtlasResponseError
-        """
+Environment Variables
 
-        payload: Dict[str, Any] = {
-            "query": query,
-            "variables": variables or {},
-        }
+The scripts require these environment variables:
+DATA_ATLAS_GRAPHQL_URL
+DATA_ATLAS_TOKEN
 
-        if operation_name:
-            payload["operationName"] = operation_name
+Example:
+$env:DATA_ATLAS_GRAPHQL_URL="https://your-data-atlas-host/api/graphql"
+$env:DATA_ATLAS_TOKEN="your-token-here"
 
-        if self.config.dry_run:
-            return {
-                "__dry_run__": True,
-                "operationName": operation_name,
-                "variables": variables or {},
-            }
+Optional variables:
+$env:DATA_ATLAS_ACTOR="urn:li:corpuser:datahub"
+$env:DATA_ATLAS_VERIFY_SSL="true"
+$env:DATA_ATLAS_TIMEOUT_SECONDS="30"
 
-        response = self.session.post(
-            self.config.graphql_url,
-            headers=self._headers(),
-            json=payload,
-            timeout=self.config.timeout_seconds,
-            verify=self.config.verify_ssl,
-        )
+If Data Atlas does not use the standard bearer token header, override the auth header:
+$env:DATA_ATLAS_AUTH_HEADER="X-DataAtlas-Token"
+$env:DATA_ATLAS_AUTH_SCHEME=""
 
-        try:
-            body = response.json()
-        except ValueError as exc:
-            raise DataAtlasResponseError(
-                "Data Atlas returned a non-JSON response. "
-                f"HTTP status={response.status_code}. "
-                f"Response body preview={response.text[:500]}"
-            ) from exc
 
-        if response.status_code >= 400:
-            raise DataAtlasHTTPError(
-                "Data Atlas returned an HTTP error. "
-                f"HTTP status={response.status_code}. "
-                f"Response body={body}"
-            )
+Local Setup
 
-        data = body.get("data")
-        errors = body.get("errors")
+From the repo root:
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install requests pandas openpyxl acryl-datahub
 
-        if errors:
-            raise DataAtlasGraphQLError(errors=errors, data=data)
+Verify syntax:
+python -m py_compile scripts/bulk_uploads/config.py scripts/bulk_uploads/client.py scripts/bulk_uploads/utils.py scripts/bulk_uploads/glossary.py scripts/bulk_uploads/descriptions.py
 
-        if data is None:
-            raise DataAtlasResponseError(
-                f"Data Atlas response did not contain a data object. Response body={body}"
-            )
+Verify imports:
+python -c "from scripts.bulk_uploads.config import load_config; from scripts.bulk_uploads.client import DataAtlasGraphQLClient; print('imports ok')"
 
-        return data
+Expected output:
+imports ok
 
 
+Finding Excel Sheet Names
 
+Before running the scripts, confirm the exact sheet names in the workbook:
+python -c "import pandas as pd; print(pd.ExcelFile(r'C:\path\to\template.xlsx').sheet_names)"
 
+Use the exact printed sheet names with --terms-sheet, --assignments-sheet, or --sheet.
 
-from __future__ import annotations
+Dry Run Testing
 
-from pathlib import Path
-import re
-from typing import Any, Dict, List, Optional, Union
+Dry-run mode does not publish to Data Atlas, but the scripts still require environment variables to be set.
 
-import pandas as pd
+For dry-run testing, dummy values are fine:
+$env:DATA_ATLAS_GRAPHQL_URL="https://dummy-data-atlas-host/api/graphql"
+$env:DATA_ATLAS_TOKEN="dummy-token"
 
 
-def normalize_column_name(name: Any) -> str:
-    """
-    Convert Excel column names to predictable snake_case names.
+Finding Excel Sheet Names
 
-    Examples:
-        "Column_Name" -> "column_name"
-        "Column Name" -> "column_name"
-        "Schema Name" -> "schema_name"
-    """
+Before running the scripts, confirm the exact sheet names in the workbook:
+python -c "import pandas as pd; print(pd.ExcelFile(r'C:\path\to\template.xlsx').sheet_names)"
 
-    text = str(name).strip().lower()
-    text = re.sub(r"[^a-z0-9]+", "_", text)
-    text = re.sub(r"_+", "_", text)
-    return text.strip("_")
+Use the exact printed sheet names with --terms-sheet, --assignments-sheet, or --sheet.
 
+Run Glossary Dry Run
 
-def clean_value(value: Any) -> Optional[str]:
-    """
-    Normalize blank Excel values to None and strip string values.
-    """
+Run both glossary term creation/resolution and glossary assignments:
+python scripts/bulk_uploads/glossary.py C:\path\to\template.xlsx --terms-sheet "Glossary Template" --assignments-sheet "Data Template" --dry-run --limit 1
 
-    if value is None:
-        return None
+Run only glossary assignments:
+python scripts/bulk_uploads/glossary.py C:\path\to\template.xlsx --skip-term-creation --assignments-sheet "Data Template" --dry-run --limit 1
 
-    try:
-        if pd.isna(value):
-            return None
-    except TypeError:
-        pass
+Run only glossary term creation/resolution:
+python scripts/bulk_uploads/glossary.py C:\path\to\template.xlsx --terms-sheet "Glossary Template" --skip-assignments --dry-run --limit 1
 
-    text = str(value).strip()
+Expected result files:
+outputs/glossary_terms_results.csv
+outputs/glossary_assignments_results.csv
 
-    if not text:
-        return None
 
-    if text.lower() in {"nan", "none", "null"}:
-        return None
 
-    return text
+Run Description Dry Run
+python scripts/bulk_uploads/descriptions.py C:\path\to\template.xlsx --sheet "Description Template" --dry-run --limit 1
 
+If the description rows are on the first sheet, --sheet can be omitted:
+python scripts/bulk_uploads/descriptions.py C:\path\to\template.xlsx --dry-run --limit 1
 
-def read_excel_template(
-    path: Union[str, Path],
-    sheet_name: Optional[Union[str, int]] = None,
-) -> pd.DataFrame:
-    """
-    Read an Excel sheet and normalize its column names.
-    """
+Expected result file:
+outputs/descriptions_results.csv
 
-    if sheet_name is None:
-        df = pd.read_excel(path)
-    else:
-        df = pd.read_excel(path, sheet_name=sheet_name)
 
-    df = df.copy()
-    df.columns = [normalize_column_name(column) for column in df.columns]
-    return df
 
+Real API Smoke Test
 
-def get_value(
-    row: pd.Series,
-    *column_names: str,
-    required: bool = False,
-    default: Optional[str] = None,
-) -> Optional[str]:
-    """
-    Fetch a value from a normalized pandas row using one or more possible names.
+After dry-run succeeds, set the real Data Atlas endpoint and token:
+$env:DATA_ATLAS_GRAPHQL_URL="https://your-real-data-atlas-host/api/graphql"
+$env:DATA_ATLAS_TOKEN="your-real-token"
 
-    Column names passed here do not have to already be normalized.
-    """
+Run only one row first:
+python scripts/bulk_uploads/descriptions.py C:\path\to\template.xlsx --sheet "Description Template" --limit 1
 
-    for column_name in column_names:
-        key = normalize_column_name(column_name)
+Or for glossary:
+python scripts/bulk_uploads/glossary.py C:\path\to\template.xlsx --terms-sheet "Glossary Template" --assignments-sheet "Data Template" --limit 1
 
-        if key in row.index:
-            value = clean_value(row[key])
+Do not run the full workbook until a one-row publish test succeeds.
 
-            if value is not None:
-                return value
 
-    if required:
-        joined = ", ".join(column_names)
-        raise ValueError(f"Missing required column/value. Expected one of: {joined}")
 
-    return default
+Template Column Requirements
 
+Description Upload
 
-def is_blank_row(row: pd.Series) -> bool:
-    """
-    Return True when every cell in a row is blank-ish.
-    """
+Supported formats:
+Option A:
+resource_urn
+column_name
+description
 
-    for value in row.values:
-        if clean_value(value) is not None:
-            return False
+Option B:
+Platform
+Database
+Schema Name
+Dataset Name
+Env Name
+Column_Name
+Description
 
-    return True
+If resource_urn is provided, it is used directly.
 
+If resource_urn is not provided, the script builds a dataset URN using:
+Platform
+Database
+Schema Name
+Dataset Name
+Env Name
 
-def build_dataset_name_from_row(row: pd.Series) -> str:
-    """
-    Build the DataHub/Data Atlas dataset name from template fields.
+The dataset name is built as:
+{Database}.{Schema Name}.{Dataset Name}
 
-    Existing MDH script used:
-        {Database}.{Schema Name}.{Dataset Name}
-    """
 
-    database = get_value(row, "database", required=True)
-    schema = get_value(row, "schema_name", "schema name", required=True)
-    dataset_name = get_value(row, "dataset_name", "dataset name", required=True)
+Glossary Term Creation
 
-    return f"{database}.{schema}.{dataset_name}"
+Supported columns:
+glossary_name
+definition
+parent_node
 
+Alternate accepted names:
+glossary name
+term_name
+term name
+name
+description
+parent node
+parentNode
 
-def build_dataset_urn_from_row(row: pd.Series) -> str:
-    """
-    Return resource_urn if provided, otherwise build it using DataHub's mce_builder.
+parent_node is optional. If blank, the script attempts to create a top-level glossary term, assuming Data Atlas allows that.
 
-    Required template columns when resource_urn is not present:
-        Platform
-        Database
-        Schema Name
-        Dataset Name
-        Env Name
-    """
 
-    existing_resource_urn = get_value(
-        row,
-        "resource_urn",
-        "resource urn",
-        "urn",
-        "dataset_urn",
-        "dataset urn",
-    )
+Glossary Assignment
 
-    if existing_resource_urn:
-        return existing_resource_urn
+Supported columns:
+Platform
+Database
+Schema Name
+Dataset Name
+Env Name
+Glossary_Name
+Column_Name
 
-    try:
-        import datahub.emitter.mce_builder as builder
-    except ImportError as exc:
-        raise ImportError(
-            "datahub.emitter.mce_builder is required to build dataset URNs. "
-            "Install the DataHub package or provide resource_urn directly in the template."
-        ) from exc
+Also supported:
+resource_urn
+glossary_urn
+term_urn
 
-    platform = get_value(row, "platform", required=True)
-    env = get_value(row, "env_name", "env name", "env", required=True)
-    dataset_name = build_dataset_name_from_row(row)
+If Column_Name is blank, the glossary term is assigned to the dataset.
 
-    return builder.make_dataset_urn(platform, dataset_name, env)
+If Column_Name is populated, the glossary term is assigned to that dataset field.
 
 
-def write_report(rows: List[Dict[str, Any]], output_path: Union[str, Path]) -> Path:
-    """
-    Write row-level execution results to CSV.
-    """
+Output Reports
 
-    path = Path(output_path)
-    path.parent.mkdir(parents=True, exist_ok=True)
+Each script writes row-level CSV reports to the outputs/ directory.
 
-    df = pd.DataFrame(rows)
-    df.to_csv(path, index=False)
+Reports include:
 
-    return path
+* success
+* dry_run
+* row
+* action-specific metadata
+* error message if the row failed
 
+The scripts continue processing rows by default even if a row fails.
 
-def has_failures(rows: List[Dict[str, Any]]) -> bool:
-    """
-    Return True if any result row has success=False.
-    """
+Use --fail-fast to stop on the first failed row.
 
-    for row in rows:
-        if row.get("success") is False:
-            return True
+⸻
 
-    return False
+Common Commands
 
+Compile check:
+python -m py_compile scripts/bulk_uploads/config.py scripts/bulk_uploads/client.py scripts/bulk_uploads/utils.py scripts/bulk_uploads/glossary.py scripts/bulk_uploads/descriptions.py
 
+Show workbook sheet names:
+python -c "import pandas as pd; print(pd.ExcelFile(r'C:\path\to\template.xlsx').sheet_names)"
 
+Glossary dry run, one row:
+python scripts/bulk_uploads/glossary.py C:\path\to\template.xlsx --terms-sheet "Glossary Template" --assignments-sheet "Data Template" --dry-run --limit 1
 
+Description dry run, one row:
+python scripts/bulk_uploads/descriptions.py C:\path\to\template.xlsx --sheet "Description Template" --dry-run --limit 1
 
-from __future__ import annotations
 
-import argparse
-from dataclasses import replace
-import sys
-from typing import Any, Dict, List, Optional
+Known Limitations
 
-import pandas as pd
+This is a first-pass migration, not the final production ingestion framework.
 
-try:
-    from .client import DataAtlasGraphQLClient
-    from .config import load_config
-    from .utils import (
-        build_dataset_urn_from_row,
-        get_value,
-        has_failures,
-        is_blank_row,
-        read_excel_template,
-        write_report,
-    )
-except ImportError:
-    from client import DataAtlasGraphQLClient
-    from config import load_config
-    from utils import (
-        build_dataset_urn_from_row,
-        get_value,
-        has_failures,
-        is_blank_row,
-        read_excel_template,
-        write_report,
-    )
+Known limitations:
 
-
-UPDATE_DESCRIPTION_MUTATION = """
-mutation updateDescription(
-    $description: String!,
-    $resourceUrn: String!,
-    $subResourceType: SubResourceType,
-    $subResource: String
-) {
-    updateDescription(input: {
-        description: $description,
-        resourceUrn: $resourceUrn,
-        subResourceType: $subResourceType,
-        subResource: $subResource
-    })
-}
-"""
-
-
-def set_column_description(
-    client: DataAtlasGraphQLClient,
-    description: str,
-    resource_urn: str,
-    column_name: str,
-) -> Dict[str, Any]:
-    """
-    Update a column description in Data Atlas.
-    """
-
-    variables = {
-        "description": description,
-        "resourceUrn": resource_urn,
-        "subResourceType": "DATASET_FIELD",
-        "subResource": column_name,
-    }
-
-    if client.dry_run:
-        client.execute(
-            UPDATE_DESCRIPTION_MUTATION,
-            variables,
-            operation_name="updateDescription",
-        )
-
-        return {
-            "success": True,
-            "dry_run": True,
-            "urn": resource_urn,
-            "field": column_name,
-            "description": description,
-        }
-
-    data = client.execute(
-        UPDATE_DESCRIPTION_MUTATION,
-        variables,
-        operation_name="updateDescription",
-    )
-
-    return {
-        "success": bool(data.get("updateDescription")),
-        "dry_run": False,
-        "urn": resource_urn,
-        "field": column_name,
-        "description": description,
-    }
-
-
-def process_description_rows(
-    df: pd.DataFrame,
-    client: DataAtlasGraphQLClient,
-    fail_fast: bool = False,
-    limit: Optional[int] = None,
-) -> List[Dict[str, Any]]:
-    """
-    Process description template rows.
-
-    Supported template styles:
-
-    Option A:
-        resource_urn
-        column_name
-        description
-
-    Option B:
-        Platform
-        Database
-        Schema Name
-        Dataset Name
-        Env Name
-        Column_Name
-        Description
-    """
-
-    results: List[Dict[str, Any]] = []
-
-    if limit is not None:
-        df = df.head(limit)
-
-    for index, row in df.iterrows():
-        excel_row_number = index + 2
-
-        if is_blank_row(row):
-            continue
-
-        try:
-            resource_urn = build_dataset_urn_from_row(row)
-
-            column_name = get_value(
-                row,
-                "column_name",
-                "column name",
-                "field",
-                "field_name",
-                "field name",
-                required=True,
-            )
-
-            description = get_value(
-                row,
-                "description",
-                "column_description",
-                "column description",
-                required=True,
-            )
-
-            result = set_column_description(
-                client=client,
-                description=description,
-                resource_urn=resource_urn,
-                column_name=column_name,
-            )
-
-            result["row"] = excel_row_number
-            results.append(result)
-
-        except Exception as exc:
-            failure = {
-                "success": False,
-                "dry_run": client.dry_run,
-                "row": excel_row_number,
-                "error": str(exc),
-            }
+1. Tags, domains, owners, and lineage are not implemented in this scope.
+2. GraphQL mutations are used for this first pass because they match the existing MDH scripts.
+3. For larger-scale production ingestion, the DataHub Python SDK may be more appropriate than expanding GraphQL scripts indefinitely.
+4. Dry-run validates local parsing and operation construction, but it does not validate that a real term, dataset, or column exists in Data Atlas.
+5. Dry-run glossary term creation uses a fake URN for local assignment flow testing.
+6. searchAcrossEntities only fetches the first 10 glossary search results.
+7. The scripts assume Data Atlas uses DataHub-compatible URN structure and GraphQL schema.
+8. Dataset-level descriptions are not implemented; descriptions.py is currently limited to column descriptions.
 
-            results.append(failure)
+⸻
 
-            if fail_fast:
-                raise
+Troubleshooting
 
-    return results
+ModuleNotFoundError: No module named 'requests'
 
+Install dependencies inside the active virtual environment:
+python -m pip install requests pandas openpyxl acryl-datahub
 
-def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="Bulk upload column descriptions to Data Atlas."
-    )
 
-    parser.add_argument(
-        "workbook",
-        help="Path to the Excel workbook containing description rows.",
-    )
+DATA_ATLAS_GRAPHQL_URL is required
 
-    parser.add_argument(
-        "--sheet",
-        default=None,
-        help=(
-            "Excel sheet name. "
-            "If omitted, pandas will read the first sheet in the workbook."
-        ),
-    )
-
-    parser.add_argument(
-        "--output",
-        default="outputs/descriptions_results.csv",
-        help="CSV output path for row-level results.",
-    )
-
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show intended operations without publishing to Data Atlas.",
-    )
-
-    parser.add_argument(
-        "--fail-fast",
-        action="store_true",
-        help="Stop immediately on the first failed row.",
-    )
-
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=None,
-        help="Optional max number of rows to process.",
-    )
-
-    return parser
-
-
-def main() -> None:
-    parser = build_arg_parser()
-    args = parser.parse_args()
-
-    config = load_config()
-
-    if args.dry_run:
-        config = replace(config, dry_run=True)
-
-    client = DataAtlasGraphQLClient(config)
-
-    df = read_excel_template(args.workbook, sheet_name=args.sheet)
-
-    results = process_description_rows(
-        df=df,
-        client=client,
-        fail_fast=args.fail_fast,
-        limit=args.limit,
-    )
-
-    report_path = write_report(results, args.output)
-
-    total = len(results)
-    failed = sum(1 for row in results if row.get("success") is False)
-    succeeded = total - failed
-
-    print(f"Description upload complete. Success={succeeded}, Failed={failed}")
-    print(f"Report written to: {report_path}")
-
-    if has_failures(results):
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
-
-
-
-
-
-
-
-from __future__ import annotations
-
-import argparse
-from dataclasses import replace
-from pathlib import Path
-import re
-import sys
-from typing import Any, Dict, List, Optional, Tuple, Union
-
-import pandas as pd
-
-try:
-    from .client import DataAtlasGraphQLClient
-    from .config import load_config
-    from .utils import (
-        build_dataset_urn_from_row,
-        clean_value,
-        get_value,
-        has_failures,
-        is_blank_row,
-        read_excel_template,
-        write_report,
-    )
-except ImportError:
-    from client import DataAtlasGraphQLClient
-    from config import load_config
-    from utils import (
-        build_dataset_urn_from_row,
-        clean_value,
-        get_value,
-        has_failures,
-        is_blank_row,
-        read_excel_template,
-        write_report,
-    )
-
-
-CREATE_GLOSSARY_TERM_MUTATION = """
-mutation createGlossaryTerm(
-    $name: String!,
-    $description: String,
-    $parentNode: String
-) {
-    createGlossaryTerm(input: {
-        name: $name,
-        description: $description,
-        parentNode: $parentNode
-    })
-}
-"""
-
-
-SEARCH_GLOSSARY_TERM_BY_NAME_QUERY = """
-query searchGlossaryTermByName($input: SearchAcrossEntitiesInput!) {
-    searchAcrossEntities(input: $input) {
-        searchResults {
-            entity {
-                urn
-                ... on GlossaryTerm {
-                    properties {
-                        name
-                        description
-                    }
-                }
-            }
-        }
-    }
-}
-"""
-
-
-ADD_TERMS_MUTATION = """
-mutation addTerms(
-    $termUrns: [String!]!,
-    $resourceUrn: String!,
-    $subResourceType: SubResourceType,
-    $subResource: String
-) {
-    addTerms(input: {
-        termUrns: $termUrns,
-        resourceUrn: $resourceUrn,
-        subResourceType: $subResourceType,
-        subResource: $subResource
-    })
-}
-"""
-
-
-REMOVE_TERMS_MUTATION = """
-mutation removeTerms(
-    $termUrns: [String!]!,
-    $resourceUrn: String!,
-    $subResourceType: SubResourceType,
-    $subResource: String
-) {
-    batchRemoveTerms(input: {
-        termUrns: $termUrns,
-        resources: [{
-            resourceUrn: $resourceUrn,
-            subResourceType: $subResourceType,
-            subResource: $subResource
-        }]
-    })
-}
-"""
-
-
-def _fake_glossary_urn(name: str) -> str:
-    slug = re.sub(r"[^a-zA-Z0-9_.-]+", "_", name.strip())
-    slug = slug.strip("_") or "unknown"
-    return f"urn:li:glossaryTerm:{slug}"
-
-
-def _normalize_term_name(name: str) -> str:
-    return name.strip()
-
-
-def _term_cache_key(name: str) -> str:
-    return _normalize_term_name(name).lower()
-
-
-def search_glossary_term_urn(
-    client: DataAtlasGraphQLClient,
-    term_name: str,
-    exact_match: bool = True,
-) -> Optional[str]:
-    """
-    Search Data Atlas for a glossary term by name.
-
-    Returns:
-        Glossary term URN when found, otherwise None.
-    """
-
-    term_name = _normalize_term_name(term_name)
-
-    if client.dry_run:
-        return None
-
-    variables = {
-        "input": {
-            "types": ["GLOSSARY_TERM"],
-            "query": term_name,
-            "start": 0,
-            "count": 10,
-        }
-    }
-
-    data = client.execute(
-        SEARCH_GLOSSARY_TERM_BY_NAME_QUERY,
-        variables,
-        operation_name="searchGlossaryTermByName",
-    )
-
-    search_results = (
-        data.get("searchAcrossEntities", {})
-        .get("searchResults", [])
-    )
-
-    first_urn: Optional[str] = None
-
-    for result in search_results:
-        entity = result.get("entity") or {}
-        urn = entity.get("urn")
-
-        if not urn:
-            continue
-
-        if first_urn is None:
-            first_urn = urn
-
-        properties = entity.get("properties") or {}
-        found_name = clean_value(properties.get("name"))
-
-        if found_name and found_name.strip().lower() == term_name.lower():
-            return urn
-
-    if exact_match:
-        return None
-
-    return first_urn
-
-
-def create_glossary_term(
-    client: DataAtlasGraphQLClient,
-    name: str,
-    description: Optional[str] = None,
-    parent_node: Optional[str] = None,
-) -> str:
-    """
-    Create a glossary term and return its URN.
-    """
-
-    name = _normalize_term_name(name)
-
-    variables = {
-        "name": name,
-        "description": description or "",
-        "parentNode": parent_node,
-    }
-
-    if client.dry_run:
-        client.execute(
-            CREATE_GLOSSARY_TERM_MUTATION,
-            variables,
-            operation_name="createGlossaryTerm",
-        )
-
-        return _fake_glossary_urn(name)
-
-    data = client.execute(
-        CREATE_GLOSSARY_TERM_MUTATION,
-        variables,
-        operation_name="createGlossaryTerm",
-    )
-
-    term_urn = data.get("createGlossaryTerm")
-
-    if not term_urn:
-        raise RuntimeError(
-            f"createGlossaryTerm did not return a glossary term URN for name={name}"
-        )
-
-    return term_urn
-
-
-def resolve_glossary_term_urn(
-    client: DataAtlasGraphQLClient,
-    term_name: str,
-    cache: Dict[str, str],
-    create_if_missing: bool = False,
-    description: str = "",
-    parent_node: Optional[str] = None,
-) -> str:
-    """
-    Resolve a glossary term name to a URN using cache, search, and optional creation.
-    """
-
-    term_name = _normalize_term_name(term_name)
-    cache_key = _term_cache_key(term_name)
-
-    if cache_key in cache:
-        return cache[cache_key]
-
-    found_urn = search_glossary_term_urn(client, term_name, exact_match=True)
-
-    if found_urn:
-        cache[cache_key] = found_urn
-        return found_urn
-
-    if not create_if_missing:
-        raise LookupError(
-            f"Glossary term was not found in Data Atlas and create_if_missing=False: {term_name}"
-        )
-
-    created_urn = create_glossary_term(
-        client=client,
-        name=term_name,
-        description=description,
-        parent_node=parent_node,
-    )
-
-    cache[cache_key] = created_urn
-    return created_urn
-
-
-def create_terms_from_df(
-    df: pd.DataFrame,
-    client: DataAtlasGraphQLClient,
-    cache: Optional[Dict[str, str]] = None,
-    fail_fast: bool = False,
-    limit: Optional[int] = None,
-) -> Tuple[List[Dict[str, Any]], Dict[str, str]]:
-    """
-    Create or resolve glossary terms from the glossary template sheet.
-
-    Supported columns:
-        glossary_name / glossary name / term_name / name
-        definition / description
-        parent_node / parent node / parentNode
-
-    parent_node is optional. If blank, the term is created as a top-level term
-    if Data Atlas allows top-level glossary terms.
-    """
-
-    results: List[Dict[str, Any]] = []
-    cache = cache or {}
-
-    if limit is not None:
-        df = df.head(limit)
-
-    for index, row in df.iterrows():
-        excel_row_number = index + 2
-
-        if is_blank_row(row):
-            continue
-
-        try:
-            name = get_value(
-                row,
-                "glossary_name",
-                "glossary name",
-                "term_name",
-                "term name",
-                "name",
-                required=True,
-            )
-
-            description = get_value(
-                row,
-                "definition",
-                "description",
-                default="",
-            ) or ""
-
-            parent_node = get_value(
-                row,
-                "parent_node",
-                "parent node",
-                "parentNode",
-                default=None,
-            )
-
-            existing_urn = search_glossary_term_urn(
-                client=client,
-                term_name=name,
-                exact_match=True,
-            )
-
-            if existing_urn:
-                cache[_term_cache_key(name)] = existing_urn
-
-                results.append(
-                    {
-                        "success": True,
-                        "dry_run": client.dry_run,
-                        "row": excel_row_number,
-                        "action": "exists",
-                        "glossary_name": name,
-                        "glossary_urn": existing_urn,
-                        "message": "Glossary term already exists.",
-                    }
-                )
-
-                continue
-
-            created_urn = create_glossary_term(
-                client=client,
-                name=name,
-                description=description,
-                parent_node=parent_node,
-            )
-
-            cache[_term_cache_key(name)] = created_urn
-
-            results.append(
-                {
-                    "success": True,
-                    "dry_run": client.dry_run,
-                    "row": excel_row_number,
-                    "action": "created",
-                    "glossary_name": name,
-                    "glossary_urn": created_urn,
-                    "message": "Glossary term created.",
-                }
-            )
-
-        except Exception as exc:
-            failure = {
-                "success": False,
-                "dry_run": client.dry_run,
-                "row": excel_row_number,
-                "action": "create_or_resolve",
-                "error": str(exc),
-            }
-
-            results.append(failure)
-
-            if fail_fast:
-                raise
-
-    return results, cache
-
-
-def assign_terms(
-    client: DataAtlasGraphQLClient,
-    term_urns: Union[List[str], str],
-    resource_urn: str,
-    column_name: Optional[str] = None,
-) -> Dict[str, Any]:
-    """
-    Assign one or more glossary terms to a dataset or dataset field.
-    """
-
-    if isinstance(term_urns, str):
-        term_urns = [term_urns]
-
-    variables = {
-        "termUrns": term_urns,
-        "resourceUrn": resource_urn,
-        "subResourceType": None,
-        "subResource": None,
-    }
-
-    if column_name:
-        variables["subResourceType"] = "DATASET_FIELD"
-        variables["subResource"] = column_name
-
-    if client.dry_run:
-        client.execute(
-            ADD_TERMS_MUTATION,
-            variables,
-            operation_name="addTerms",
-        )
-
-        return {
-            "success": True,
-            "dry_run": True,
-            "urn": resource_urn,
-            "field": column_name,
-            "terms": term_urns,
-        }
-
-    data = client.execute(
-        ADD_TERMS_MUTATION,
-        variables,
-        operation_name="addTerms",
-    )
-
-    return {
-        "success": bool(data.get("addTerms")),
-        "dry_run": False,
-        "urn": resource_urn,
-        "field": column_name,
-        "terms": term_urns,
-    }
-
-
-def unassign_terms(
-    client: DataAtlasGraphQLClient,
-    term_urns: Union[List[str], str],
-    resource_urn: str,
-    column_name: Optional[str] = None,
-) -> Dict[str, Any]:
-    """
-    Remove one or more glossary terms from a dataset or dataset field.
-    """
-
-    if isinstance(term_urns, str):
-        term_urns = [term_urns]
-
-    variables = {
-        "termUrns": term_urns,
-        "resourceUrn": resource_urn,
-        "subResourceType": None,
-        "subResource": None,
-    }
-
-    if column_name:
-        variables["subResourceType"] = "DATASET_FIELD"
-        variables["subResource"] = column_name
-
-    if client.dry_run:
-        client.execute(
-            REMOVE_TERMS_MUTATION,
-            variables,
-            operation_name="removeTerms",
-        )
-
-        return {
-            "success": True,
-            "dry_run": True,
-            "urn": resource_urn,
-            "field": column_name,
-            "terms": term_urns,
-        }
-
-    data = client.execute(
-        REMOVE_TERMS_MUTATION,
-        variables,
-        operation_name="removeTerms",
-    )
-
-    return {
-        "success": bool(data.get("batchRemoveTerms")),
-        "dry_run": False,
-        "urn": resource_urn,
-        "field": column_name,
-        "terms": term_urns,
-    }
-
-
-def assign_terms_from_df(
-    df: pd.DataFrame,
-    client: DataAtlasGraphQLClient,
-    cache: Optional[Dict[str, str]] = None,
-    create_missing_from_assignments: bool = False,
-    fail_fast: bool = False,
-    limit: Optional[int] = None,
-) -> List[Dict[str, Any]]:
-    """
-    Assign glossary terms to datasets or dataset fields.
-
-    Supported assignment columns:
-
-    Preferred:
-        Platform
-        Database
-        Schema Name
-        Dataset Name
-        Env Name
-        Glossary_Name
-        Column_Name
-
-    Also supported:
-        resource_urn
-        glossary_urn
-        term_urn
-
-    Notes:
-        Column_Name is optional.
-        If Column_Name is blank, the term is assigned to the dataset.
-        If Column_Name is populated, the term is assigned to that field.
-    """
-
-    results: List[Dict[str, Any]] = []
-    cache = cache or {}
-
-    if limit is not None:
-        df = df.head(limit)
-
-    for index, row in df.iterrows():
-        excel_row_number = index + 2
-
-        if is_blank_row(row):
-            continue
-
-        try:
-            resource_urn = build_dataset_urn_from_row(row)
-
-            column_name = get_value(
-                row,
-                "column_name",
-                "column name",
-                "field",
-                "field_name",
-                "field name",
-                default=None,
-            )
-
-            direct_term_urn = get_value(
-                row,
-                "term_urn",
-                "term urn",
-                "glossary_urn",
-                "glossary urn",
-                default=None,
-            )
-
-            term_name = get_value(
-                row,
-                "glossary_name",
-                "glossary name",
-                "term_name",
-                "term name",
-                "name",
-                default=None,
-            )
-
-            if direct_term_urn:
-                term_urn = direct_term_urn
-            else:
-                if not term_name:
-                    raise ValueError(
-                        "Missing glossary term. Expected glossary_name, term_name, glossary_urn, or term_urn."
-                    )
-
-                description = get_value(
-                    row,
-                    "definition",
-                    "description",
-                    default="",
-                ) or ""
-
-                parent_node = get_value(
-                    row,
-                    "parent_node",
-                    "parent node",
-                    "parentNode",
-                    default=None,
-                )
-
-                term_urn = resolve_glossary_term_urn(
-                    client=client,
-                    term_name=term_name,
-                    cache=cache,
-                    create_if_missing=create_missing_from_assignments,
-                    description=description,
-                    parent_node=parent_node,
-                )
-
-            result = assign_terms(
-                client=client,
-                term_urns=[term_urn],
-                resource_urn=resource_urn,
-                column_name=column_name,
-            )
-
-            result["row"] = excel_row_number
-            result["action"] = "assign"
-            result["glossary_name"] = term_name
-            result["glossary_urn"] = term_urn
-
-            results.append(result)
-
-        except Exception as exc:
-            failure = {
-                "success": False,
-                "dry_run": client.dry_run,
-                "row": excel_row_number,
-                "action": "assign",
-                "error": str(exc),
-            }
-
-            results.append(failure)
-
-            if fail_fast:
-                raise
-
-    return results
-
-
-def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="Bulk upload glossary terms and glossary assignments to Data Atlas."
-    )
-
-    parser.add_argument(
-        "workbook",
-        help="Path to the Excel workbook containing glossary template sheets.",
-    )
-
-    parser.add_argument(
-        "--terms-sheet",
-        default="Glossary Template",
-        help="Excel sheet containing glossary term definitions.",
-    )
-
-    parser.add_argument(
-        "--assignments-sheet",
-        default="Dataset Template",
-        help="Excel sheet containing dataset or column glossary assignments.",
-    )
-
-    parser.add_argument(
-        "--output-dir",
-        default="outputs",
-        help="Directory where result CSV files will be written.",
-    )
-
-    parser.add_argument(
-        "--skip-term-creation",
-        action="store_true",
-        help="Skip the glossary term creation/resolution sheet.",
-    )
-
-    parser.add_argument(
-        "--skip-assignments",
-        action="store_true",
-        help="Skip the glossary assignment sheet.",
-    )
-
-    parser.add_argument(
-        "--create-missing-from-assignments",
-        action="store_true",
-        help=(
-            "If a glossary assignment references a missing term, create it. "
-            "The assignment row may include parent_node when this is enabled."
-        ),
-    )
-
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show intended operations without publishing to Data Atlas.",
-    )
-
-    parser.add_argument(
-        "--fail-fast",
-        action="store_true",
-        help="Stop immediately on the first failed row.",
-    )
-
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=None,
-        help="Optional max number of rows to process per sheet.",
-    )
-
-    return parser
-
-
-def main() -> None:
-    parser = build_arg_parser()
-    args = parser.parse_args()
-
-    config = load_config()
-
-    if args.dry_run:
-        config = replace(config, dry_run=True)
-
-    client = DataAtlasGraphQLClient(config)
-
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    all_results: List[Dict[str, Any]] = []
-    term_cache: Dict[str, str] = {}
-
-    if not args.skip_term_creation:
-        terms_df = read_excel_template(args.workbook, sheet_name=args.terms_sheet)
-
-        term_results, term_cache = create_terms_from_df(
-            df=terms_df,
-            client=client,
-            cache=term_cache,
-            fail_fast=args.fail_fast,
-            limit=args.limit,
-        )
-
-        term_report_path = write_report(
-            term_results,
-            output_dir / "glossary_terms_results.csv",
-        )
-
-        all_results.extend(term_results)
-
-        term_failed = sum(1 for row in term_results if row.get("success") is False)
-        term_succeeded = len(term_results) - term_failed
-
-        print(
-            f"Glossary term processing complete. "
-            f"Success={term_succeeded}, Failed={term_failed}"
-        )
-        print(f"Glossary term report written to: {term_report_path}")
-
-    if not args.skip_assignments:
-        assignments_df = read_excel_template(
-            args.workbook,
-            sheet_name=args.assignments_sheet,
-        )
-
-        assignment_results = assign_terms_from_df(
-            df=assignments_df,
-            client=client,
-            cache=term_cache,
-            create_missing_from_assignments=args.create_missing_from_assignments,
-            fail_fast=args.fail_fast,
-            limit=args.limit,
-        )
-
-        assignment_report_path = write_report(
-            assignment_results,
-            output_dir / "glossary_assignments_results.csv",
-        )
-
-        all_results.extend(assignment_results)
-
-        assignment_failed = sum(
-            1 for row in assignment_results if row.get("success") is False
-        )
-        assignment_succeeded = len(assignment_results) - assignment_failed
-
-        print(
-            f"Glossary assignment processing complete. "
-            f"Success={assignment_succeeded}, Failed={assignment_failed}"
-        )
-        print(f"Glossary assignment report written to: {assignment_report_path}")
-
-    if has_failures(all_results):
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
+Set the required environment variables in the same terminal session:
+$env:DATA_ATLAS_GRAPHQL_URL="https://dummy-data-atlas-host/api/graphql"
+$env:DATA_ATLAS_TOKEN="dummy-token"
 
 
+Worksheet named '...' not found
 
+The Excel workbook does not contain the sheet name passed to the script.
 
+Check sheet names:
+python -c "import pandas as pd; print(pd.ExcelFile(r'C:\path\to\template.xlsx').sheet_names)"
+
+
+Missing required column/value
+
+The template does not contain one of the required columns, or the row being processed has a blank value for a required field.
+
+Check the relevant section above for required template columns.
+
+⸻
+
+401 or 403
+
+The endpoint is reachable, but authentication or authorization failed.
+
+Check:
+
+* Token value
+* Token expiration
+* Auth header format
+* Data Atlas permissions
+* Whether DATA_ATLAS_ACTOR is required
+
+⸻
+
+GraphQL errors
+
+If the script reports GraphQL errors, the endpoint is reachable, but the mutation, input shape, or schema may not match the target Data Atlas deployment.
+
+Check:
+
+* Mutation support in Data Atlas
+* Input object names
+* Enum names like DATASET_FIELD
+* Whether the entity exists
+* Whether the token has permission to mutate metadata
+
+⸻
+
+Review Notes
+
+This branch is intentionally scoped to the smallest safe migration:
+
+* Move endpoint/auth to shared config/client
+* Add token authentication
+* Preserve existing GraphQL-based behavior for glossary and descriptions
+* Add dry-run and row-level reporting
+* Avoid larger object-oriented rewrite until the Data Atlas API contract is confirmed
