@@ -1,13 +1,40 @@
 'use client';
 
 import { useParams, notFound } from 'next/navigation';
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, type ReactNode } from 'react';
+import { Tag } from 'antd';
 import DataTable from '~/components/DataTable';
 import { fetchTableData, fetchTableMetadata } from '~/lib/api';
 import { getTableData, getColumns, type TableName } from '~/lib/tableRegistry';
+import { recordVisit } from '~/lib/userTables';
 import type { ColumnsType } from 'antd/es/table';
 
 const DEV_TABLES = new Set<string>(['states', 'countries', 'departments']);
+
+// Ant Design renders a cell's raw value directly, and React renders a raw
+// boolean (true/false) as nothing — so boolean columns like `_current_` show up
+// blank. This formats values for display: booleans become a labeled tag, nulls
+// become a muted dash, and objects are stringified.
+function renderCellValue(value: unknown): ReactNode {
+  if (typeof value === 'boolean') {
+    return (
+      <Tag color={value ? 'green' : 'default'} style={{ margin: 0 }}>
+        {value ? 'True' : 'False'}
+      </Tag>
+    );
+  }
+  if (value === null || value === undefined) {
+    return <span style={{ color: '#cbd5e1' }}>—</span>;
+  }
+  if (typeof value === 'object') {
+    return (
+      <span style={{ fontFamily: 'monospace', fontSize: 12 }}>
+        {JSON.stringify(value)}
+      </span>
+    );
+  }
+  return String(value);
+}
 
 export default function TablePage() {
   const params = useParams();
@@ -41,6 +68,7 @@ export default function TablePage() {
         key: col.name,
         width: 160,
         ellipsis: true,
+        render: (value: unknown) => renderCellValue(value),
       }));
 
       const apiData = tableResponse.data.map((row, index) => {
@@ -63,6 +91,7 @@ export default function TablePage() {
       setData(apiData);
       setTotalRows(metadataResponse.total_rows);
       setHasPrimaryKey(apiHasRowKey);
+      recordVisit(slug);
     } catch {
       if (myId !== loadIdRef.current) return;
 
@@ -74,6 +103,7 @@ export default function TablePage() {
         setTotalRows(mockData.length);
         setUsingMock(true);
         setHasPrimaryKey(false);
+        recordVisit(slug);
       } else {
         setNotFoundError(true);
       }

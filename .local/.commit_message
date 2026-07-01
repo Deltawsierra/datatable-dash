@@ -1,0 +1,28 @@
+Fix frontend auth to match real FastAPI backend contract (401 fix)
+
+The real lighthouse-rdm backend's global AuthMiddleware requires an Azure
+access token whose audience is the app's own API (plus oid + non-empty groups
+claims). The frontend was only requesting OIDC scopes, so MSAL returned a
+Microsoft Graph token that the backend rejected with 401 on every data call.
+Per the user's instruction, only frontend files were changed (backend untouched).
+
+Changes (frontend only):
+- lib/auth.ts: acquire/login with the app's API scope (default
+  api://<clientId>/access_as_user, overridable via /api/config apiScope);
+  added getLoginRequest() so login consents to the API scope.
+- app/api/config/route.ts: also return apiScope from AZURE_API_SCOPE.
+- AuthProvider.tsx: pass apiScope into getMsalInstance.
+- lib/api.ts: fix UserInfoResponse to the real shape; remove dead
+  fetchUserRoles/UserRolesResponse; add deriveRoles().
+- AuthGuard.tsx: get roles from /v1/user/info (real endpoint) instead of the
+  non-existent /v1/user/roles; use getLoginRequest().
+- app/(dashboard)/page.tsx: read username instead of removed user_name.
+- DataTable.tsx: gate create/update/delete + EditDrawer persisted banner behind
+  WRITE_API_ENABLED=false (backend is read-only); edits fall back to local-only.
+
+Verified: tsc --noEmit passes; app boots; dev-bypass UI renders. Architect
+review PASS after gating the EditDrawer persisted prop.
+
+Deployment prerequisite (frontend cannot fix): the Azure App Registration must
+expose the API scope (or set AZURE_API_SCOPE) and emit the groups claim, else
+401/403 persists. End-to-end auth is only verifiable in the real environment.

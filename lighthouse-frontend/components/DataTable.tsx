@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { Table, Card, Typography, Empty, Spin, Tag, Input, Space, Modal, message } from 'antd';
+import { Table, Card, Typography, Empty, Spin, Tag, Input, Space, Modal, message, Popover, Checkbox, Tooltip } from 'antd';
 import {
   TableOutlined,
   DownloadOutlined,
@@ -12,12 +12,16 @@ import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
+  ControlOutlined,
+  StarFilled,
+  StarOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import { BorderBeam } from '~/components/magicui/BorderBeam';
 import { useTheme } from '~/components/ThemeProvider';
-import EditDrawer, { type ColumnDef, type DrawerAction, type SelectionType } from '~/components/EditDrawer';
-import { createTableRow, updateTableRow, deleteTableRow, deleteTableColumn } from '~/lib/api';
+import EditDrawer, { type ColumnDef, type DrawerAction } from '~/components/EditDrawer';
+import { createTableRow, updateTableRow, deleteTableRow } from '~/lib/api';
+import { useUserTables } from '~/lib/userTables';
 
 const { Title, Text } = Typography;
 
@@ -26,6 +30,22 @@ const { Title, Text } = Typography;
 // stay local (DataTable already has a local-only fallback path with messaging).
 // Flip this to true once the backend gains write support.
 const WRITE_API_ENABLED = false;
+
+// Reference-data schema conventions. `_current_` marks a row as live (true) or
+// archived/historical (false); `_last_edited_` is the audit timestamp.
+const CURRENT_COLUMN = '_current_';
+const LAST_EDITED_COLUMN = '_last_edited_';
+
+// Admin columns are not defined yet. Populate this list once admin roles/columns
+// exist — every key listed here is hidden by default and grouped under the
+// "Admin" toggle in the View menu.
+const ADMIN_COLUMNS: string[] = [];
+
+// Friendlier labels for system columns in the View menu.
+const COLUMN_LABELS: Record<string, string> = {
+  [CURRENT_COLUMN]: 'Live status',
+  [LAST_EDITED_COLUMN]: 'Last Edited on',
+};
 
 interface DataTableProps<T extends { id: string }> {
   title: string;
@@ -42,9 +62,16 @@ interface DataTableProps<T extends { id: string }> {
 interface ContextMenuState {
   x: number;
   y: number;
-  type: SelectionType;
-  rowId: string | null;
-  columnKey: string | null;
+  rowId: string;
+}
+
+function colKeyOf(col: unknown): string {
+  const c = col as Record<string, unknown>;
+  return (c.key as string) || (c.dataIndex as string) || '';
+}
+
+function isLiveValue(value: unknown): boolean {
+  return value === true || value === 'true' || value === 'True' || value === 1;
 }
 
 function escapeCSV(value: unknown): string {
@@ -77,7 +104,6 @@ export default function DataTable<T extends { id: string }>({
   data,
   columns,
   loading = false,
-  totalRows,
   usingApi,
   tableName,
   hasRowKey = false,
@@ -85,20 +111,20 @@ export default function DataTable<T extends { id: string }>({
 }: DataTableProps<T>) {
   const [searchText, setSearchText] = useState('');
   const { currentScheme } = useTheme();
-  const cardRef = useRef<HTMLDivElement>(null);
+  const { isFavorite, toggleFavorite } = useUserTables();
 
   const [localData, setLocalData] = useState<T[]>(data);
   const [localColumns, setLocalColumns] = useState<ColumnsType<T>>(columns);
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerAction, setDrawerAction] = useState<DrawerAction>('edit');
-  const [drawerSelection, setDrawerSelection] = useState<{
-    type: SelectionType;
-    rowId: string | null;
-    columnKey: string | null;
-  } | null>(null);
+  const [drawerRowId, setDrawerRowId] = useState<string | null>(null);
   const [hoveredActionBtn, setHoveredActionBtn] = useState<string | null>(null);
   const [dirty, setDirty] = useState(false);
+  // Row view: which rows to show based on the `_current_` flag (item 5).
+  const [rowView, setRowView] = useState<{ live: boolean; archived: boolean }>({ live: true, archived: false });
+  // Columns hidden via the View menu. Admin columns start hidden (item 6).
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(() => new Set(ADMIN_COLUMNS));
   const contextMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -120,15 +146,57 @@ export default function DataTable<T extends { id: string }>({
     return () => document.removeEventListener('mousedown', handler);
   }, [contextMenu]);
 
+  // Metadata for every column: friendly label + whether it is an admin column.
+  const columnMeta = useMemo(
+    () =>
+      localColumns
+        .map(col => {
+          const key = colKeyOf(col);
+          const rawTitle = (col as Record<string, unknown>).title;
+          const label = COLUMN_LABELS[key] ?? (typeof rawTitle === 'string' && rawTitle ? rawTitle : key);
+          return { key, label, admin: ADMIN_COLUMNS.includes(key) };
+        })
+        .filter(m => m.key),
+    [localColumns],
+  );
+
+  const dataColumnMeta = useMemo(() => columnMeta.filter(m => !m.admin), [columnMeta]);
+  const adminColumnMeta = useMemo(() => columnMeta.filter(m => m.admin), [columnMeta]);
+  const hasCurrentColumn = useMemo(() => columnMeta.some(m => m.key === CURRENT_COLUMN), [columnMeta]);
+
+  const rowLiveMap = useCallback(
+    (row: T) => isLiveValue((row as Record<string, unknown>)[CURRENT_COLUMN]),
+    [],
+  );
+
+  const toggleColumn = useCallback((key: string, checked: boolean) => {
+    setHiddenColumns(prev => {
+      const next = new Set(prev);
+      if (checked) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  }, []);
+
+  const toggleAdminColumns = useCallback(
+    (checked: boolean) => {
+      setHiddenColumns(prev => {
+        const next = new Set(prev);
+        adminColumnMeta.forEach(m => {
+          if (checked) next.delete(m.key);
+          else next.add(m.key);
+        });
+        return next;
+      });
+    },
+    [adminColumnMeta],
+  );
+
   const openDrawer = useCallback(
     (action: DrawerAction) => {
       if (!contextMenu) return;
       setDrawerAction(action);
-      setDrawerSelection({
-        type: contextMenu.type,
-        rowId: contextMenu.rowId,
-        columnKey: contextMenu.columnKey,
-      });
+      setDrawerRowId(contextMenu.rowId);
       setDrawerOpen(true);
       setContextMenu(null);
     },
@@ -137,7 +205,7 @@ export default function DataTable<T extends { id: string }>({
 
   const openAddRow = useCallback(() => {
     setDrawerAction('add');
-    setDrawerSelection({ type: 'row', rowId: null, columnKey: null });
+    setDrawerRowId(null);
     setDrawerOpen(true);
     setContextMenu(null);
   }, []);
@@ -192,61 +260,9 @@ export default function DataTable<T extends { id: string }>({
     });
   }, [contextMenu, localData, localColumns, usingApi, tableName, hasRowKey, onRefresh]);
 
-  const handleDeleteColumn = useCallback(() => {
-    if (!contextMenu?.columnKey) return;
-    const colKey = contextMenu.columnKey;
-    const col = localColumns.find(c => {
-      const cc = c as Record<string, unknown>;
-      return ((cc.key as string) || (cc.dataIndex as string) || '') === colKey;
-    }) as Record<string, unknown> | undefined;
-    const colLabel = col ? String(col.title ?? colKey) : colKey;
-    const persisted = Boolean(usingApi && tableName && WRITE_API_ENABLED);
-    const removeLocally = () => {
-      setLocalColumns(prev =>
-        prev.filter(c => {
-          const cc = c as Record<string, unknown>;
-          return ((cc.key as string) || (cc.dataIndex as string) || '') !== colKey;
-        }),
-      );
-      setDirty(true);
-    };
-    setContextMenu(null);
-    Modal.confirm({
-      title: 'Delete this column?',
-      icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
-      content: (
-        <span>
-          You are about to delete the <strong>{colLabel}</strong> column and all of its values
-          across every row.{' '}
-          {persisted
-            ? 'This permanently alters the table in the database and cannot be undone.'
-            : 'This change is local until a backend write API is connected, but it cannot be undone here.'}
-        </span>
-      ),
-      okText: 'Delete',
-      okType: 'danger',
-      cancelText: 'Cancel',
-      onOk: async () => {
-        if (persisted) {
-          try {
-            await deleteTableColumn(tableName as string, colKey);
-            message.success('Column deleted');
-            if (onRefresh) await onRefresh();
-            else removeLocally();
-          } catch (err) {
-            message.error(err instanceof Error ? err.message : 'Failed to delete column');
-            throw err;
-          }
-          return;
-        }
-        removeLocally();
-      },
-    });
-  }, [contextMenu, localColumns, usingApi, tableName, onRefresh]);
-
   const handleSave = useCallback(
     async (values: Record<string, unknown>, isNew: boolean) => {
-      const rowId = drawerSelection?.rowId ?? null;
+      const rowId = drawerRowId;
       const applyLocalAdd = () => {
         const newRow = { id: `local-${Date.now()}`, ...values } as T;
         setLocalData(prev => [newRow, ...prev]);
@@ -285,27 +301,30 @@ export default function DataTable<T extends { id: string }>({
       if (isNew) applyLocalAdd();
       else if (rowId) applyLocalEdit(rowId);
     },
-    [drawerSelection, usingApi, tableName, hasRowKey, onRefresh],
+    [drawerRowId, usingApi, tableName, hasRowKey, onRefresh],
   );
 
   const columnDefs = useMemo<ColumnDef[]>(
     () =>
       localColumns
-        .map(col => {
-          const c = col as Record<string, unknown>;
-          return {
-            key: (c.key as string) || (c.dataIndex as string) || '',
-            title: String(c.title ?? ''),
-          };
-        })
+        .map(col => ({
+          key: colKeyOf(col),
+          title: String((col as Record<string, unknown>).title ?? ''),
+        }))
         .filter(c => c.key),
     [localColumns],
   );
 
   const selectedRowData = useMemo<Record<string, unknown> | null>(() => {
-    if (!drawerSelection?.rowId) return null;
-    return (localData.find(row => row.id === drawerSelection.rowId) as Record<string, unknown>) ?? null;
-  }, [localData, drawerSelection]);
+    if (!drawerRowId) return null;
+    return (localData.find(row => row.id === drawerRowId) as Record<string, unknown>) ?? null;
+  }, [localData, drawerRowId]);
+
+  // Only columns not hidden via the View menu are rendered.
+  const visibleColumns = useMemo(
+    () => localColumns.filter(col => !hiddenColumns.has(colKeyOf(col))),
+    [localColumns, hiddenColumns],
+  );
 
   const augmentedColumns = useMemo<ColumnsType<T>>(() => {
     const rowSelectorCol: ColumnType<T> = {
@@ -319,15 +338,9 @@ export default function DataTable<T extends { id: string }>({
           onMouseDown={e => e.stopPropagation()}
           onClick={e => {
             e.stopPropagation();
-            setContextMenu({
-              x: e.clientX,
-              y: e.clientY,
-              type: 'row',
-              rowId: record.id,
-              columnKey: null,
-            });
+            setContextMenu({ x: e.clientX, y: e.clientY, rowId: record.id });
           }}
-          title="Select row"
+          title="Row actions"
           style={{
             background: 'none',
             border: 'none',
@@ -345,76 +358,36 @@ export default function DataTable<T extends { id: string }>({
       ),
     };
 
-    const dataCols = localColumns.map(col => {
-      const c = col as Record<string, unknown>;
-      const colKey = (c.key as string) || (c.dataIndex as string) || '';
-      const originalTitle = col.title;
-
-      return {
-        ...col,
-        title: (
-          <span
-            data-testid={`header-col-${colKey}`}
-            onMouseDown={e => e.stopPropagation()}
-            onClick={(e: React.MouseEvent) => {
-              e.stopPropagation();
-              setContextMenu({
-                x: e.clientX,
-                y: e.clientY,
-                type: 'column',
-                rowId: null,
-                columnKey: colKey,
-              });
-            }}
-            style={{ cursor: 'pointer', display: 'block', userSelect: 'none' }}
-          >
-            {originalTitle as React.ReactNode}
-          </span>
-        ),
-        onCell: (record: T) => ({
-          onMouseDown: (e: React.MouseEvent) => e.stopPropagation(),
-          onClick: (e: React.MouseEvent) => {
-            e.stopPropagation();
-            setContextMenu({
-              x: e.clientX,
-              y: e.clientY,
-              type: 'cell',
-              rowId: record.id,
-              columnKey: colKey,
-            });
-          },
-          style: { cursor: 'pointer' },
-        }),
-      };
-    });
-
-    return [rowSelectorCol, ...dataCols] as ColumnsType<T>;
-  }, [localColumns]);
+    return [rowSelectorCol, ...visibleColumns] as ColumnsType<T>;
+  }, [visibleColumns]);
 
   const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
+  // Row-view filter (live vs archived) then free-text search.
+  const rowViewData = useMemo(() => {
+    if (!hasCurrentColumn) return localData;
+    return localData.filter(row => (rowLiveMap(row) ? rowView.live : rowView.archived));
+  }, [localData, hasCurrentColumn, rowView, rowLiveMap]);
+
   const filteredData = useMemo(() => {
-    if (!searchText.trim()) return localData;
+    if (!searchText.trim()) return rowViewData;
     const query = searchText.toLowerCase();
-    return localData.filter(row =>
+    return rowViewData.filter(row =>
       Object.values(row).some(
         val => val !== null && val !== undefined && String(val).toLowerCase().includes(query),
       ),
     );
-  }, [localData, searchText]);
+  }, [rowViewData, searchText]);
 
   const handleDownloadCSV = useCallback(() => {
-    if (localData.length === 0) return;
-    const columnKeys = localColumns
-      .map(col => {
-        const c = col as Record<string, unknown>;
-        return (c.dataIndex as string) || (c.key as string) || '';
-      })
+    if (filteredData.length === 0) return;
+    const columnKeys = visibleColumns
+      .map(col => (col as Record<string, unknown>).dataIndex as string || colKeyOf(col))
       .filter(Boolean);
-    const columnTitles = localColumns.map(col => String((col as Record<string, unknown>).title ?? ''));
+    const columnTitles = visibleColumns.map(col => String((col as Record<string, unknown>).title ?? ''));
 
     const header = columnTitles.map(escapeCSV).join(',');
-    const rows = localData.map(row =>
+    const rows = filteredData.map(row =>
       columnKeys.map(key => escapeCSV((row as Record<string, unknown>)[key])).join(','),
     );
     const csvContent = [header, ...rows].join('\n');
@@ -426,33 +399,15 @@ export default function DataTable<T extends { id: string }>({
     link.download = `${title}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-  }, [localData, localColumns, title]);
+  }, [filteredData, visibleColumns, title]);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    el.style.setProperty('--mouse-x', `${x}%`);
-    el.style.setProperty('--mouse-y', `${y}%`);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    const el = cardRef.current;
-    if (!el) return;
-    el.style.setProperty('--mouse-x', '50%');
-    el.style.setProperty('--mouse-y', '50%');
-  }, []);
-
-  const totalCount = totalRows ?? localData.length;
+  const viewCount = rowViewData.length;
   const filteredCount = filteredData.length;
   const isFiltered = searchText.trim().length > 0;
-  const localCount = localData.length;
-  const hasLocalChanges = dirty || localCount !== data.length;
+  const hasLocalChanges = dirty || localData.length !== data.length;
   const countLabel = isFiltered
-    ? `${filteredCount} of ${localCount} records`
-    : `${localCount} records`;
+    ? `${filteredCount} of ${viewCount} records`
+    : `${viewCount} records`;
 
   const beamFrom = currentScheme.primaryAccent;
   const beamTo =
@@ -460,12 +415,95 @@ export default function DataTable<T extends { id: string }>({
       ? currentScheme.gradientMid
       : '#8b5cf6';
 
-  const contextMenuSelectionLabel =
-    contextMenu?.type === 'cell'
-      ? 'cell'
-      : contextMenu?.type === 'column'
-        ? 'column'
-        : 'row';
+  // Item 7: only live rows are editable.
+  const menuRow = contextMenu ? localData.find(r => r.id === contextMenu.rowId) : null;
+  const menuRowIsLive = !hasCurrentColumn || (menuRow ? rowLiveMap(menuRow) : true);
+
+  const favorited = tableName ? isFavorite(tableName) : false;
+
+  const viewMenu = (
+    <div style={{ minWidth: 220, maxHeight: 360, overflowY: 'auto' }} data-testid="view-menu">
+      {hasCurrentColumn && (
+        <>
+          <div style={sectionLabelStyle}>Rows</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '2px 4px 8px' }}>
+            <Checkbox
+              checked={rowView.live}
+              onChange={e => setRowView(v => ({ ...v, live: e.target.checked }))}
+              data-testid="checkbox-view-live"
+            >
+              Live
+            </Checkbox>
+            <Checkbox
+              checked={rowView.archived}
+              onChange={e => setRowView(v => ({ ...v, archived: e.target.checked }))}
+              data-testid="checkbox-view-archived"
+            >
+              Archived <Text type="secondary" style={{ fontSize: 12 }}>(history)</Text>
+            </Checkbox>
+          </div>
+          <div style={dividerStyle} />
+        </>
+      )}
+
+      <div style={sectionLabelStyle}>Columns</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '2px 4px 8px' }}>
+        {dataColumnMeta.map(m => (
+          <Checkbox
+            key={m.key}
+            checked={!hiddenColumns.has(m.key)}
+            onChange={e => toggleColumn(m.key, e.target.checked)}
+            data-testid={`checkbox-col-${m.key}`}
+          >
+            {m.label}
+          </Checkbox>
+        ))}
+        {dataColumnMeta.length === 0 && (
+          <Text type="secondary" style={{ fontSize: 12 }}>No columns</Text>
+        )}
+      </div>
+
+      <div style={dividerStyle} />
+      <div style={sectionLabelStyle}>Admin</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '2px 4px 4px' }}>
+        {adminColumnMeta.length > 0 ? (
+          <>
+            <Checkbox
+              checked={adminColumnMeta.every(m => !hiddenColumns.has(m.key))}
+              indeterminate={
+                adminColumnMeta.some(m => !hiddenColumns.has(m.key)) &&
+                !adminColumnMeta.every(m => !hiddenColumns.has(m.key))
+              }
+              onChange={e => toggleAdminColumns(e.target.checked)}
+              data-testid="checkbox-admin-all"
+            >
+              Admin columns
+            </Checkbox>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, paddingLeft: 22 }}>
+              {adminColumnMeta.map(m => (
+                <Checkbox
+                  key={m.key}
+                  checked={!hiddenColumns.has(m.key)}
+                  onChange={e => toggleColumn(m.key, e.target.checked)}
+                  data-testid={`checkbox-col-${m.key}`}
+                >
+                  {m.label}
+                </Checkbox>
+              ))}
+            </div>
+          </>
+        ) : (
+          <Tooltip title="Admin roles and columns aren't set up yet — this will unlock once they are configured.">
+            <span>
+              <Checkbox disabled data-testid="checkbox-admin-all">
+                Admin columns
+              </Checkbox>
+            </span>
+          </Tooltip>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)', overflow: 'hidden' }}>
@@ -477,6 +515,22 @@ export default function DataTable<T extends { id: string }>({
             <Title level={3} style={{ margin: 0 }} data-testid={`title-${title}`}>
               {formattedTitle}
             </Title>
+            {tableName && (
+              <Tooltip title={favorited ? 'Remove from favorites' : 'Add to favorites'}>
+                <button
+                  onClick={() => toggleFavorite(tableName)}
+                  aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+                  data-testid={`button-favorite-${title}`}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, lineHeight: 0 }}
+                >
+                  {favorited ? (
+                    <StarFilled style={{ fontSize: 18, color: '#faad14' }} />
+                  ) : (
+                    <StarOutlined style={{ fontSize: 18, color: 'var(--text-secondary, #94a3b8)' }} />
+                  )}
+                </button>
+              </Tooltip>
+            )}
             {usingApi !== undefined && (
               <Tag color={usingApi ? 'green' : 'default'} data-testid={`tag-source-${title}`}>
                 {usingApi ? 'Live' : 'Sample Data'}
@@ -489,6 +543,16 @@ export default function DataTable<T extends { id: string }>({
             )}
           </div>
           <Space>
+            <Popover content={viewMenu} trigger="click" placement="bottomRight">
+              <button
+                className="shimmer-btn"
+                disabled={loading}
+                data-testid={`button-view-${title}`}
+              >
+                <ControlOutlined style={{ fontSize: 13 }} />
+                View
+              </button>
+            </Popover>
             <button
               className="shimmer-btn"
               onClick={openAddRow}
@@ -502,7 +566,7 @@ export default function DataTable<T extends { id: string }>({
             <button
               className="shimmer-btn"
               onClick={handleDownloadCSV}
-              disabled={localData.length === 0 || loading}
+              disabled={filteredData.length === 0 || loading}
               data-testid={`button-download-csv-${title}`}
             >
               <DownloadOutlined style={{ fontSize: 13 }} />
@@ -538,21 +602,12 @@ export default function DataTable<T extends { id: string }>({
       </div>
 
       {/* Table card */}
-      <div style={{ flex: 1, overflow: 'hidden', padding: '0 24px 24px' }}>
-        <div
-          ref={cardRef}
-          className="magic-card-wrap"
-          style={{ height: '100%', borderRadius: 8 }}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
+      <div style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '0 24px 24px' }}>
+        <div style={{ borderRadius: 8, position: 'relative' }}>
           <Card
             className="shadow-sm"
-            styles={{ body: { padding: 0, height: '100%' } }}
+            styles={{ body: { padding: 0 } }}
             style={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
               overflow: 'visible',
               position: 'relative',
             }}
@@ -570,7 +625,11 @@ export default function DataTable<T extends { id: string }>({
             ) : filteredData.length === 0 ? (
               <div className="py-20">
                 <Empty
-                  description={`No results for "${searchText}"`}
+                  description={
+                    isFiltered
+                      ? `No results for "${searchText}"`
+                      : 'No rows match the current view — adjust Live/Archived in the View menu'
+                  }
                   data-testid="empty-search-state"
                 />
               </div>
@@ -580,16 +639,15 @@ export default function DataTable<T extends { id: string }>({
                 dataSource={filteredData}
                 rowKey="id"
                 pagination={false}
-                scroll={{ x: 'max-content', y: 'calc(100vh - 260px)' }}
+                scroll={{ x: 'max-content', y: 'calc(100vh - 300px)' }}
                 data-testid={`table-${title}`}
-                style={{ height: '100%' }}
               />
             )}
           </Card>
         </div>
       </div>
 
-      {/* Context action menu */}
+      {/* Context action menu (row only) */}
       {contextMenu && (
         <div
           ref={contextMenuRef}
@@ -620,40 +678,38 @@ export default function DataTable<T extends { id: string }>({
               letterSpacing: '0.05em',
             }}
           >
-            {contextMenuSelectionLabel} selected
+            {menuRowIsLive ? 'Row selected' : 'Archived row'}
           </div>
           <button
             data-testid="button-action-edit"
-            onClick={() => openDrawer('edit')}
+            onClick={() => menuRowIsLive && openDrawer('edit')}
             onMouseEnter={() => setHoveredActionBtn('edit')}
             onMouseLeave={() => setHoveredActionBtn(null)}
             style={{
               ...actionBtnStyle,
-              background: hoveredActionBtn === 'edit' ? 'rgba(0,0,0,0.04)' : 'transparent',
-              color: contextMenu.type === 'column' ? '#94a3b8' : 'inherit',
-              cursor: contextMenu.type === 'column' ? 'not-allowed' : 'pointer',
+              background: hoveredActionBtn === 'edit' && menuRowIsLive ? 'rgba(0,0,0,0.04)' : 'transparent',
+              color: menuRowIsLive ? 'inherit' : '#94a3b8',
+              cursor: menuRowIsLive ? 'pointer' : 'not-allowed',
             }}
-            disabled={contextMenu.type === 'column'}
-            title={contextMenu.type === 'column' ? 'Select a cell or row to edit' : undefined}
+            disabled={!menuRowIsLive}
+            title={menuRowIsLive ? undefined : 'Archived rows cannot be edited'}
           >
             <EditOutlined />
-            Edit {contextMenuSelectionLabel === 'column' ? '(select a row)' : contextMenuSelectionLabel}
+            Edit row
           </button>
           <button
             data-testid="button-action-delete"
-            onClick={contextMenu.type === 'column' ? handleDeleteColumn : handleDeleteRow}
+            onClick={handleDeleteRow}
             onMouseEnter={() => setHoveredActionBtn('delete')}
             onMouseLeave={() => setHoveredActionBtn(null)}
             style={{
               ...actionBtnStyle,
-              background: hoveredActionBtn === 'delete'
-                ? 'rgba(255,77,79,0.08)'
-                : 'transparent',
+              background: hoveredActionBtn === 'delete' ? 'rgba(255,77,79,0.08)' : 'transparent',
               color: '#ff4d4f',
             }}
           >
             <DeleteOutlined />
-            Delete {contextMenu.type === 'column' ? 'column' : 'row'}
+            Delete row
           </button>
         </div>
       )}
@@ -663,9 +719,7 @@ export default function DataTable<T extends { id: string }>({
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         action={drawerAction}
-        selectionType={drawerSelection?.type ?? 'row'}
         selectedRow={selectedRowData}
-        selectedColumnKey={drawerSelection?.columnKey ?? null}
         columns={columnDefs}
         onSave={handleSave}
         persisted={Boolean(usingApi && tableName && WRITE_API_ENABLED)}
@@ -673,3 +727,18 @@ export default function DataTable<T extends { id: string }>({
     </div>
   );
 }
+
+const sectionLabelStyle: React.CSSProperties = {
+  padding: '2px 4px 4px',
+  fontSize: 11,
+  color: '#94a3b8',
+  fontWeight: 600,
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+};
+
+const dividerStyle: React.CSSProperties = {
+  height: 1,
+  background: 'var(--border-color, rgba(0,0,0,0.08))',
+  margin: '4px 0',
+};

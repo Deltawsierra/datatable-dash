@@ -1,4 +1,4 @@
-import { PublicClientApplication, type Configuration } from '@azure/msal-browser';
+import { PublicClientApplication, InteractionRequiredAuthError, type Configuration } from '@azure/msal-browser';
 
 const OIDC_SCOPES = ['openid', 'profile', 'email'];
 
@@ -60,15 +60,17 @@ export function getLoginRequest(): { scopes: string[] } {
 
 export async function getAccessToken(): Promise<string | null> {
   if (typeof window === 'undefined' || !_instance) return null;
+  const accounts = _instance.getAllAccounts();
+  if (!accounts.length) return null;
+  const scopes = _apiScope ? [_apiScope] : OIDC_SCOPES;
   try {
-    const accounts = _instance.getAllAccounts();
-    if (!accounts.length) return null;
-    const result = await _instance.acquireTokenSilent({
-      scopes: _apiScope ? [_apiScope] : OIDC_SCOPES,
-      account: accounts[0],
-    });
+    const result = await _instance.acquireTokenSilent({ scopes, account: accounts[0] });
     return result.accessToken;
-  } catch {
+  } catch (err) {
+    console.error('[auth] acquireTokenSilent failed', err);
+    if (err instanceof InteractionRequiredAuthError) {
+      await _instance.acquireTokenRedirect({ scopes });
+    }
     return null;
   }
 }

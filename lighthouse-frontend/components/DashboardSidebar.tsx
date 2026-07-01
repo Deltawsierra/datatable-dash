@@ -118,7 +118,7 @@ export default function DashboardSidebar({ collapsed, onCollapse }: DashboardSid
                   lineHeight: currentScheme.fontOverride ? '1.6' : undefined,
                 }}
               >
-                RDM Lighthouse
+                Lighthouse RDM
               </span>
               <span style={{ fontSize: 12, color: 'var(--sidebar-text-muted)' }}>Data Governance</span>
             </div>

@@ -24,9 +24,6 @@ const CATEGORY_LABELS: Record<CategoryFilter, string> = {
   nature:    'Nature',
   sports:    'Sports',
   holiday:   'Holiday',
-  aesthetic: 'Aesthetic',
-  special:   'Special',
-  tech:      'Tech',
 };
 
 const CATEGORY_EMOJIS: Record<CategoryFilter, string> = {
@@ -36,13 +33,10 @@ const CATEGORY_EMOJIS: Record<CategoryFilter, string> = {
   nature:    '🌍',
   sports:    '🏆',
   holiday:   '🎉',
-  aesthetic: '✨',
-  special:   '⚡',
-  tech:      '💻',
 };
 
 const CATEGORY_ORDER: CategoryFilter[] = [
-  'all', 'classic', 'seasonal', 'nature', 'sports', 'holiday', 'aesthetic', 'special', 'tech',
+  'all', 'classic', 'seasonal', 'nature', 'sports', 'holiday',
 ];
 
 export default function DashboardHeader({ collapsed, onToggle }: DashboardHeaderProps) {
@@ -58,7 +52,6 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
 
   const titleClass =
     currentScheme.key === 'aurora'          ? 'aurora-text' :
-    currentScheme.key === 'terminal-amber'  ? 'typewriter-cursor' :
     hasGlow                                 ? 'neon-glow' :
     '';
 
@@ -151,7 +144,7 @@ export default function DashboardHeader({ collapsed, onToggle }: DashboardHeader
             style={{
               fontWeight: 600,
               fontSize: hasFont ? 14 : 16,
-              color: (hasGlow && currentScheme.key !== 'aurora' && currentScheme.key !== 'terminal-amber')
+              color: (hasGlow && currentScheme.key !== 'aurora')
                 ? 'var(--glow-color)'
                 : 'var(--header-text)',
               fontFamily: hasFont ? 'var(--theme-font)' : undefined,

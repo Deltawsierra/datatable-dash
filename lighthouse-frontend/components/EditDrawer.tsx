@@ -11,16 +11,13 @@ export interface ColumnDef {
   title: string;
 }
 
-export type SelectionType = 'cell' | 'row' | 'column';
 export type DrawerAction = 'add' | 'edit';
 
 interface EditDrawerProps {
   open: boolean;
   onClose: () => void;
   action: DrawerAction;
-  selectionType: SelectionType;
   selectedRow: Record<string, unknown> | null;
-  selectedColumnKey: string | null;
   columns: ColumnDef[];
   onSave: (values: Record<string, unknown>, isNew: boolean) => void | Promise<void>;
   persisted?: boolean;
@@ -30,9 +27,7 @@ export default function EditDrawer({
   open,
   onClose,
   action,
-  selectionType,
   selectedRow,
-  selectedColumnKey,
   columns,
   onSave,
   persisted = false,
@@ -43,16 +38,12 @@ export default function EditDrawer({
     if (!open) return;
     if (action === 'edit' && selectedRow) {
       const initial: Record<string, unknown> = {};
-      if (selectionType === 'cell' && selectedColumnKey) {
-        initial[selectedColumnKey] = selectedRow[selectedColumnKey] ?? '';
-      } else {
-        columns.forEach(c => { initial[c.key] = selectedRow[c.key] ?? ''; });
-      }
+      columns.forEach(c => { initial[c.key] = selectedRow[c.key] ?? ''; });
       form.setFieldsValue(initial);
     } else {
       form.resetFields();
     }
-  }, [open, action, selectedRow, selectionType, selectedColumnKey, columns, form]);
+  }, [open, action, selectedRow, columns, form]);
 
   const [saving, setSaving] = useState(false);
 
@@ -70,23 +61,10 @@ export default function EditDrawer({
     }
   };
 
-  const formColumns =
-    selectionType === 'cell' && selectedColumnKey && action === 'edit'
-      ? columns.filter(c => c.key === selectedColumnKey)
-      : columns;
+  const formColumns = columns;
+  const readOnlyColumns = columns;
 
-  const readOnlyColumns =
-    selectionType === 'cell' && selectedColumnKey
-      ? columns.filter(c => c.key === selectedColumnKey)
-      : columns;
-
-  const drawerTitle = action === 'add'
-    ? 'Add New Row'
-    : selectionType === 'cell'
-      ? 'Edit Cell'
-      : selectionType === 'column'
-        ? 'Edit Column'
-        : 'Edit Row';
+  const drawerTitle = action === 'add' ? 'Add New Row' : 'Edit Row';
 
   return (
     <Drawer
@@ -139,7 +117,7 @@ export default function EditDrawer({
             type="secondary"
             style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}
           >
-            Selected {selectionType === 'cell' ? 'Cell' : selectionType === 'column' ? 'Column' : 'Row'}
+            Selected Row
           </Text>
           <div
             style={{
