@@ -204,7 +204,11 @@ Use short, lowercase names. Here are common conventions by stack:
 |-------------|----------------------|---------------------------|---------------------|
 | `lint`      | `npm run lint`       | `ruff check .`            | `golangci-lint run` |
 | `test`      | `npm test`           | `pytest`                  | `go test ./...`     |
+<<<<<<< HEAD
 | `typecheck` | `npx tsc --noEmit --incremental` | `mypy .`        | `go vet ./...`      |
+=======
+| `typecheck` | `npx tsc --noEmit`   | `mypy .`                  | `go vet ./...`      |
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 | `format`    | `npx prettier --check .` | `ruff format --check .` | `gofmt -l .`       |
 
 ## Example Workflow
@@ -215,7 +219,11 @@ After implementing a feature in a Node.js project:
 // Set up validation commands for the project
 await setValidationCommand({ name: "lint", command: "npm run lint" });
 await setValidationCommand({ name: "test", command: "npm test" });
+<<<<<<< HEAD
 await setValidationCommand({ name: "typecheck", command: "npx tsc --noEmit --incremental" });
+=======
+await setValidationCommand({ name: "typecheck", command: "npx tsc --noEmit" });
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 
 // Run all validations (blocks until complete)
 const run = await startValidationRun({ commandIds: ["lint", "test", "typecheck"] });

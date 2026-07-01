@@ -2,8 +2,11 @@
   "include": ["src/**/*", "mockupPreviewPlugin.ts", "vite.config.ts"],
   "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
   "compilerOptions": {
+<<<<<<< HEAD
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
     "target": "es2022",
     "module": "esnext",
     "moduleResolution": "bundler",

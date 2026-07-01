@@ -1,0 +1,8 @@
+DATABRICKS_ACCESS_TOKEN=        
+VERSION=DEV
+SERVER_HOSTNAME=adb-3931586972327690.10.azuredatabricks.net
+HTTP_PATH=/sql/1.0/warehouses/34cd6375c10142b1
+CATALOG=lighthouse_rdm
+SCHEMA=reference_dev
+NEXT_PUBLIC_AZURE_CLIENT_ID=<from IT / Azure App Registration>
+NEXT_PUBLIC_AZURE_TENANT_ID=<from IT / Azure App Registration>

@@ -10,7 +10,10 @@ description: "Create, read, and manipulate shapes on the canvas. The canvas is t
 When the user's request will produce **new visual content** on the canvas (e.g. "create a landing page", "show me 3 card variants", "mockup a dashboard"), your very first action must be to place building placeholders — before writing any code or setting up servers:
 
 1. Call `applyCanvasActions()` with a `create-auto` action to create iframe shapes with `state: "building"` and names for every element you plan to produce. No URL is needed — the UI shows a building indicator.
+<<<<<<< HEAD
    - **Exception:** if the `pending_canvas_frames` block for the current user turn lists frames, use those exact `shape_id`s with `type: "update"` actions for the first N elements instead of `create-auto`. The client has already placed those Building iframes. Only fall back to `create-auto` for elements beyond the reserved count. Ignore `pending_canvas_frames` blocks attached to earlier turns — those reservations belong to those earlier user messages.
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 2. Only call `getCanvasState()` first when you must place shapes at exact coordinates or relative to existing content.
 3. Only then proceed with the rest of the work (mockup-sandbox setup, writing code, starting servers, etc.).
 4. As each element becomes ready, update its iframe to `state: "live"` with the real URL.
@@ -220,10 +223,13 @@ Modify the canvas board by applying an ordered list of actions in a single atomi
 }
 ```
 
+<<<<<<< HEAD
 #### Pre-reserved frames
 
 Some user turns include a `pending_canvas_frames` block: design-mockup iframes the client already placed in `state: "building"` with listed `shape_id`s before this turn. Update those exact ids with `applyCanvasActions` `type: "update"` instead of creating replacement shapes. Each block is scoped to the user message it precedes — do not consume `shape_id`s from a `pending_canvas_frames` block attached to an earlier turn. See the **mockup-sandbox** skill for the update payload.
 
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 ### `getCanvasState`
 
 Read the current state of the canvas board. Returns shapes at three detail levels based on distance from the viewport or focus area.

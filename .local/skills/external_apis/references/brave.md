@@ -89,7 +89,14 @@ for (const [index, item] of items.entries()) {
     'result_' + String(index + 1) + '.jpg',
   )
 
+<<<<<<< HEAD
   await fs.writeFile(filePath, Buffer.from(await response.arrayBuffer()))
+=======
+  await fs.writeFile(
+    filePath,
+    Buffer.from(await response.arrayBuffer()),
+  )
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 
   await presentAsset({
     filePath,

@@ -1,8 +1,11 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+<<<<<<< HEAD
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
     "baseUrl": ".",
     "strict": true,
     "paths": {

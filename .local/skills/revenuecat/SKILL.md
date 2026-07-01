@@ -5,11 +5,14 @@ description: Guidelines for using RevenueCat to integrate payments in mobile app
 # Note: ./references/replit-revenuecat-sdk-docs.md is copy-pasted manually from https://github.com/replit/revenuecat-sdk/blob/main/docs/SDK.md and was last updated: 2026-03-19 for version 4.0.0
 ---
 
+<<<<<<< HEAD
 ## Read the monetization skill first
 
 Before using anything in this skill, read the `monetization` skill and follow its routing instructions. It is the single source of truth for choosing a payment provider on Replit. Only continue with this RevenueCat skill once the monetization skill has confirmed that RevenueCat is the right provider (either because the user explicitly named RevenueCat, the project already has RevenueCat wired up, or the routing question resolved to RevenueCat).
 
 
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 
 ## Introduction
 

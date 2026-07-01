@@ -19,6 +19,7 @@ managed credentials.
 ## Available APIs
 
 - [Brave](references/brave.md) - Search real web image results through Brave passthrough billing.
+<<<<<<< HEAD
 - [Browserbase](references/browserbase.md)
 - [ElevenLabs](references/elevenlabs.md)
 - [Exa](references/exa.md)
@@ -31,3 +32,9 @@ managed credentials.
 - [Shotstack](references/shotstack.md)
 - [Tripo3D](references/tripo3d.md)
 - [X (Twitter)](references/x.md)
+=======
+- [ElevenLabs](references/elevenlabs.md)
+- [Exa](references/exa.md)
+- [Firecrawl](references/firecrawl.md)
+- [Nano Banana](references/nano_banana.md)
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff

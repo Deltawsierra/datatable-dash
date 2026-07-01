@@ -1,5 +1,9 @@
 {
   "/(dashboard)/page": "app/(dashboard)/page.js",
+<<<<<<< HEAD
   "/api/config/route": "app/api/config/route.js",
+=======
+  "/(dashboard)/tables/[slug]/page": "app/(dashboard)/tables/[slug]/page.js",
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
   "/api/proxy/[...path]/route": "app/api/proxy/[...path]/route.js"
 }

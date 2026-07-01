@@ -1,0 +1,83 @@
+Starting Next.js on port 5000...
+Starting FastAPI on port 8000...
+[32mINFO[0m:     Will watch for changes in these directories: ['/home/runner/workspace']
+[32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     Started reloader process [[36m[1m877[0m] using [36m[1mStatReload[0m
+[1G[0K⠙[1G[0K[1m[38;2;173;127;168m▲ Next.js 16.1.1[39m[22m (Turbopack)
+- Local:         http://localhost:5000
+- Network:       http://172.31.80.2:5000
+
+[32m[1m✓[22m[39m Starting...
+[WARN] pyarrow is not installed by default since databricks-sql-connector 4.0.0,any arrow specific api (e.g. fetchmany_arrow) and cloud fetch will be disabled.If you need these features, please run pip install pyarrow or pip install databricks-sql-connector[pyarrow] to install
+[32mINFO[0m:     Started server process [[36m896[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32m[1m✓[22m[39m Ready in 560ms
+ GET / [32m200[39m in 3.2s[2m (compile: 2.8s, render: 369ms)[22m
+ GET / [32m200[39m in 3.2s[2m (compile: 2.8s, render: 345ms)[22m
+[33m[1m⚠[22m[39m Cross origin request detected from af78457b-e79b-47a9-8b2b-ca55de4f93f5-00-2xevv4znzxb6e.janeway.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[32mINFO[0m:     127.0.0.1:54144 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:54158 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:54164 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:54174 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/user/info [33m401[39m in 812ms[2m (compile: 760ms, render: 52ms)[22m
+ GET /api/proxy/v1/tables/list [33m401[39m in 808ms[2m (compile: 755ms, render: 54ms)[22m
+ GET /api/proxy/v1/user/info [33m401[39m in 529ms[2m (compile: 473ms, render: 56ms)[22m
+ GET /api/proxy/v1/tables/list [33m401[39m in 531ms[2m (compile: 472ms, render: 58ms)[22m
+[32mINFO[0m:     127.0.0.1:54144 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:54158 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/user/info [33m401[39m in 95ms[2m (compile: 74ms, render: 21ms)[22m
+ GET /api/proxy/v1/tables/list [33m401[39m in 98ms[2m (compile: 84ms, render: 14ms)[22m
+[32mINFO[0m:     127.0.0.1:54144 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:54158 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/user/info [33m401[39m in 56ms[2m (compile: 5ms, render: 51ms)[22m
+ GET /api/proxy/v1/tables/list [33m401[39m in 61ms[2m (compile: 10ms, render: 52ms)[22m
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m[1m✓[22m[39m Compiled in 2.8s
+ GET / [32m200[39m in 1029ms[2m (compile: 205ms, render: 824ms)[22m
+ GET /api/proxy/v1/user/info [32m200[39m in 105ms[2m (compile: 90ms, render: 15ms)[22m
+[32mINFO[0m:     127.0.0.1:33982 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:33982 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/user/info [33m401[39m in 9ms[2m (compile: 2ms, render: 6ms)[22m
+[32mINFO[0m:     127.0.0.1:33982 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/list [33m401[39m in 49ms[2m (compile: 1640µs, render: 48ms)[22m
+[32mINFO[0m:     127.0.0.1:33982 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/list [33m401[39m in 8ms[2m (compile: 1861µs, render: 6ms)[22m
+[32mINFO[0m:     127.0.0.1:33982 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/user/info [33m401[39m in 8ms[2m (compile: 2ms, render: 6ms)[22m
+ GET /tables/states [32m200[39m in 1712ms[2m (compile: 1562ms, render: 150ms)[22m
+[32mINFO[0m:     127.0.0.1:47460 - "[1mGET /v1/tables/states/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:47466 - "[1mGET /v1/tables/states?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:47468 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/states/info [33m401[39m in 161ms[2m (compile: 81ms, render: 80ms)[22m
+ GET /api/proxy/v1/tables/states?limit=1000&offset=0 [33m401[39m in 166ms[2m (compile: 90ms, render: 76ms)[22m
+ GET /api/proxy/v1/tables/list [33m401[39m in 170ms[2m (compile: 95ms, render: 76ms)[22m
+[32mINFO[0m:     127.0.0.1:47460 - "[1mGET /v1/tables/states/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:47466 - "[1mGET /v1/tables/states?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:47468 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/states?limit=1000&offset=0 [33m401[39m in 23ms[2m (compile: 14ms, render: 9ms)[22m
+ GET /api/proxy/v1/tables/list [33m401[39m in 25ms[2m (compile: 18ms, render: 7ms)[22m
+ GET /api/proxy/v1/tables/states/info [33m401[39m in 68ms[2m (compile: 6ms, render: 61ms)[22m
+ GET /tables/countries [32m200[39m in 235ms[2m (compile: 146ms, render: 89ms)[22m
+[32mINFO[0m:     127.0.0.1:44536 - "[1mGET /v1/tables/countries?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/countries?limit=1000&offset=0 [33m401[39m in 225ms[2m (compile: 171ms, render: 54ms)[22m
+[32mINFO[0m:     127.0.0.1:44536 - "[1mGET /v1/tables/countries/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/countries/info [33m401[39m in 264ms[2m (compile: 16ms, render: 248ms)[22m
+[32mINFO[0m:     127.0.0.1:44536 - "[1mGET /v1/tables/countries?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/countries?limit=1000&offset=0 [33m401[39m in 18ms[2m (compile: 6ms, render: 12ms)[22m
+[32mINFO[0m:     127.0.0.1:44536 - "[1mGET /v1/tables/countries/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/countries/info [33m401[39m in 76ms[2m (compile: 1998µs, render: 74ms)[22m
+ GET /tables/departments [32m200[39m in 108ms[2m (compile: 81ms, render: 27ms)[22m
+[32mINFO[0m:     127.0.0.1:49002 - "[1mGET /v1/tables/departments?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments?limit=1000&offset=0 [33m401[39m in 82ms[2m (compile: 71ms, render: 11ms)[22m
+[32mINFO[0m:     127.0.0.1:49002 - "[1mGET /v1/tables/departments/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:49012 - "[1mGET /v1/tables/departments?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments?limit=1000&offset=0 [33m401[39m in 11ms[2m (compile: 2ms, render: 8ms)[22m
+ GET /api/proxy/v1/tables/departments/info [33m401[39m in 51ms[2m (compile: 6ms, render: 45ms)[22m
+[32mINFO[0m:     127.0.0.1:49002 - "[1mGET /v1/tables/departments/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments/info [33m401[39m in 11ms[2m (compile: 4ms, render: 7ms)[22m
+[32m[1m✓[22m[39m Compiled in 491ms
+Next.js exited with code null

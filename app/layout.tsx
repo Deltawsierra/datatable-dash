@@ -1,0 +1,28 @@
+import type { Metadata } from 'next';
+import '~/app/globals.css';
+import { getThemeScript } from '~/lib/themeScript';
+import AuthProvider from '~/components/AuthProvider';
+
+export const metadata: Metadata = {
+  title: 'RDM Lighthouse - Reference Data Management',
+  description: 'Reference Data Management Dashboard by Genworth Data Governance',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: getThemeScript() }} />
+      </head>
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
+    </html>
+  );
+}

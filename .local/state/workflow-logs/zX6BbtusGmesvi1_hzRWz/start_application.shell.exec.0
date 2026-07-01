@@ -1,0 +1,52 @@
+Starting Next.js on port 5000...
+Starting FastAPI on port 8000...
+[1G[0K⠙[1G[0K[32mINFO[0m:     Will watch for changes in these directories: ['/home/runner/workspace']
+[32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     Started reloader process [[36m[1m276[0m] using [36m[1mStatReload[0m
+[1m[38;2;173;127;168m▲ Next.js 16.1.1[39m[22m (Turbopack)
+- Local:         http://localhost:5000
+- Network:       http://172.31.80.2:5000
+
+[32m[1m✓[22m[39m Starting...
+[WARN] pyarrow is not installed by default since databricks-sql-connector 4.0.0,any arrow specific api (e.g. fetchmany_arrow) and cloud fetch will be disabled.If you need these features, please run pip install pyarrow or pip install databricks-sql-connector[pyarrow] to install
+[32mINFO[0m:     Started server process [[36m314[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32m[1m✓[22m[39m Ready in 10.4s
+[37m[1m○[22m[39m Compiling / ...
+ GET / [32m200[39m in 8.9s[2m (compile: 8.6s, render: 356ms)[22m
+[33m[1m⚠[22m[39m Cross origin request detected from af78457b-e79b-47a9-8b2b-ca55de4f93f5-00-2xevv4znzxb6e.janeway.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ GET / [32m200[39m in 48ms[2m (compile: 4ms, render: 44ms)[22m
+[33mWARNING[0m:  StatReload detected changes in '.local/skills/canvas/__init__.py'. Reloading...
+[32mINFO[0m:     Shutting down
+[32mINFO[0m:     Waiting for application shutdown.
+[32mINFO[0m:     Application shutdown complete.
+[32mINFO[0m:     Finished server process [[36m314[0m]
+[WARN] pyarrow is not installed by default since databricks-sql-connector 4.0.0,any arrow specific api (e.g. fetchmany_arrow) and cloud fetch will be disabled.If you need these features, please run pip install pyarrow or pip install databricks-sql-connector[pyarrow] to install
+[32mINFO[0m:     Started server process [[36m433[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m[1m✓[22m[39m Compiled in 2.1s
+[32m[1m✓[22m[39m Compiled in 124ms
+[32mINFO[0m:     127.0.0.1:38462 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:38476 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/list [33m401[39m in 1599ms[2m (compile: 1562ms, render: 37ms)[22m
+ GET /api/proxy/v1/user/info [33m401[39m in 1605ms[2m (compile: 1566ms, render: 39ms)[22m
+[32mINFO[0m:     127.0.0.1:38462 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/user/info [33m401[39m in 61ms[2m (compile: 53ms, render: 9ms)[22m
+[32mINFO[0m:     127.0.0.1:38462 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/list [33m401[39m in 52ms[2m (compile: 3ms, render: 48ms)[22m
+ GET / [32m200[39m in 470ms[2m (compile: 76ms, render: 394ms)[22m
+[32mINFO[0m:     127.0.0.1:38486 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:38478 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/user/info [33m401[39m in 158ms[2m (compile: 145ms, render: 13ms)[22m
+ GET /api/proxy/v1/tables/list [33m401[39m in 160ms[2m (compile: 123ms, render: 36ms)[22m
+[32mINFO[0m:     127.0.0.1:38478 - "[1mGET /v1/user/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/user/info [33m401[39m in 15ms[2m (compile: 4ms, render: 11ms)[22m
+[32mINFO[0m:     127.0.0.1:38478 - "[1mGET /v1/tables/list HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/list [33m401[39m in 71ms[2m (compile: 3ms, render: 68ms)[22m
+Next.js exited with code null

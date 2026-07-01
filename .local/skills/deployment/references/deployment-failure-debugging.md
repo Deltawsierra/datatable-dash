@@ -144,9 +144,12 @@ A deployment goes through these phases in order: **build** → **promote** → *
 **Build logs show a clear error in the build phase** (compilation error, missing dependency, command not found):
 → Fix the code or configuration directly. See Common Failure Modes below.
 
+<<<<<<< HEAD
 **Build logs show an HTTP 403 `Blocked by Security Policy` from `package-firewall.replit.local`** (typically during an `npm ci`/`npm install`/`pip install` step):
 → This is the supply-chain firewall blocking a flagged package — not a transient error. Do not retry the same publish. See "Supply-chain firewall block" under Common Failure Modes below, and the `package-management` and `security_scan` skills.
 
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 **Build phase succeeded but the promote step failed** (build logs mention health check, startup probe, container failing to start, the process exiting, or the deployment never became ready):
 → First check the deployment target in `.replit`'s `[deployment]` section — the right diagnosis depends on it.
 → For **`autoscale` and HTTP-serving `vm`**: the app is failing the startup probe. The default probe is `GET /`. The probe can fail because the app crash-loops on startup, the probe path returns non-200, or the app binds to the wrong host/port. See "Health check / promote step failure" and "Application crashes on startup" below.
@@ -189,6 +192,7 @@ After making code or configuration fixes:
 - **Look for:** TypeScript compilation errors, missing dependencies not in package.json/requirements.txt, build scripts that reference dev-only paths.
 - **Fix:** Ensure the build command succeeds locally before deploying. Check that all dependencies are listed in the manifest.
 
+<<<<<<< HEAD
 ### Supply-chain firewall block (HTTP 403 from `package-firewall.replit.local`)
 
 - **Indicators:** Build status `failed` during the **build phase**, with a build log line like `npm error 403 Forbidden - GET http://package-firewall.replit.local/npm/<pkg>/-/<pkg>-<ver>.tgz - Blocked by Security Policy` (or the equivalent for another package manager). This usually comes from a build/install step — `npm ci`, `npm install`, `npm update`, `pip install`, etc. — that the build runs before promoting the app.
@@ -196,6 +200,8 @@ After making code or configuration fixes:
 - **Look up the package:** Identify the blocked package and version from the firewall log line, then check its public security advisories and reputation (e.g. the package's page on a vulnerability/supply-chain database for its ecosystem) to understand why it was flagged. See the `security_scan` skill for the broader scanning workflow — both it and the `package-management` skill document that a 403 from `package-firewall.replit.local` is a security block that must not be blindly retried.
 - **Fix:** Remediate the flagged dependency rather than retrying the publish. Upgrade it to a version that isn't flagged, or replace/remove it if it's unused. Use the `package-management` skill (`installLanguagePackages` / `uninstallLanguagePackages`) to update dependencies so the manifest and lockfile change. If the install is driven by a custom build/run command, fix that command. Then re-publish (`suggestDeploy()` in the main repl).
 
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 ### Run command failure or misconfiguration
 
 - **Indicators:** Build logs show command not found or immediate exit.

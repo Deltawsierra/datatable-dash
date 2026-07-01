@@ -1,0 +1,33 @@
+[1G[0K⠙[1G[0KStarting Next.js on port 5000...
+Starting FastAPI on port 8000...
+[1G[0K⠙[1G[0K[32mINFO[0m:     Will watch for changes in these directories: ['/home/runner/workspace']
+[32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     Started reloader process [[36m[1m22515[0m] using [36m[1mStatReload[0m
+[1m[38;2;173;127;168m▲ Next.js 16.1.1[39m[22m (Turbopack)
+- Local:         http://localhost:5000
+- Network:       http://172.31.125.34:5000
+
+[32m[1m✓[22m[39m Starting...
+[32m[1m✓[22m[39m Ready in 1270ms
+[WARN] pyarrow is not installed by default since databricks-sql-connector 4.0.0,any arrow specific api (e.g. fetchmany_arrow) and cloud fetch will be disabled.If you need these features, please run pip install pyarrow or pip install databricks-sql-connector[pyarrow] to install
+[32mINFO[0m:     Started server process [[36m22552[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+ GET / [32m200[39m in 3.0s[2m (compile: 2.5s, render: 540ms)[22m
+ GET / [32m200[39m in 3.0s[2m (compile: 2.5s, render: 506ms)[22m
+[33m[1m⚠[22m[39m Cross origin request detected from af78457b-e79b-47a9-8b2b-ca55de4f93f5-00-2xevv4znzxb6e.janeway.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[32mINFO[0m:     127.0.0.1:42374 - "[1mGET /v1/health HTTP/1.1[0m" [32m200 OK[0m
+ GET /api/proxy/v1/health [32m200[39m in 741ms[2m (compile: 717ms, render: 24ms)[22m
+[32mINFO[0m:     127.0.0.1:42374 - "[1mGET /v1/health HTTP/1.1[0m" [32m200 OK[0m
+ GET /api/proxy/v1/health [32m200[39m in 52ms[2m (compile: 44ms, render: 8ms)[22m
+[32m[1m✓[22m[39m Compiled in 932ms
+[32mINFO[0m:     127.0.0.1:59808 - "[1mGET /v1/health HTTP/1.1[0m" [32m200 OK[0m
+ GET /api/proxy/v1/health [32m200[39m in 57ms[2m (compile: 45ms, render: 12ms)[22m
+[32m[1m✓[22m[39m Compiled in 123ms
+[32m[1m✓[22m[39m Compiled in 74ms
+[32m[1m✓[22m[39m Compiled in 73ms
+[32m[1m✓[22m[39m Compiled in 54ms
+[32m[1m✓[22m[39m Compiled in 199ms
+[32mINFO[0m:     127.0.0.1:59204 - "[1mGET /v1/health HTTP/1.1[0m" [32m200 OK[0m
+ GET /api/proxy/v1/health [32m200[39m in 73ms[2m (compile: 62ms, render: 11ms)[22m

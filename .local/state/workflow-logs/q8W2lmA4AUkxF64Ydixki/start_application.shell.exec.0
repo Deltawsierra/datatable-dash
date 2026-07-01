@@ -1,0 +1,70 @@
+[1G[0KStarting Next.js on port 5000...
+Starting FastAPI on port 8000...
+[32mINFO[0m:     Will watch for changes in these directories: ['/home/runner/workspace']
+[32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     Started reloader process [[36m[1m28746[0m] using [36m[1mStatReload[0m
+[1G[0K⠙[1G[0K[1m[38;2;173;127;168m▲ Next.js 16.1.1[39m[22m (Turbopack)
+- Local:         http://localhost:5000
+- Network:       http://172.31.125.34:5000
+
+[32m[1m✓[22m[39m Starting...
+[WARN] pyarrow is not installed by default since databricks-sql-connector 4.0.0,any arrow specific api (e.g. fetchmany_arrow) and cloud fetch will be disabled.If you need these features, please run pip install pyarrow or pip install databricks-sql-connector[pyarrow] to install
+[32mINFO[0m:     Started server process [[36m28783[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32m[1m✓[22m[39m Ready in 545ms
+ GET / [32m200[39m in 2.9s[2m (compile: 2.4s, render: 454ms)[22m
+[33m[1m⚠[22m[39m Cross origin request detected from af78457b-e79b-47a9-8b2b-ca55de4f93f5-00-2xevv4znzxb6e.janeway.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[32mINFO[0m:     127.0.0.1:43850 - "[1mGET /v1/health HTTP/1.1[0m" [32m200 OK[0m
+ GET /api/proxy/v1/health [32m200[39m in 659ms[2m (compile: 632ms, render: 26ms)[22m
+ GET /tables/countries [32m200[39m in 3.4s[2m (compile: 3.4s, render: 30ms)[22m
+[32mINFO[0m:     127.0.0.1:57524 - "[1mGET /v1/tables/countries?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:57536 - "[1mGET /v1/tables/countries/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/countries?limit=1000&offset=0 [33m401[39m in 850ms[2m (compile: 51ms, render: 799ms)[22m
+ GET /api/proxy/v1/tables/countries/info [33m401[39m in 786ms[2m (compile: 2ms, render: 784ms)[22m
+[32mINFO[0m:     127.0.0.1:57524 - "[1mGET /v1/tables/countries?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:57536 - "[1mGET /v1/tables/countries/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/countries?limit=1000&offset=0 [33m401[39m in 58ms[2m (compile: 45ms, render: 13ms)[22m
+ GET /api/proxy/v1/tables/countries/info [33m401[39m in 62ms[2m (compile: 51ms, render: 11ms)[22m
+ GET /tables/departments [32m200[39m in 66ms[2m (compile: 45ms, render: 22ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/departments?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:36128 - "[1mGET /v1/tables/departments/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments?limit=1000&offset=0 [33m401[39m in 79ms[2m (compile: 50ms, render: 29ms)[22m
+ GET /api/proxy/v1/tables/departments/info [33m401[39m in 83ms[2m (compile: 59ms, render: 25ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/departments?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments?limit=1000&offset=0 [33m401[39m in 12ms[2m (compile: 3ms, render: 8ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/departments/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments/info [33m401[39m in 52ms[2m (compile: 3ms, render: 50ms)[22m
+ GET /tables/states [32m200[39m in 66ms[2m (compile: 46ms, render: 20ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/states/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:36128 - "[1mGET /v1/tables/states?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/states/info [33m401[39m in 73ms[2m (compile: 56ms, render: 17ms)[22m
+ GET /api/proxy/v1/tables/states?limit=1000&offset=0 [33m401[39m in 76ms[2m (compile: 63ms, render: 14ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/states/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:36128 - "[1mGET /v1/tables/states?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/states/info [33m401[39m in 17ms[2m (compile: 3ms, render: 14ms)[22m
+ GET /api/proxy/v1/tables/states?limit=1000&offset=0 [33m401[39m in 19ms[2m (compile: 9ms, render: 10ms)[22m
+ GET /tables/countries [32m200[39m in 65ms[2m (compile: 42ms, render: 23ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/countries/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:36128 - "[1mGET /v1/tables/countries?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/countries/info [33m401[39m in 55ms[2m (compile: 43ms, render: 11ms)[22m
+ GET /api/proxy/v1/tables/countries?limit=1000&offset=0 [33m401[39m in 56ms[2m (compile: 48ms, render: 8ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/countries/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:36128 - "[1mGET /v1/tables/countries?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/countries/info [33m401[39m in 13ms[2m (compile: 3ms, render: 10ms)[22m
+ GET /api/proxy/v1/tables/countries?limit=1000&offset=0 [33m401[39m in 16ms[2m (compile: 6ms, render: 10ms)[22m
+ GET /tables/departments [32m200[39m in 154ms[2m (compile: 72ms, render: 82ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/departments?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+[32mINFO[0m:     127.0.0.1:36128 - "[1mGET /v1/tables/departments/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments?limit=1000&offset=0 [33m401[39m in 100ms[2m (compile: 81ms, render: 19ms)[22m
+ GET /api/proxy/v1/tables/departments/info [33m401[39m in 104ms[2m (compile: 87ms, render: 17ms)[22m
+[32mINFO[0m:     127.0.0.1:36114 - "[1mGET /v1/tables/departments?limit=1000&offset=0 HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments?limit=1000&offset=0 [33m401[39m in 20ms[2m (compile: 4ms, render: 15ms)[22m
+[32mINFO[0m:     127.0.0.1:36128 - "[1mGET /v1/tables/departments/info HTTP/1.1[0m" [31m401 Unauthorized[0m
+ GET /api/proxy/v1/tables/departments/info [33m401[39m in 16ms[2m (compile: 1403µs, render: 15ms)[22m
+ GET / [32m200[39m in 19ms[2m (compile: 3ms, render: 16ms)[22m
+[32mINFO[0m:     127.0.0.1:42130 - "[1mGET /v1/health HTTP/1.1[0m" [32m200 OK[0m
+ GET /api/proxy/v1/health [32m200[39m in 52ms[2m (compile: 42ms, render: 10ms)[22m
+[32mINFO[0m:     127.0.0.1:42130 - "[1mGET /v1/health HTTP/1.1[0m" [32m200 OK[0m
+ GET /api/proxy/v1/health [32m200[39m in 47ms[2m (compile: 1893µs, render: 45ms)[22m

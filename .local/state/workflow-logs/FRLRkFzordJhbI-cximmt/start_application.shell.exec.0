@@ -1,0 +1,22 @@
+Starting Next.js on port 5000...
+Starting FastAPI on port 8000...
+[32mINFO[0m:     Will watch for changes in these directories: ['/home/runner/workspace']
+[32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     Started reloader process [[36m[1m632[0m] using [36m[1mStatReload[0m
+[WARN] pyarrow is not installed by default since databricks-sql-connector 4.0.0,any arrow specific api (e.g. fetchmany_arrow) and cloud fetch will be disabled.If you need these features, please run pip install pyarrow or pip install databricks-sql-connector[pyarrow] to install
+[32mINFO[0m:     Started server process [[36m646[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[1G[0K⠙[1G[0K[1m[38;2;173;127;168m▲ Next.js 16.1.1[39m[22m (Turbopack)
+- Local:         http://localhost:5000
+- Network:       http://172.31.97.130:5000
+
+[32m[1m✓[22m[39m Starting...
+[32m[1m✓[22m[39m Ready in 2.1s
+[37m[1m○[22m[39m Compiling / ...
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ GET / [32m200[39m in 6.7s[2m (compile: 6.2s, render: 450ms)[22m
+ GET / [32m200[39m in 55ms[2m (compile: 4ms, render: 51ms)[22m
+Next.js exited with code null

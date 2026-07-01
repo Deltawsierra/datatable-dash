@@ -47,8 +47,11 @@ For framework-specific configuration, refer to these guides:
 - `.local/skills/repl_setup/references/react_vite.md` - React and Vite configuration
 - `.local/skills/repl_setup/references/vue.md` - Vue.js setup
 
+<<<<<<< HEAD
 For Microsoft Fabric (MSFT_RAYFIN) apps, the standard Replit dev-server proxy rules don't apply — the project is published to the Microsoft Rayfin backend instead. Use the `msft-rayfin` skill for setup instructions and the `fabric-rayfin` skill for the deploy workflow.
 
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 ## Frontend-Backend Connectivity
 
 When your frontend calls a local backend API:

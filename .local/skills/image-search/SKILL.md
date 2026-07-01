@@ -131,6 +131,7 @@ for (const [index, item] of items.entries()) {
 }
 ```
 
+<<<<<<< HEAD
 ## When called from the slides skill
 
 The slides skill runs `imageSearch` as part of its brand-research steps in `../slides/references/brand_research.md`. That reference owns the order (run `extractBranding` first, use `imageSearch` for the logo only when the first step's logo is missing or low quality, and use `imageSearch` for real-world photos like product / team / venue shots) and the budget (at most 4 `imageSearch` calls per deck).
@@ -139,6 +140,8 @@ The slides skill runs `imageSearch` as part of its brand-research steps in `../s
 
 Follow these steps rather than improvising the order — these are billable passthrough calls.
 
+=======
+>>>>>>> 5af7b45bff9783311500884b852e2b83f803caff
 ## Best Practices
 
 1. Use `imageSearch`, not provider-specific passthrough callbacks, so the implementation can change underneath without changing your code.
