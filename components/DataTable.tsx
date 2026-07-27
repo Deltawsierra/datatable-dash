@@ -12,8 +12,10 @@ import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
+  CaretUpOutlined,
+  CaretDownOutlined,
 } from '@ant-design/icons';
-import type { ColumnsType, ColumnType } from 'antd/es/table';
+import type { ColumnsType, ColumnType, TableProps } from 'antd/es/table';
 import { BorderBeam } from '~/components/magicui/BorderBeam';
 import { useTheme } from '~/components/ThemeProvider';
 import EditDrawer, { type ColumnDef, type DrawerAction, type SelectionType } from '~/components/EditDrawer';
@@ -45,6 +47,42 @@ interface ContextMenuState {
   type: SelectionType;
   rowId: string | null;
   columnKey: string | null;
+}
+
+// Column-sort comparator: numbers sort numerically, text alphabetically
+// (case-insensitive, natural order for embedded numbers), and empty values
+// always group at the end regardless of direction. Ant Design negates the
+// comparator result when sorting descending, so empty-value results are
+// pre-negated to keep them pinned at the bottom both ways.
+//
+// Mixed-type columns need a deterministic, transitive ordering (JS sort
+// requires a consistent comparator), so values are bucketed first: all
+// numeric-like values (numbers, numeric strings, booleans) order before all
+// text values, then each bucket is compared internally.
+type SortDirection = 'ascend' | 'descend';
+
+function toComparableNumber(value: unknown): number | null {
+  if (typeof value === 'boolean') return value ? 1 : 0;
+  if (typeof value === 'number') return Number.isNaN(value) ? null : value;
+  if (typeof value === 'string') {
+    const n = Number(value);
+    return Number.isNaN(n) ? null : n;
+  }
+  return null;
+}
+
+function compareCellValues(a: unknown, b: unknown, sortOrder?: SortDirection | null): number {
+  const aEmpty = a === null || a === undefined || String(a).trim() === '';
+  const bEmpty = b === null || b === undefined || String(b).trim() === '';
+  if (aEmpty && bEmpty) return 0;
+  if (aEmpty) return sortOrder === 'descend' ? -1 : 1;
+  if (bEmpty) return sortOrder === 'descend' ? 1 : -1;
+  const aNum = toComparableNumber(a);
+  const bNum = toComparableNumber(b);
+  if (aNum !== null && bNum !== null) return aNum === bNum ? 0 : aNum < bNum ? -1 : 1;
+  if (aNum !== null) return -1;
+  if (bNum !== null) return 1;
+  return String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' });
 }
 
 function escapeCSV(value: unknown): string {
@@ -84,6 +122,7 @@ export default function DataTable<T extends { id: string }>({
   onRefresh,
 }: DataTableProps<T>) {
   const [searchText, setSearchText] = useState('');
+  const [activeSort, setActiveSort] = useState<{ key: string; order: SortDirection } | null>(null);
   const { currentScheme } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -388,8 +427,46 @@ export default function DataTable<T extends { id: string }>({
       };
     });
 
-    return [rowSelectorCol, ...dataCols] as ColumnsType<T>;
-  }, [localColumns]);
+    // Every data column gets a click-to-sort arrow. Ant Design's per-column
+    // sorter is single-column by default: activating a new column's sort
+    // automatically clears the previous one, and whole rows always move
+    // together. Click cycle: A–Z → Z–A → original order.
+    const accent = currentScheme.primaryAccent;
+    const sortableColumns = visibleColumns.map(col => {
+      const key = colKeyOf(col);
+      if (!key) return col;
+      const sortable: ColumnType<T> = {
+        ...(col as ColumnType<T>),
+        sorter: (a, b, sortOrder) =>
+          compareCellValues(
+            (a as Record<string, unknown>)[key],
+            (b as Record<string, unknown>)[key],
+            sortOrder,
+          ),
+        sortIcon: ({ sortOrder }) =>
+          sortOrder === 'ascend' ? (
+            <CaretUpOutlined
+              style={{ fontSize: 11, color: accent }}
+              data-testid={`sort-icon-asc-${key}`}
+            />
+          ) : sortOrder === 'descend' ? (
+            <CaretDownOutlined
+              style={{ fontSize: 11, color: accent }}
+              data-testid={`sort-icon-desc-${key}`}
+            />
+          ) : (
+            <CaretDownOutlined
+              style={{ fontSize: 11, color: 'var(--text-secondary, #94a3b8)', opacity: 0.5 }}
+              data-testid={`sort-icon-idle-${key}`}
+            />
+          ),
+        onHeaderCell: () =>
+          ({ 'data-testid': `header-sort-${title}-${key}` }) as React.HTMLAttributes<HTMLElement>,
+      };
+      return sortable;
+    });
+    return [rowSelectorCol, ...sortableColumns] as ColumnsType<T>;
+  }, [visibleColumns, currentScheme.primaryAccent, title]);
 
   const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
@@ -403,8 +480,37 @@ export default function DataTable<T extends { id: string }>({
     );
   }, [localData, searchText]);
 
+  // Keep `activeSort` in sync with the table's own (uncontrolled) sorter.
+  const handleTableChange = useCallback<NonNullable<TableProps<T>['onChange']>>(
+    (_pagination, _filters, sorter) => {
+      const s = Array.isArray(sorter) ? sorter[0] : sorter;
+      const key = s ? String(s.columnKey ?? (typeof s.field === 'string' ? s.field : '') ?? '') : '';
+      if (s && s.order && key) setActiveSort({ key, order: s.order });
+      else setActiveSort(null);
+    },
+    [],
+  );
+  // Rows in the exact order the user sees them (filter → search → sort).
+  // The underlying data order is never mutated, so cancelling the sort
+  // restores the original insertion order.
+  const displayedData = useMemo(() => {
+    if (!activeSort) return filteredData;
+    const { key, order } = activeSort;
+    // If the sorted column is hidden via the View menu, its sorter is gone
+    // from the table too — fall back to the unsorted order.
+    if (!visibleColumns.some(col => colKeyOf(col) === key)) return filteredData;
+    return [...filteredData].sort((a, b) => {
+      const res = compareCellValues(
+        (a as Record<string, unknown>)[key],
+        (b as Record<string, unknown>)[key],
+        order,
+      );
+      return order === 'descend' ? -res : res;
+    });
+  }, [filteredData, activeSort, visibleColumns]);
+
   const handleDownloadCSV = useCallback(() => {
-    if (localData.length === 0) return;
+    if (displayedData.length === 0) return;
     const columnKeys = localColumns
       .map(col => {
         const c = col as Record<string, unknown>;
@@ -414,7 +520,7 @@ export default function DataTable<T extends { id: string }>({
     const columnTitles = localColumns.map(col => String((col as Record<string, unknown>).title ?? ''));
 
     const header = columnTitles.map(escapeCSV).join(',');
-    const rows = localData.map(row =>
+    const rows = displayedData.map(row =>
       columnKeys.map(key => escapeCSV((row as Record<string, unknown>)[key])).join(','),
     );
     const csvContent = [header, ...rows].join('\n');
@@ -426,7 +532,7 @@ export default function DataTable<T extends { id: string }>({
     link.download = `${title}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-  }, [localData, localColumns, title]);
+  }, [displayedData, localColumns, title]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const el = cardRef.current;
@@ -502,7 +608,7 @@ export default function DataTable<T extends { id: string }>({
             <button
               className="shimmer-btn"
               onClick={handleDownloadCSV}
-              disabled={localData.length === 0 || loading}
+              disabled={displayedData.length === 0 || loading}
               data-testid={`button-download-csv-${title}`}
             >
               <DownloadOutlined style={{ fontSize: 13 }} />
@@ -563,7 +669,7 @@ export default function DataTable<T extends { id: string }>({
               <div className="flex items-center justify-center py-20">
                 <Spin size="large" data-testid="loading-spinner" />
               </div>
-            ) : localData.length === 0 ? (
+            ) : displayedData.length === 0 ? (
               <div className="py-20">
                 <Empty description="No data available" data-testid="empty-state" />
               </div>
@@ -577,9 +683,10 @@ export default function DataTable<T extends { id: string }>({
             ) : (
               <Table
                 columns={augmentedColumns}
-                dataSource={filteredData}
+                dataSource={displayedData}
                 rowKey="id"
                 pagination={false}
+                onChange={handleTableChange}
                 scroll={{ x: 'max-content', y: 'calc(100vh - 260px)' }}
                 data-testid={`table-${title}`}
                 style={{ height: '100%' }}
